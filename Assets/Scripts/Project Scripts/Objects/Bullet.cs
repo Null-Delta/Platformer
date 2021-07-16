@@ -16,7 +16,6 @@ public class Bullet : MovableMapObject
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        mode = MoveMode.linear;
         move = new LinearMove(Random.Range(-1,1),Random.Range(-1,1),5);
         radius = 0.25f;
     }
