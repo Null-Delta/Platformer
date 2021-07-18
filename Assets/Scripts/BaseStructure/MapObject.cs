@@ -11,4 +11,6 @@ public class MapObject: Object {
     public override StateEvent stateCheck(float time) { return null; }
     public override void startObject() { }
     public override void execute(Command command) { }
+
+    
 }

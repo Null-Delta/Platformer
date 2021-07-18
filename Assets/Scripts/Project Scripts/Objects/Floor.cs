@@ -18,4 +18,8 @@ public class Floor : StaticMapObject
     public Floor(int x, int y) {
         position = new Vector2(x,y);
     }
+
+    public Floor() {
+        position = new Vector2(0,0);
+    }
 }

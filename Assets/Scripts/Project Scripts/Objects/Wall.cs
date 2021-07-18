@@ -18,4 +18,9 @@ public class Wall : StaticMapObject
     public Wall(int x, int y) {
         position = new Vector2(x,y);
     }
+
+    public Wall() {}
+    
+
+    
 }
