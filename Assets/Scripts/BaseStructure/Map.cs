@@ -10,6 +10,7 @@ public class Map : MonoBehaviour
     List<MovableMapObject> movableObjects = new List<MovableMapObject>();
     List<Group> groups = new List<Group>();
     List<StaticMapObject>[,] mapMatrix = new List<StaticMapObject>[width,height];
+    int error_catcher; //err
 
     // public void RefreshAround(int x, int y)
     // {
@@ -275,9 +276,11 @@ public class Map : MonoBehaviour
 
     void Update()
     {
+        error_catcher = 0;//err
         var delta = Time.deltaTime;
 
         while(delta > 0) {
+            error_catcher++; //err
             List<Event> minEvents = new List<Event>();
             minEvents.Add(new Event(delta));
 
@@ -308,7 +311,7 @@ public class Map : MonoBehaviour
                     }
                 }
             }
-
+            
             moveObjectsIterator = movableObjects.GetEnumerator();
 
             while(moveObjectsIterator.MoveNext()) {
@@ -328,7 +331,7 @@ public class Map : MonoBehaviour
                     }
                 }
             }
-
+            
             objectsIterator = objects.GetEnumerator();
             while(objectsIterator.MoveNext()) {
                 objectsIterator.Current.updateObject(minEvents[0].time);
@@ -343,11 +346,22 @@ public class Map : MonoBehaviour
                 } else if (eventIterator.Current is StateEvent) {
 
                 }
+                
             }
 
             delta -= minEvents[0].time;
+            if (error_catcher >= 10) //err
+            {
+                var heart_of_game = GameObject.Find("New Game Object");
+                Destroy(heart_of_game);
+                print("STOP");
+            }
         }
-    
+        if (error_catcher >= 6) //err
+        {
+            print("WARNING");
+        }
+        
         //TODO: player move input
     
     }
