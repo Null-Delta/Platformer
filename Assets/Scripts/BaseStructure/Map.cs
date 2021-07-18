@@ -280,7 +280,7 @@ public class Map : MonoBehaviour
         var delta = Time.deltaTime;
 
         while(delta > 0) {
-            error_catcher++; //err
+            
             List<Event> minEvents = new List<Event>();
             minEvents.Add(new Event(delta));
 
@@ -350,6 +350,8 @@ public class Map : MonoBehaviour
             }
 
             delta -= minEvents[0].time;
+            
+            error_catcher++; //err
             if (error_catcher >= 10) //err
             {
                 var heart_of_game = GameObject.Find("New Game Object");

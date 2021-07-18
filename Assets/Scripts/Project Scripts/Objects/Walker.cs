@@ -6,6 +6,7 @@ public class Walker : MovableMapObject
 {
 
     float sum_time;
+    float move_delay;
 
     public override string objectName => "Walker";
     LinearMove linearMove {
@@ -19,29 +20,35 @@ public class Walker : MovableMapObject
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        move = new LinearMove(Random.Range(-1f,1f),Random.Range(-1f,1f),1);
+        move = new LinearMove(1,0,1);
         radius = 1f;
+        move_delay = 0.5f;
     }
 
     public override StateEvent stateCheck(float time) { 
-        if(sum_time + time >= 1)
+        
+
+        if(sum_time + time >= move_delay && sum_time < move_delay)
         {
-            return new StateEvent(sum_time + time -1, this);
+            return new StateEvent(time - (sum_time + time - move_delay), this);
         }
          return null;
         }
 
     public override void updateObject(float time) {
-        sum_time+=time;
+        
+        sum_time+=time; //важно
 
-        if (sum_time >= 1)
+        if (sum_time >= move_delay)
         {
-            linearMove.dx = Random.Range(-1f,1f);
-            linearMove.dy = Random.Range(-1f,1f);
-            position += new Vector2((int)(linearMove.dx * linearMove.speed * 1),(int)(linearMove.dy * linearMove.speed * 1));
+            
+            //linearMove.dx = Random.Range(-1,2);
+            //linearMove.dy = Random.Range(-1,2);
+
+            position += new Vector2((int)(linearMove.dx * linearMove.speed),(int)(linearMove.dy * linearMove.speed));
             gameObject.transform.position = position;
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
-            sum_time -=1;
+            sum_time = 0f;
         }
     }
 
@@ -52,7 +59,9 @@ public class Walker : MovableMapObject
 
     public override void onCollizion(MapObject obj, Vector2 orientation)
     {//todo
+    
         if(obj is Wall) {
+            
             if(orientation.x != 0) {
                 linearMove.dx = -linearMove.dx;
             }
