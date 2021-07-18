@@ -19,7 +19,5 @@ public class Floor : StaticMapObject
         position = new Vector2(x,y);
     }
 
-    public Floor() {
-        position = new Vector2(0,0);
-    }
+    public Floor() {}
 }

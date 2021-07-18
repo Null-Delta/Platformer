@@ -16,14 +16,14 @@ public class Bullet : MovableMapObject
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        move = new LinearMove(Random.Range(-1,1),Random.Range(-1,1),5);
+        move = new LinearMove(Random.Range(-1f,1f),Random.Range(-1f,1f),5);
         radius = 0.25f;
     }
 
     public override void updateObject(float time) {
         position += new Vector2(linearMove.dx * linearMove.speed * time,linearMove.dy * linearMove.speed * time);
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 0);
     }
 
     public override bool isCollizion(MapObject obj)
@@ -49,5 +49,7 @@ public class Bullet : MovableMapObject
     }
     public Bullet(float x, float y) {
         position = new Vector2(x,y);
+        move = new LinearMove(Random.Range(-1f,1f),Random.Range(-1f,1f), 5);
+        radius = 0.25f;
     }
 }

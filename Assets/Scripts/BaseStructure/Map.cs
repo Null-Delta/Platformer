@@ -11,6 +11,27 @@ public class Map : MonoBehaviour
     List<Group> groups = new List<Group>();
     List<StaticMapObject>[,] mapMatrix = new List<StaticMapObject>[width,height];
 
+    // public void RefreshAround(int x, int y)
+    // {
+    //     float r = 1.5f;
+
+    //     //Обработка всех объектов вокруг.
+    //     for (float i = 0; i < 2 * 3.14f; i+= 2*3.14f/8f)
+    //     {
+    //         int dx = x + (int)(Mathf.Cos(i)*r), dy = y + (int)(Mathf.Sin(i)*r);
+
+    //         if (getMapObjects<ConnectedObject>(dx,dy) != null)
+    //         {
+    //             foreach(ConnectedObject obj in getMapObjects<ConnectedObject>(dx,dy))
+    //             {
+    //                 int weight = (int)(obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.x * 17);
+    //                 int height = (int)(obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.y * 17);
+    //                 obj.setupStyle(dx, dy, weight, height);
+    //             }
+    //         }
+    //     }
+    // }
+
     public List<T> getMapObjects<T>(int x, int y, Predicate<T> predicate = default(Predicate<T>)) where T: StaticMapObject {
         if(x < 0 || y < 0 || x >= width || y >= height) return null; 
         
@@ -92,9 +113,21 @@ public class Map : MonoBehaviour
             GameObject prefab = Resources.Load<GameObject>("Prefabs/" + objectsIterator.Current.objectName);
 
             objectsIterator.Current.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
+            objectsIterator.Current.map = this;
             addObject(objectsIterator.Current);
         }
     }
+
+    public void setupObject(Object obj) {
+
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/" + obj.objectName);
+
+        obj.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
+        obj.map = this;
+        addObject(obj);
+    
+    }
+
     CollizionEvent collizionTime(MovableMapObject m1, MovableMapObject m2) {
         if(m1 == m2 || !m1.isCollizion(m2) || !m2.isCollizion(m1)) {
             return null;
@@ -138,7 +171,7 @@ public class Map : MonoBehaviour
 
         var times = new List<(float, int, int, int)>();
         var move = (m.move as LinearMove);
-
+        
         int startX = move.dx > 0 ? (int)Mathf.Ceil(m.position.x) : (int)Mathf.Floor(m.position.x);
         int endX = move.dx > 0 ? (int)Mathf.Ceil(m.position.x + time * move.dx * move.speed) : (int)Mathf.Floor(m.position.x + time * move.dx * move.speed);
         

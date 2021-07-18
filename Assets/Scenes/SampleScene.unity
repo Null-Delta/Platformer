@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -149,6 +150,32 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dada7f9cda7363e44a626d0394aa292b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObj: {fileID: 0}
+  minSize: 1
+  maxSize: 50
+  "smoothFollowing\u0421ursor": 16
+  smoothResizing: 16
+  forceApproach: 16
+  targetApproachSpeed: 16
+  cameraInertiaForce: 65
+  cameraInertiaDuration: 0.5
+  targetPos: {x: 0, y: 0, z: 0}
+  goTarget: 0
+  followingTarget: 1
+  cameraMove: 1
+  touchDown: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -176,7 +203,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 15.48
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -235,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861d1a7e2815942f9a3a823d32923ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 0}
 --- !u!4 &526316899
 Transform:
   m_ObjectHideFlags: 0
