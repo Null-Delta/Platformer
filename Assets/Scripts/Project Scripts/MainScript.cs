@@ -12,19 +12,21 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         map = new GameObject();
-        // objects.Add(new Bullet(5.3f, 5.8f));
-        // objects.Add(new Bullet(6.3f, 5.8f));
-        objects.Add(new Walker(6.3f, 15.8f));
+        //objects.Add(new Bullet(5.3f, 5.8f));
+        //objects.Add(new Bullet(6.3f, 5.8f));
+        //objects.Add(new Walker(6.3f, 15.8f));
+
         Camera.main.transform.position = new Vector3(15,15, -10);
+
         SetRect<Wall>(0,0,30,30,0);
         SetRect<Wall>(5,5,20,20,0);
         SetRect<Wall>(12,12,6,6,1);
-        SetRect<Puddle>(2,2,2,2,1);
-         for (int i = 1; i < 29; i++)
-            for (int j = 1; j < 29; j++)
-                if(Random.Range(0f,1f) < 0.20f) objects.Add(new Puddle(i,j));
-        objects.RemoveAll(x=>(x as MapObject).position.y == 5 && (x as MapObject).position.x >= 10 && (x as MapObject).position.x < 20 && (x is Wall));
+        //objects.Add(new Floor(10,10));
         SetRect<Floor>(0,0,30,30,1);
+
+        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,2) == 0);
+
+        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) != null);
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);
     }

@@ -10,6 +10,6 @@ public abstract class Object
     abstract public StateEvent stateCheck(float time);
     abstract public void execute(Command command);
     abstract public void startObject();
+    abstract public void resetObject();
     abstract public void updateObject(float time);
 }
-

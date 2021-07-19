@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class ConnectedObject : StaticMapObject
 {
-    
+    const int width = 25, height = 59;
 
     public void setupStyle(int x, int y) {
         int sum = 0;
-        
-    
-
         if (map.getMapObjects<StaticMapObject>(x - 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00000010;
         if (map.getMapObjects<StaticMapObject>(x, y + 1, x => x.objectName == objectName) != null)     sum = sum | 0b00000100;
         if (map.getMapObjects<StaticMapObject>(x + 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00001000;
@@ -23,134 +20,125 @@ public class ConnectedObject : StaticMapObject
     }
 
     void generateTexture(int code) {
-
+        Debug.Log(code);
         List<Texture2D> textures = new List<Texture2D>();
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Textures/"+ objectName + "s");
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Textures/"+ objectName);
         for (int i = 0; i < 20; i++)
         {
-            var croppedTexture = new Texture2D( (int) sprites[i].rect.width, (int) sprites[i].rect.height );
+            var croppedTexture = new Texture2D(width, height);
+
             var pixels = sprites[i].texture.GetPixels(  (int) sprites[i].textureRect.x, 
                                                     (int) sprites[i].textureRect.y, 
-                                                    (int) sprites[i].textureRect.width, 
-                                                    (int) sprites[i].textureRect.height );
+                                                    width, 
+                                                    height);
             croppedTexture.SetPixels(pixels);
             croppedTexture.Apply();
             textures.Add(croppedTexture);
         }
-        int widht = (int)(gameObject.GetComponent<SpriteRenderer>().bounds.size.x * 17);
-        int height = (int)(gameObject.GetComponent<SpriteRenderer>().bounds.size.y * 17);
-        
 
+        Texture2D texture = new Texture2D(width,height);
 
-
-        Texture2D texture = new Texture2D(widht,height);
-
-        for(int x = 0; x < widht; x++) {
+        for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
                 texture.SetPixel(x,y,new Color(0,0,0,0));
             }
         }
+
         texture.filterMode = FilterMode.Point;
-        
-
-
-        
-
-
-
         
         switch ((code & 0b00000111)) {
             case 0b00000000:
             case 0b00000010:
-            drawOn(ref texture, textures[0], widht, height);
+            drawOn(ref texture, textures[0]);
             break;
             case 0b00000001:
             case 0b00000011:
-            drawOn(ref texture, textures[1], widht, height);
+            drawOn(ref texture, textures[1]);
             break;
             case 0b00000100:
             case 0b00000110:
-            drawOn(ref texture, textures[2], widht, height);
+            drawOn(ref texture, textures[2]);
             break;
             case 0b00000101:
-            drawOn(ref texture, textures[3], widht, height);
+            drawOn(ref texture, textures[3]);
             break;
             case 0b00000111:
-            drawOn(ref texture, textures[4], widht, height);
+            drawOn(ref texture, textures[4]);
             break;
         }
 
         switch ((code & 0b00011100)) {
             case 0b00001000:
             case 0b00000000:
-            drawOn(ref texture, textures[5], widht, height);
+            drawOn(ref texture, textures[5]);
             break;
             case 0b00000100:
             case 0b00001100:
-            drawOn(ref texture, textures[7], widht, height);
+            drawOn(ref texture, textures[7]);
             break;
             case 0b00010000:
             case 0b00011000:
-            drawOn(ref texture, textures[6], widht, height);
+            drawOn(ref texture, textures[6]);
             break;
             case 0b00010100:
-            drawOn(ref texture, textures[8], widht, height);
+            drawOn(ref texture, textures[8]);
             break;
             case 0b00011100:
-            drawOn(ref texture, textures[9], widht, height);
+            drawOn(ref texture, textures[9]);
             break;
         }
 
         switch ((code & 0b01110000)) {
             case 0b00100000:
             case 0b00000000:
-            drawOn(ref texture, textures[10], widht, height);
+            drawOn(ref texture, textures[10]);
             break;
             case 0b00010000:
             case 0b00110000:
-            drawOn(ref texture, textures[11], widht, height);
+            drawOn(ref texture, textures[11]);
             break;
             case 0b01000000:
             case 0b01100000:
-            drawOn(ref texture, textures[12], widht, height);
+            drawOn(ref texture, textures[12]);
             break;
             case 0b01010000:
-            drawOn(ref texture, textures[13], widht, height);
+            drawOn(ref texture, textures[13]);
             break;
             case 0b01110000:
-            drawOn(ref texture, textures[14], widht, height);
+            drawOn(ref texture, textures[14]);
             break;
         }
 
         switch ((code & 0b11000001)) {
             case 0b10000000:
             case 0b00000000:
-            drawOn(ref texture, textures[15], widht, height);
+            drawOn(ref texture, textures[15]);
             break;
             case 0b01000000:
             case 0b11000000:
-            drawOn(ref texture, textures[17], widht, height);
+            drawOn(ref texture, textures[17]);
             break;
             case 0b00000001:
             case 0b10000001:
-            drawOn(ref texture, textures[16], widht, height);
+            drawOn(ref texture, textures[16]);
             break;
             case 0b01000001:
-            drawOn(ref texture, textures[18], widht, height);
+            drawOn(ref texture, textures[18]);
             break;
             case 0b11000001:
-            drawOn(ref texture, textures[19], widht, height);
+            drawOn(ref texture, textures[19]);
             break;
         }
 
-        Sprite s = Sprite.Create(texture, new Rect(0,0, widht, height), new Vector2(1f,0.5f), 17);
+        Sprite s = Sprite.Create(texture, new Rect(0,0, width, height), new Vector2(0.5f,0.5f), 17);
         
         gameObject.GetComponent<SpriteRenderer>().sprite = s;
     }
-    void drawOn(ref Texture2D main, Texture2D sorse, int widht, int height) {
-        for(int x = 0; x < widht; x++) {
+
+    void drawOn(ref Texture2D main, Texture2D sorse) {
+        for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                if(main.GetPixel(x,y).a == 0)
+                if(sorse.GetPixel(x,y).a != 0 && main.GetPixel(x,y).a == 0)
                     main.SetPixel(x,y,sorse.GetPixel(x,y));
             }
         }

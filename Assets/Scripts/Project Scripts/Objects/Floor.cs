@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Floor : StaticMapObject
+public class Floor : ConnectedObject
 {
 
     public override string objectName => "Floor";
@@ -13,6 +13,8 @@ public class Floor : StaticMapObject
         isDecoration = true;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)position.y - 1;
+
+        setupStyle((int)position.x, (int)position.y);
     }
 
     public Floor(int x, int y) {

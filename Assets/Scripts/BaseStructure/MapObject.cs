@@ -10,7 +10,6 @@ public class MapObject: Object {
     public override void updateObject(float time) { }
     public override StateEvent stateCheck(float time) { return null; }
     public override void startObject() { }
+    public override void resetObject() { }
     public override void execute(Command command) { }
-
-    
 }
