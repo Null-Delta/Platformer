@@ -19,13 +19,18 @@ public class Walker : MovableMapObject
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        move = new LinearMove(1,0,1);
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)+3;
+        move = new LinearMove(0,0,1);
+        linearMove.dx = Random.Range(-1,2);
+            if (Mathf.Abs(linearMove.dx) == 0)
+                linearMove.dy = Random.Range(0,2)*2-1;
         radius = 1f;
-        move_delay = 0.5f;
+        move_delay = 20f;
     }
 
     public override StateEvent stateCheck(float time) { 
+        
+
         if(sum_time + time >= move_delay && sum_time < move_delay)
         {
             return new StateEvent(time - (sum_time + time - move_delay), this);
@@ -39,6 +44,14 @@ public class Walker : MovableMapObject
 
         if (sum_time >= move_delay)
         {
+            if (map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.dx * linearMove.speed),
+             (int)(position.y + linearMove.dy * linearMove.speed), x => x.isDecoration == false) != null)
+            {
+                
+                linearMove.dx = -linearMove.dx;
+                linearMove.dy = -linearMove.dy;
+            }
+
             position += new Vector2((int)(linearMove.dx * linearMove.speed),(int)(linearMove.dy * linearMove.speed));
             gameObject.transform.position = position;
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
@@ -53,19 +66,14 @@ public class Walker : MovableMapObject
 
     public override void onCollizion(MapObject obj, Vector2 orientation)
     {//todo
-    
         if(obj is Wall) {
-            if(orientation.x != 0) {
                 linearMove.dx = -linearMove.dx;
-            }
-
-            if(orientation.y != 0) {
                 linearMove.dy = -linearMove.dy;
-            }
         } else if (obj is Bullet) {
-            var vs = (position - obj.position).normalized;
-            linearMove.dx = vs.x;
-            linearMove.dy = vs.y;
+
+            linearMove.dx = Random.Range(-1,2);
+            if (Mathf.Abs(linearMove.dx) == 0)
+                linearMove.dy = Random.Range(0,2)*2-1;
         }
     }
     public Walker(float x, float y) {
