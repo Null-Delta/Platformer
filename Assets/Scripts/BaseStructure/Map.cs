@@ -75,6 +75,7 @@ public class Map : MonoBehaviour
         if(obj is MovableMapObject) {
             movableObjects.Remove(obj as MovableMapObject);
         }
+        Destroy(obj.gameObject);
     }
 
     public void executeGroup(List<Action> actions) {

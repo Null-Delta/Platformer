@@ -13,12 +13,13 @@ public class MainScript : MonoBehaviour
     {
         map = new GameObject();
         // objects.Add(new Bullet(5.3f, 5.8f));
-        // objects.Add(new Bullet(6.3f, 5.8f));
-        objects.Add(new Walker(6.3f, 15.8f));
+        objects.Add(new Bullet(1.3f, 15f));
+        objects.Add(new Bullet(11.3f, 15f));
+        objects.Add(new Walker(5f, 15f));
         Camera.main.transform.position = new Vector3(15,15, -10);
         SetRect<Wall>(0,0,30,30,0);
-        SetRect<Wall>(5,5,20,20,0);
-        SetRect<Wall>(12,12,6,6,1);
+        //SetRect<Wall>(5,5,20,20,0);
+        //SetRect<Wall>(12,12,6,6,1);
         SetRect<Puddle>(2,2,2,2,1);
          for (int i = 1; i < 29; i++)
             for (int j = 1; j < 29; j++)

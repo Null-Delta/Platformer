@@ -16,7 +16,7 @@ public class Bullet : MovableMapObject
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        move = new LinearMove(Random.Range(-1f,1f),Random.Range(-1f,1f),5);
+        move = new LinearMove(-1,0,5);
         radius = 0.25f;
     }
 
@@ -45,6 +45,8 @@ public class Bullet : MovableMapObject
             var vs = (position - obj.position).normalized;
             linearMove.dx = vs.x;
             linearMove.dy = vs.y;
+        } else if (obj is Walker) {
+            map.deleteObject(this);
         }
     }
     public Bullet(float x, float y) {
