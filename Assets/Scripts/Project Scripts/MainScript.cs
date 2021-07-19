@@ -12,16 +12,17 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         map = new GameObject();
-        //objects.Add(new Bullet(5.3f, 5.8f));
-        //objects.Add(new Bullet(6.3f, 5.8f));
-        //objects.Add(new Walker(6.3f, 15.8f));
+        //objects.Add(new Bullet(1.3f, 10.2f));
+        //objects.Add(new Bullet(6.3f, 10.2f));
+        objects.Add(new Walker(10,10));
 
         Camera.main.transform.position = new Vector3(15,15, -10);
 
         SetRect<Wall>(0,0,30,30,0);
-        SetRect<Wall>(5,5,20,20,0);
-        SetRect<Wall>(12,12,6,6,1);
+        //SetRect<Wall>(5,5,20,20,0);
+        //SetRect<Wall>(12,12,6,6,1);
         //objects.Add(new Floor(10,10));
+        
         SetRect<Floor>(0,0,30,30,1);
 
         objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,2) == 0);

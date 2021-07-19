@@ -20,7 +20,6 @@ public class ConnectedObject : StaticMapObject
     }
 
     void generateTexture(int code) {
-        Debug.Log(code);
         List<Texture2D> textures = new List<Texture2D>();
         Sprite[] sprites = Resources.LoadAll<Sprite>("Textures/"+ objectName);
         for (int i = 0; i < 20; i++)
