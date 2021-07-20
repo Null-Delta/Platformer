@@ -8,236 +8,154 @@ public class CamControl : MonoBehaviour
 {
     public GameObject targetObj;
     
-    public float minSize = 1, maxSize = 50;
-    public float smoothFollowingСursor = 16;
-    public float smoothResizing = 16;
-    public float forceApproach = 16;
-    public float targetApproachSpeed = 16;
-    public float cameraInertiaForce = 65, cameraInertiaDuration = 0.5f;
-    private Vector2 mousePos, mousePosDinamic, posForZoom1 = Vector2.zero, posForZoom2 = Vector2.zero, futureCoord = Vector2.zero;
-    public Vector3 targetPos;
-    public bool goTarget = false, followingTarget = true, cameraMove = true, touchDown = false;
+    [SerializeField] float minSize = 0.5f, maxSize = 100;
+    [SerializeField] float smoothFollowingСursor = 16;
+    [SerializeField] float smoothResizing = 16;
+    [SerializeField] float forceZoom = 16;
+    [SerializeField] float targetApproachSpeed = 16;
+    [SerializeField] float cameraInertiaForce = 65;
+    private Vector2 pointerPos, posForZoom1 = Vector2.zero, posForZoom2 = Vector2.zero, futurePos;
 
-    float x, y, k = 1, size, futureSize = 0, k2 = 1, zCam = -10, delay = 0, futureX, futureY, time = 0, inertiaCam = 0;
+    [SerializeField] bool goTarget = false, followingTarget = false;
+
+    float x, y, k = 1, size, futureSize = 0, difSize = 1, inertiaCam = 0;
     RuntimePlatform platform = Application.platform;
     
+    InputHandler ih;
+
+
     void Start()
     {
+        ih = Camera.main.GetComponent<InputHandler>();
+        
         Camera.main.orthographicSize = 17;
         futureSize = Camera.main.orthographicSize;
-        if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
-        {
-
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            smoothFollowingСursor = 8;
-            smoothResizing = 8;
-            cameraInertiaForce = 50;
-            cameraInertiaDuration = 0.3f;
-        }
-    }
-
-    bool pointer()
-    {
-        if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
-        {
-            if (Input.GetMouseButton(1))
-                return true;
-            
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            if (Input.touchCount == 1)
-                    return true;
-        }
         
-        return false;
-    }
-
-    bool pointerDown()
-    {
-        if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
+        switch(platform)
         {
-            if (Input.GetMouseButtonDown(1))
-                return true;
-            
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            if (Input.touchCount != 1) touchDown = true;
-
-            if (Input.touchCount == 1 && touchDown)
-                {
-                    touchDown = false;
-                    return true;
-                }
-
-                    
-        }
-
-        return false;
-    }
-
-    float inputDeltaY()
-    {   
-        if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
-        {
-            return Input.mouseScrollDelta.y; 
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            
-            if (Input.touchCount == 2)
-            {
-                cameraMove = false;
-                Touch touch0  = Input.GetTouch(0);
-                Touch touch1 = Input.GetTouch(1);
-
-                Vector2 posTouch0 = touch0.position - touch0.deltaPosition;
-                Vector2 posTouch1 = touch1.position - touch1.deltaPosition;
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
                 
-                float disTouch = (posTouch0 - posTouch1).magnitude;
-                float curDisTouch = (touch0.position - touch1.position).magnitude;
+            break;
 
-                float dif = curDisTouch - disTouch;
-                
-                return dif*0.01f;
-            }
-            return 0;  
+            case RuntimePlatform.Android:
+            case RuntimePlatform.IPhonePlayer:
+                smoothFollowingСursor = 8;
+                smoothResizing = 8;
+                cameraInertiaForce = 50;
+            break;
         }
-
-        return 0;
     }
 
-    Vector2 inputPosForZoom()
+    
+
+    
+
+    
+
+    
+
+
+    void goToTargetPos(Vector2 targetPos)
     {
-        if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
-        {
-            return Camera.main.ScreenToWorldPoint(Input.mousePosition); 
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            
-            if (Input.touchCount == 2)
-            {
-                cameraMove = false;
-                Touch touch0  = Input.GetTouch(0);
-                Touch touch1 = Input.GetTouch(1);
+        Vector2 heading = targetPos - (Vector2)Camera.main.transform.position;
 
-                Vector2 posTouch0 = touch0.position - touch0.deltaPosition;
-                Vector2 posTouch1 = touch1.position - touch1.deltaPosition;
-                return Camera.main.ScreenToWorldPoint((posTouch0+posTouch1)/2);
-            }
-            else return Vector2.zero;
-        }
-        return Vector2.zero; 
-    }
-
-    Vector2 inputPos()
-    {
-        if (platform == RuntimePlatform.WindowsEditor || platform == RuntimePlatform.WindowsPlayer)
-        {
-            return Camera.main.ScreenToWorldPoint(Input.mousePosition); 
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            return Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        }
-        return Vector2.zero; 
-    }
-
-
-    void goToTargetPos(Vector3 targetPos)
-    {
-        if (followingTarget) targetPos = targetObj.transform.position;
-
-        targetPos -= new Vector3(0,0,targetObj.transform.position.z - zCam);
-
-        Vector3 heading = targetPos - Camera.main.transform.position;
-
-        Vector3 heading2 = Camera.main.transform.position - targetPos;
+        Vector2 heading2 = (Vector2)Camera.main.transform.position - targetPos;
 
         heading2/=heading2.magnitude;
+
         if (heading.sqrMagnitude < 0.01f * 0.01f)
         {
-            if(!followingTarget) goTarget = false;
+            goTarget = false;
             Camera.main.transform.position = targetPos;
         }
         else
         {
-            if (followingTarget) Camera.main.transform.position += (heading - heading2/4)*Time.deltaTime * targetApproachSpeed/8;
-            else Camera.main.transform.position += (heading - heading2)*Time.deltaTime * targetApproachSpeed/8;       
+            Camera.main.transform.position += (Vector3)((heading - heading2)* Time.deltaTime * targetApproachSpeed/8);       
         }    
     }
     
-    void trackingMode()
+    void trackingTargetPos()
     {
-        if (platform == RuntimePlatform.WindowsEditor)
-        {
-            
-            if(Input.GetKeyDown(KeyCode.C))
-            {
-                if (Math.Abs(time- Time.time) < 0.3f) followingTarget = true;
-                else followingTarget = false;
-                goTarget = true;
-                targetPos = targetObj.transform.position;
-                time = Time.time;
-            }
+        Vector2 targetPos = targetObj.transform.position;
 
-            
-        }
-        else if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
-        {
-            
-        }
+        Vector2 heading = targetPos - (Vector2)Camera.main.transform.position;
 
-        
+        Vector2 heading2 = (Vector2)Camera.main.transform.position - targetPos;
+
+        if (heading.sqrMagnitude < 0.01f * 0.01f)
+        {
+            Camera.main.transform.position = targetPos;
+            Camera.main.transform.position += new Vector3(0,0,-10);
+        }
+        else
+        {
+            Camera.main.transform.position += (Vector3)((heading - heading2/4) * Time.deltaTime * targetApproachSpeed/8);    
+        }  
     }
 
     void Update()
     {   
-        float deltaY = inputDeltaY();
-
-        
-        trackingMode();
-        
-        
-        if (goTarget)
+        if(!followingTarget)
         {
-            goToTargetPos(targetPos);
-            if (pointerDown())
-                mousePos = inputPos();
-            inertiaCam = 0;   
-        }   
+            if(ih.trakingButtonDown())
+                followingTarget = true;
+        }
         else
         {
-            //followingTarget = false;
-            //Сохраняяем координаты мышки и камеры
-            if (pointerDown())
-                mousePos = inputPos();
+            if(ih.trakingButtonDown())
+                followingTarget = false;
+        }
+            
 
-            //Перемещаем камеру
-            if (pointer())
+        if (followingTarget)
+        {
+            inertiaCam = 0;
+            trackingTargetPos();
+        }
+        else
+        {
+            //Сохраняяем координаты мышки и камеры
+            if (ih.PointerDown())
+                pointerPos = ih.GetPointerPos();
+
+            
+            if (ih.Pointer())
             {
-                mousePosDinamic = inputPos();
-                futureX = mousePos.x - mousePosDinamic.x;
-                futureY = mousePos.y - mousePosDinamic.y;
-                inertiaCam = cameraInertiaDuration;
+                Vector2 pointerPosDinamic = ih.GetPointerPos();
+                futurePos = pointerPos - pointerPosDinamic;
+                inertiaCam = 1;
             }
             
-            if (inertiaCam > 0.02f || futureX/smoothFollowingСursor*(inertiaCam/cameraInertiaDuration)> 0.035f)
+            // Если скорость в пт/кадр больше 0.2, уменьшать её.
+            if((Math.Abs(futurePos.x)+Math.Abs(futurePos.y))*inertiaCam > 0.2f)
             {
-                Camera.main.transform.position += new Vector3 (futureX/smoothFollowingСursor*(inertiaCam/cameraInertiaDuration),futureY/smoothFollowingСursor*(inertiaCam/cameraInertiaDuration), 0);
+                //Перемещение камеры. Умножение на inertiaCam, которое стремится к нулю. futureX/smoothFollowingСursor - скорость камеры в пт/кадр. 
+                Camera.main.transform.position += (Vector3)futurePos/smoothFollowingСursor*inertiaCam;
                 inertiaCam/=(1+(1f/cameraInertiaForce));
             }
         }
+
+        // if (goTarget)
+        // {
+        //     goToTargetPos(targetPos);
+        //     if (ih.PointerDown())
+        //         mousePos = ih.GetPointerPos();
+        //     inertiaCam = 0;   
+        // }   
+        // else
+        // {
+            //followingTarget = false;
+            
+
         //Расчёт будущего размера камеры
+        float deltaY = ih.GetDeltaY();
         if (deltaY != 0)
         {
+            inertiaCam = 0;
             if ((futureSize - (deltaY) * k >= minSize) && (futureSize - (deltaY) * k <= maxSize))
             {
-                k = futureSize / (200/forceApproach);
+                k = futureSize / (200/forceZoom);
                 futureSize += -(deltaY) * k;
                 
             }
@@ -247,23 +165,23 @@ public class CamControl : MonoBehaviour
         size = Camera.main.orthographicSize;
         if (size != futureSize)
         {
-            posForZoom1 = inputPosForZoom();
-            k2 = Math.Abs(size - futureSize);
-            if (k2 < 0.025f) k2 = 0.025f;
-            if (size > futureSize) k2 = -k2;
+            posForZoom1 = ih.GetPosForZoom();
+            difSize = Math.Abs(size - futureSize);
+            if (difSize < 0.025f) difSize = 0.025f;
+            if (size > futureSize) difSize = -difSize;
             
             if (size != futureSize)
             {                     
-                Camera.main.orthographicSize += 100/smoothResizing * k2 * Time.deltaTime;
+                Camera.main.orthographicSize += 100/smoothResizing * difSize * Time.deltaTime;
                 if (Math.Abs(Camera.main.orthographicSize - futureSize) < 0.01f)
                     Camera.main.orthographicSize = futureSize;
             }
 
-            if(!goTarget)
+            if(!followingTarget)
             {
-                posForZoom2 = inputPosForZoom();
-            //Движение камеры к курсору при приближении и обратно
-            transform.position += (Vector3)(posForZoom1 - posForZoom2);
+                posForZoom2 = ih.GetPosForZoom();
+                //Движение камеры к курсору при приближении и обратно
+                transform.position += (Vector3)(posForZoom1 - posForZoom2);
             }
         }
     }

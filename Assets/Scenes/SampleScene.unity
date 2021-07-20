@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -167,15 +168,11 @@ MonoBehaviour:
   maxSize: 50
   "smoothFollowing\u0421ursor": 16
   smoothResizing: 16
-  forceApproach: 16
+  forceZoom: 16
   targetApproachSpeed: 16
   cameraInertiaForce: 65
-  cameraInertiaDuration: 0.5
-  targetPos: {x: 0, y: 0, z: 0}
-  goTarget: 1
-  followingTarget: 1
-  cameraMove: 1
-  touchDown: 0
+  goTarget: 0
+  followingTarget: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -233,6 +230,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b9ae48b68bc394a8ea481926e2ff93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &526316897
 GameObject:
   m_ObjectHideFlags: 0
