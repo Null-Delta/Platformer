@@ -35,6 +35,8 @@ public class CamControl : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 
             break;
 

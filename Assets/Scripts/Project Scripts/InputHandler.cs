@@ -13,6 +13,8 @@ public class InputHandler : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 if (Input.GetMouseButton(1))
                     return true;
             break;
@@ -32,6 +34,8 @@ public class InputHandler : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 if (Input.GetMouseButtonDown(1))
                 return true;
             break;
@@ -56,6 +60,8 @@ public class InputHandler : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 if (Input.GetKeyDown(KeyCode.T))
                     return true;
             break;
@@ -74,6 +80,8 @@ public class InputHandler : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 return Input.mouseScrollDelta.y; 
 
             case RuntimePlatform.Android:
@@ -103,6 +111,8 @@ public class InputHandler : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 return Camera.main.ScreenToWorldPoint(Input.mousePosition);
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
@@ -126,6 +136,8 @@ public class InputHandler : MonoBehaviour
         {
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
                 return Camera.main.ScreenToWorldPoint(Input.mousePosition); 
 
             case RuntimePlatform.Android:
