@@ -14,20 +14,27 @@ public class MainScript : MonoBehaviour
         map = new GameObject();
         //objects.Add(new Bullet(1.3f, 10.2f));
         //objects.Add(new Bullet(6.3f, 10.2f));
-        objects.Add(new Walker(10,10));
+        //objects.Add(new Walker(10,10));
 
         Camera.main.transform.position = new Vector3(15,15, -10);
 
         SetRect<Wall>(0,0,30,30,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
-        //objects.Add(new Floor(10,10));
+        objects.Add(new Player(10,10));
+        objects.Add(new Player(11,10));
+        objects.Add(new Player(12,10));
+        objects.Add(new Player(13,10));
         
         SetRect<Floor>(0,0,30,30,1);
 
-        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,2) == 0);
+        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,4) == 0);
 
         objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) != null);
+        
+        SetRect<Floor>(10,10,1,4,0);
+
+        
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);
     }

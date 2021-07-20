@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dada7f9cda7363e44a626d0394aa292b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObj: {fileID: 0}
+  targetObj: {fileID: 4104641402059468846, guid: 2ceb45431253a49ec934c50287c82555, type: 3}
   minSize: 1
   maxSize: 50
   "smoothFollowing\u0421ursor": 16
@@ -172,7 +172,7 @@ MonoBehaviour:
   cameraInertiaForce: 65
   cameraInertiaDuration: 0.5
   targetPos: {x: 0, y: 0, z: 0}
-  goTarget: 0
+  goTarget: 1
   followingTarget: 1
   cameraMove: 1
   touchDown: 0
@@ -203,7 +203,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15.48
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

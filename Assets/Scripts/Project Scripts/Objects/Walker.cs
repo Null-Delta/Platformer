@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Walker : MovableMapObject
 {
-
     float sum_time;
-    float move_delay;
-    float animation_time;
+    public float move_delay;
+    public float animation_time;
     bool in_animation = false;
     Vector2 moving_vector;
     bool is_ready = true;
-
     public override string objectName => "Walker";
-    LinearMove linearMove {
+    public LinearMove linearMove {
         get {
             return move as LinearMove;
         }
@@ -39,13 +37,13 @@ public class Walker : MovableMapObject
     
         if(sum_time + time >= move_delay && sum_time < move_delay && is_ready)
         {
-            return new StateEvent(time - (sum_time + time - move_delay), this);
+            return new StateEvent(move_delay - sum_time, this);
         }
-        if(sum_time + time >= move_delay+animation_time && sum_time < move_delay && is_ready)
+        if(sum_time + time >= move_delay + animation_time && sum_time < move_delay + animation_time && is_ready)
         {
-            return new StateEvent(time - (sum_time + time - move_delay - animation_time), this);
+            return new StateEvent(move_delay + animation_time - sum_time, this);
         }
-         return null;
+        return null;
         }
 
     public virtual void onWalkStart(bool is_wall)
@@ -67,7 +65,6 @@ public class Walker : MovableMapObject
         
         sum_time+=time; //важно
         
-
         if (sum_time >= move_delay && !in_animation && is_ready)
         {
             sum_time =move_delay;
@@ -82,19 +79,28 @@ public class Walker : MovableMapObject
         
         if (in_animation)
         {
-            position += new Vector2(linearMove.dx * linearMove.speed * time / animation_time,linearMove.dy * linearMove.speed * time /animation_time);
+            if(sum_time >= move_delay + animation_time) {
+                sum_time = 0f;
+                in_animation = false;
+                position = moving_vector;
+                onWalkFinish();
+            } else {
+                position += new Vector2(linearMove.dx * linearMove.speed * (time / animation_time),linearMove.dy * linearMove.speed * (time / animation_time));
+            }
+
+
             gameObject.transform.position = position;
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
         }
         
-        if (in_animation && sum_time >= move_delay + animation_time)
-        {
-            sum_time = 0f;
-            in_animation = false;
-            position = moving_vector;
-            gameObject.transform.position = position;
-            onWalkFinish();
-        }
+        // if (in_animation && sum_time >= move_delay + animation_time)
+        // {
+        //     Debug.Log(sum_time + " " + (move_delay + animation_time));
+            
+            
+        //     position = moving_vector;
+        //     gameObject.transform.position = position;
+        // }
         
     }
 
