@@ -48,6 +48,9 @@ public class Bullet : MovableMapObject
         } else if (obj is Walker) {
             map.deleteObject(this);
         }
+        else if (obj is Live_wall) {
+            
+        }
     }
     public Bullet(float x, float y) {
         position = new Vector2(x,y);

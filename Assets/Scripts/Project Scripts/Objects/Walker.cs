@@ -110,15 +110,13 @@ public class Walker : MovableMapObject
     }
 
     public override void onCollizion(MapObject obj, Vector2 orientation)
-    {//todo
+    {
         if(obj is Wall) {
                 linearMove.dx = -linearMove.dx;
                 linearMove.dy = -linearMove.dy;
         } else if (obj is Bullet) {
 
-            linearMove.dx = Random.Range(-1,2);
-            if (Mathf.Abs(linearMove.dx) == 0)
-                linearMove.dy = Random.Range(0,2)*2-1;
+            animation_time +=0.1f;
         }
     }
     public Walker(float x, float y) {

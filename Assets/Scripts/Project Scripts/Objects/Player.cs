@@ -77,7 +77,7 @@ public class Player: Walker
 
     public override bool isCollizion(MapObject obj)
     {
-        return false;
+        return true;
     }
 
     public Player(float x, float y): base(x,y) {
