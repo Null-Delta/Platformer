@@ -6,9 +6,9 @@ public class MainScript : MonoBehaviour
 {
     public GameObject map;
     List<Object> objects = new List<Object>();
-    int i = 0;
+    //int i = 0; Нигде не используется
 
-    float time = 0f;
+    //float time = 0f; Нигде не используется
     void Start()
     {
         map = new GameObject();
@@ -21,10 +21,13 @@ public class MainScript : MonoBehaviour
         SetRect<Wall>(0,0,30,30,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
-        //objects.Add(new Player(10,10));
-        //objects.Add(new Player(11,10));
-        //objects.Add(new Player(12,10));
+        objects.Add(new Player(10,10));
+        objects.Add(new Player(11,10));
+        objects.Add(new Player(12,10));
         objects.Add(new Player(13,10));
+        objects.Add(new Walker(15,10));
+        objects.Add(new Walker(19,10));
+        objects.Add(new Walker(15,15));
         objects.Add(new Live_wall(20,20, 0.3f, 0.3f));
 
         SetRect<Floor>(0,0,30,30,1);

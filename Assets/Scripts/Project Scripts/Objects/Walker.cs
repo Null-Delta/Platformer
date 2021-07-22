@@ -10,7 +10,10 @@ public class Walker : MovableMapObject
     bool in_animation = false;
     Vector2 moving_vector;
     bool is_ready = true;
+    public List<Vector2> taked_points;
     public override string objectName => "Walker";
+    
+
     public LinearMove linearMove {
         get {
             return move as LinearMove;
@@ -28,23 +31,24 @@ public class Walker : MovableMapObject
             if (Mathf.Abs(linearMove.dx) == 0)
                 linearMove.dy = Random.Range(0,2)*2-1;
 
-        radius = 0.5f;
-        move_delay = 0.5f;
-        animation_time = 0.2f;
+        radius = 0.4f;
+        move_delay = Random.Range(0.1f,0.5f);
+        animation_time = Random.Range(0.1f,0.5f);
     }
 
-    public override StateEvent stateCheck(float time) { 
-    
-        if(sum_time + time >= move_delay && sum_time < move_delay && is_ready)
+    public override StateEvent stateCheck(float time) 
+    { 
+
+        if(sum_time + time >= move_delay- 0.0001f && sum_time < move_delay && is_ready)
         {
             return new StateEvent(move_delay - sum_time, this);
         }
-        if(sum_time + time >= move_delay + animation_time && sum_time < move_delay + animation_time && is_ready)
+        if(sum_time + time >= move_delay + animation_time- 0.0001f && sum_time < move_delay + animation_time && is_ready)
         {
             return new StateEvent(move_delay + animation_time - sum_time, this);
         }
         return null;
-        }
+    }
 
     public virtual void onWalkStart(bool is_wall)
     {
@@ -65,29 +69,38 @@ public class Walker : MovableMapObject
         
         sum_time+=time; //важно
         
-        if (sum_time >= move_delay && !in_animation && is_ready)
+        if (sum_time >= move_delay- 0.0001f && !in_animation && is_ready)
         {
             sum_time =move_delay;
             in_animation = true;
             
+            
             onWalkStart(map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.dx * linearMove.speed),
-             (int)(position.y + linearMove.dy * linearMove.speed), x => x.isDecoration == false) != null);
+             (int)(position.y + linearMove.dy * linearMove.speed), x => x.isDecoration == false) != null ||
+              map.checkWalkerPoint(new Vector2(linearMove.dx * linearMove.speed+position.x,linearMove.dy * linearMove.speed+position.y)));
 
             moving_vector =new Vector2(linearMove.dx * linearMove.speed,linearMove.dy * linearMove.speed);
-            moving_vector +=position;            
+            moving_vector +=position;
+
+            taked_points.Add(new Vector2((int)moving_vector.x,(int) moving_vector.y));
+            map.setWalkerPoint(new Vector2((int)moving_vector.x,(int) moving_vector.y), this);            
         }
         
         if (in_animation)
         {
-            if(sum_time >= move_delay + animation_time) {
+            if(sum_time >= move_delay + animation_time- 0.0001f) {
                 sum_time = 0f;
                 in_animation = false;
                 position = moving_vector;
+
+                map.deleteWalkerPoint(taked_points[0]);
+                taked_points.Remove(taked_points[0]);
+
                 onWalkFinish();
+                
             } else {
                 position += new Vector2(linearMove.dx * linearMove.speed * (time / animation_time),linearMove.dy * linearMove.speed * (time / animation_time));
             }
-
 
             gameObject.transform.position = position;
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
@@ -121,5 +134,7 @@ public class Walker : MovableMapObject
     }
     public Walker(float x, float y) {
         position = new Vector2(x,y);
+        taked_points = new List<Vector2>();
+        taked_points.Add(new Vector2((int)x,(int)y));
     }
 }

@@ -16,7 +16,8 @@ public class CamControl : MonoBehaviour
     [SerializeField] float cameraInertiaForce = 65;
     private Vector2 pointerPos, posForZoom1 = Vector2.zero, posForZoom2 = Vector2.zero, futurePos;
 
-    [SerializeField] bool goTarget = false, followingTarget = false;
+    //[SerializeField] bool goTarget = false;  Нигде не использовалось
+    [SerializeField] bool followingTarget = false;
 
     float x, y, k = 1, size, futureSize = 0, difSize = 1, inertiaCam = 0;
     RuntimePlatform platform = Application.platform;
@@ -68,7 +69,7 @@ public class CamControl : MonoBehaviour
 
         if (heading.sqrMagnitude < 0.01f * 0.01f)
         {
-            goTarget = false;
+            //goTarget = false; Нигде не использовалось
             Camera.main.transform.position = targetPos;
         }
         else
