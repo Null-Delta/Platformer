@@ -36,6 +36,7 @@ public class Map : MonoBehaviour
 
     public bool checkWalkerPoint(Vector2 point)
     {
+        if((int)point.x < 0 || (int)point.y < 0 || (int)point.x >= width || (int)point.y >= height) return false;
         return mapWalkers[(int)point.x, (int)point.y] !=null;
     }
     public void setWalkerPoint(Vector2 point, Walker obj)
