@@ -171,7 +171,6 @@ MonoBehaviour:
   forceZoom: 16
   targetApproachSpeed: 16
   cameraInertiaForce: 65
-  goTarget: 0
   followingTarget: 0
 --- !u!20 &519420031
 Camera:

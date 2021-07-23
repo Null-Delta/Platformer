@@ -6,7 +6,7 @@ public class Player: Walker
 {
     public override string objectName => "Player";
     public int stepCount = 0, dir = 0;
-    override public void onWalkStart(bool is_wall) {
+    override public void onWalkStart() {
         linearMove.dx = 0;
         linearMove.dy = 0;
         stepCount++;
@@ -50,8 +50,11 @@ public class Player: Walker
                 linearMove.dx = 1;
                 break;
             }
-
-            if(map.getMapObjects<StaticMapObject>((int)position.x + (int)linearMove.dx, (int)position.y + (int)linearMove.dy, x => x.objectName == "Floor") == null) {
+            
+            if(map.getMapObjects<StaticMapObject>((int)position.x + (int)linearMove.dx, (int)position.y + (int)linearMove.dy, x => x.objectName == "Floor") == null || map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.dx),
+             (int)(position.y + linearMove.dy), x => x.isDecoration == false) != null ||
+              map.checkWalkerPoint(new Vector2(linearMove.dx +position.x,linearMove.dy+position.y))) 
+            {
                 if(linearMove.dx != 0) linearMove.dx = 0;
                 if(linearMove.dy != 0) linearMove.dy = 0;
             }
@@ -69,7 +72,7 @@ public class Player: Walker
         linearMove.dx = 1;
         linearMove.dy = 0;
         move_delay = 0.0f;
-        animation_time = 0.25f;
+        animation_time = Random.Range(0.1f, 0.5f);
     }
     override public void onWalkFinish() {
         

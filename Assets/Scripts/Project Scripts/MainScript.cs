@@ -21,14 +21,15 @@ public class MainScript : MonoBehaviour
         SetRect<Wall>(0,0,30,30,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
-        objects.Add(new Player(10,10));
-        objects.Add(new Player(11,10));
-        objects.Add(new Player(12,10));
-        objects.Add(new Player(13,10));
-        objects.Add(new Walker(15,10));
-        objects.Add(new Walker(19,10));
-        objects.Add(new Walker(15,15));
-        objects.Add(new Live_wall(20,20, 0.3f, 0.3f));
+        objects.Add(new Player(1,10));
+        objects.Add(new Player(2,10));
+        //objects.Add(new Player(3,10));
+        objects.Add(new Player(4,10));
+        objects.Add(new Walker(5,10));
+        objects.Add(new Walker(9,10));
+        objects.Add(new Walker(5,15));
+        objects.Add(new Turrel_bullet(3,3, 0.3f, 0.3f));
+        objects.Add(new Live_wall(25,25, 0.8f, 0.8f));
 
         SetRect<Floor>(0,0,30,30,1);
 

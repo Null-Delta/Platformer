@@ -25,6 +25,12 @@ public class Live_wall : StaticMapObject
     }
 
 
+
+    public virtual bool readyCheck()
+    {
+        return true;
+    }
+
     public virtual void actStart()
     {
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-2);
@@ -43,10 +49,13 @@ public class Live_wall : StaticMapObject
     }
 
 
+
+
     public override void updateObject(float time) {
         
         sum_time+=time; //важно
-        
+        is_ready = readyCheck();
+    
         if (sum_time >= act_delay && !in_animation && is_ready)
         {
             sum_time =act_delay;

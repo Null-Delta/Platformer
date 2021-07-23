@@ -10,6 +10,7 @@ public class Walker : MovableMapObject
     bool in_animation = false;
     Vector2 moving_vector;
     bool is_ready = true;
+    bool fict_move = false;
     public List<Vector2> taked_points;
     public override string objectName => "Walker";
     
@@ -38,6 +39,7 @@ public class Walker : MovableMapObject
 
     public override StateEvent stateCheck(float time) 
     { 
+        is_ready = readyCheck();
 
         if(sum_time + time >= move_delay- 0.0001f && sum_time < move_delay && is_ready)
         {
@@ -50,9 +52,16 @@ public class Walker : MovableMapObject
         return null;
     }
 
-    public virtual void onWalkStart(bool is_wall)
+    public virtual bool readyCheck()
     {
-        if(is_wall)
+        return true;
+    }
+
+    public virtual void onWalkStart()
+    {
+        if(map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.dx),
+             (int)(position.y + linearMove.dy), x => x.isDecoration == false) != null ||
+              map.checkWalkerPoint(new Vector2(linearMove.dx +position.x,linearMove.dy+position.y)))
         {
             linearMove.dx = -linearMove.dx;
             linearMove.dy = -linearMove.dy;
@@ -73,17 +82,22 @@ public class Walker : MovableMapObject
         {
             sum_time =move_delay;
             in_animation = true;
+            fict_move = false;
             
             
-            onWalkStart(map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.dx * linearMove.speed),
-             (int)(position.y + linearMove.dy * linearMove.speed), x => x.isDecoration == false) != null ||
-              map.checkWalkerPoint(new Vector2(linearMove.dx * linearMove.speed+position.x,linearMove.dy * linearMove.speed+position.y)));
+            onWalkStart();
 
             moving_vector =new Vector2(linearMove.dx * linearMove.speed,linearMove.dy * linearMove.speed);
             moving_vector +=position;
 
-            taked_points.Add(new Vector2((int)moving_vector.x,(int) moving_vector.y));
-            map.setWalkerPoint(new Vector2((int)moving_vector.x,(int) moving_vector.y), this);            
+            if (moving_vector == position)
+                fict_move = true;
+
+            if (!fict_move) 
+            {
+                taked_points.Add(new Vector2((int)moving_vector.x,(int) moving_vector.y));
+                map.setWalkerPoint(new Vector2((int)moving_vector.x,(int) moving_vector.y), this);
+            }         
         }
         
         if (in_animation)
@@ -93,8 +107,11 @@ public class Walker : MovableMapObject
                 in_animation = false;
                 position = moving_vector;
 
-                map.deleteWalkerPoint(taked_points[0]);
-                taked_points.Remove(taked_points[0]);
+                if (!fict_move)
+                {
+                    map.deleteWalkerPoint(taked_points[0]);
+                    taked_points.Remove(taked_points[0]);
+                }
 
                 onWalkFinish();
                 
