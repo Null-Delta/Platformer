@@ -19,6 +19,7 @@ public class MainScript : MonoBehaviour
         Camera.main.transform.position = new Vector3(15,15, -10);
 
         SetRect<Wall>(0,0,30,30,0);
+        //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
         objects.Add(new Player(1,10));
@@ -37,7 +38,7 @@ public class MainScript : MonoBehaviour
 
         objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) != null);
         
-        SetRect<Floor>(10,10,1,4,0);
+        //SetRect<Floor>(10,10,1,4,0);
 
         
         map.AddComponent<Map>();

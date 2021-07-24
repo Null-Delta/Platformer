@@ -5,21 +5,45 @@ using UnityEngine;
 public class ConnectedObject : StaticMapObject
 {
     const int width = 25, height = 59;
+    static List<string> already_generated_names = new List<string>();
+    static List<Sprite> ready_sprites = new List<Sprite>();
 
     public void setupStyle(int x, int y) {
         int sum = 0;
-        if (map.getMapObjects<StaticMapObject>(x - 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00000010;
-        if (map.getMapObjects<StaticMapObject>(x, y + 1, x => x.objectName == objectName) != null)     sum = sum | 0b00000100;
-        if (map.getMapObjects<StaticMapObject>(x + 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00001000;
-        if (map.getMapObjects<StaticMapObject>(x + 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00010000;
-        if (map.getMapObjects<StaticMapObject>(x + 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b00100000;
-        if (map.getMapObjects<StaticMapObject>(x, y - 1, x => x.objectName == objectName) != null)     sum = sum | 0b01000000;
-        if (map.getMapObjects<StaticMapObject>(x - 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b10000000;
-        if (map.getMapObjects<StaticMapObject>(x - 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00000001;
-        generateTexture(sum);
+        bool is_generated = false;
+        int ind;
+        
+        for (ind = 0; ind != already_generated_names.Count; ind++)
+            if (already_generated_names[ind] == objectName)
+            {
+                is_generated = true;
+                break;
+            }
+        
+        if (!is_generated)
+        {
+            already_generated_names.Add(objectName);
+            for (sum = 0; sum !=256; sum++)
+                ready_sprites.Add(generateTexture(sum));
+            is_generated = true;
+            sum = 0;
+        }
+        if (is_generated)
+        {
+            if (map.getMapObjects<StaticMapObject>(x - 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00000010;
+            if (map.getMapObjects<StaticMapObject>(x, y + 1, x => x.objectName == objectName) != null)     sum = sum | 0b00000100;
+            if (map.getMapObjects<StaticMapObject>(x + 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00001000;
+            if (map.getMapObjects<StaticMapObject>(x + 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00010000;
+            if (map.getMapObjects<StaticMapObject>(x + 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b00100000;
+            if (map.getMapObjects<StaticMapObject>(x, y - 1, x => x.objectName == objectName) != null)     sum = sum | 0b01000000;
+            if (map.getMapObjects<StaticMapObject>(x - 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b10000000;
+            if (map.getMapObjects<StaticMapObject>(x - 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00000001;
+            gameObject.GetComponent<SpriteRenderer>().sprite = ready_sprites[ind*256 + sum];
+            //generateTexture(sum);
+        }
     }
 
-    void generateTexture(int code) {
+    Sprite generateTexture(int code) {
         List<Texture2D> textures = new List<Texture2D>();
         Sprite[] sprites = Resources.LoadAll<Sprite>("Textures/"+ objectName);
         for (int i = 0; i < 20; i++)
@@ -34,7 +58,6 @@ public class ConnectedObject : StaticMapObject
             croppedTexture.Apply();
             textures.Add(croppedTexture);
         }
-
         Texture2D texture = new Texture2D(width,height);
 
         for(int x = 0; x < width; x++) {
@@ -128,10 +151,9 @@ public class ConnectedObject : StaticMapObject
             drawOn(ref texture, textures[19]);
             break;
         }
-
-        Sprite s = Sprite.Create(texture, new Rect(0,0, width, height), new Vector2(0.5f,0.5f), 17);
         
-        gameObject.GetComponent<SpriteRenderer>().sprite = s;
+        Sprite s = Sprite.Create(texture, new Rect(0,0, width, height), new Vector2(0.5f,0.5f), 17);
+        return s;
     }
 
     void drawOn(ref Texture2D main, Texture2D sorse) {
