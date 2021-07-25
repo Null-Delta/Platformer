@@ -68,6 +68,9 @@ public class Walker : MovableMapObject
         }
     }
 
+    public virtual void onWalkAnimation()
+    {
+    }
 
     public virtual void onWalkFinish()
     {
@@ -106,7 +109,7 @@ public class Walker : MovableMapObject
                 sum_time = 0f;
                 in_animation = false;
                 position = moving_vector;
-
+                
                 if (!fict_move)
                 {
                     map.deleteWalkerPoint(taked_points[0]);
@@ -116,9 +119,10 @@ public class Walker : MovableMapObject
                 onWalkFinish();
                 
             } else {
+                
                 position += new Vector2(linearMove.dx * linearMove.speed * (time / animation_time),linearMove.dy * linearMove.speed * (time / animation_time));
             }
-
+            onWalkAnimation();
             gameObject.transform.position = position;
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
         }

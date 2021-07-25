@@ -12,6 +12,7 @@ public class Map : MonoBehaviour
     List<StaticMapObject>[,] mapMatrix = new List<StaticMapObject>[width,height];
     int error_catcher; //err
     Walker[,] mapWalkers = new Walker[width,height];
+    List<Object> to_spawn_objects = new List<Object>();
 
     // public void RefreshAround(int x, int y)
     // {
@@ -33,6 +34,11 @@ public class Map : MonoBehaviour
     //         }
     //     }
     // }
+
+    public void spawn_object(Object obj)
+    {
+        to_spawn_objects.Add(obj);
+    }
 
     public bool checkWalkerPoint(Vector2 point)
     {
@@ -305,7 +311,16 @@ public class Map : MonoBehaviour
         var delta = Time.deltaTime;
 
         while(delta > 0) {
-            
+
+            for (int ind = 0; ind !=to_spawn_objects.Count; ind++ )
+            {
+                setupObject(to_spawn_objects[ind]);
+            }
+            to_spawn_objects.Clear();
+
+
+
+
             List<Event> minEvents = new List<Event>();
             minEvents.Add(new Event(delta));
 
@@ -361,6 +376,8 @@ public class Map : MonoBehaviour
             while(objectsIterator.MoveNext()) {
                 objectsIterator.Current.updateObject(minEvents[0].time);
             }
+            objectsIterator.Dispose();
+            
 
             var eventIterator = minEvents.GetEnumerator();
 
@@ -374,10 +391,13 @@ public class Map : MonoBehaviour
                 
             }
 
+
+
+
             delta -= minEvents[0].time;
             
             error_catcher++; //err
-            if (error_catcher >= 10) //err
+            if (error_catcher >= 15) //err
             {
                 var heart_of_game = GameObject.Find("New Game Object");
                 Destroy(heart_of_game);

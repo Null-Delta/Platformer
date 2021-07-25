@@ -45,7 +45,7 @@ public class Live_wall : StaticMapObject
     public virtual void actFinish()
     {
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1000;
-        map.setupObject(new Bullet(position.x, position.y));
+        map.spawn_object(new Bullet(position.x, position.y));
     }
 
 

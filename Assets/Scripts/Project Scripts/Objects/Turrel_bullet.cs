@@ -56,10 +56,10 @@ public class Turrel_bullet : Live_wall
 
     override public void actFinish()
     {
-        map.setupObject(new Bullet(position.x, position.y, 1,0));
-        map.setupObject(new Bullet(position.x, position.y, 0,1));
-        map.setupObject(new Bullet(position.x, position.y, -1,0));
-        map.setupObject(new Bullet(position.x, position.y, 0,-1));
+        map.spawn_object(new Bullet(position.x, position.y, 1,0));
+        map.spawn_object(new Bullet(position.x, position.y, 0,1));
+        map.spawn_object(new Bullet(position.x, position.y, -1,0));
+        map.spawn_object(new Bullet(position.x, position.y, 0,-1));
     }
 
 
