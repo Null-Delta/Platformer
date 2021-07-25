@@ -26,9 +26,8 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Player(2,10));
         //objects.Add(new Player(3,10));
         //objects.Add(new Player(4,10));
-        objects.Add(new Walker(5,10));
         objects.Add(new Walker(9,10));
-        objects.Add(new Walker(5,15));
+        objects.Add(new Walker(3,15));
         objects.Add(new Turrel_bullet(3,3, 0.3f, 0.3f));
         objects.Add(new Live_wall(25,25, 0.8f, 0.8f));
 

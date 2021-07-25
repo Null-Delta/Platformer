@@ -36,7 +36,7 @@ public class PlayerControl : MonoBehaviour
             
             if(time[ind] == 0) CurrentPlayer.addDirection(ind);
             time[ind] += Time.deltaTime;
-            if(time[ind] > CurrentPlayer.animation_time + 0.1f)
+            if(time[ind] > CurrentPlayer.animation_time)
             {
                 time[ind] = 0.0001f;
                 CurrentPlayer.addDirection(ind);

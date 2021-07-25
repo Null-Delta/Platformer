@@ -21,21 +21,21 @@ public class Turrel_bullet : Live_wall
         bool there_walker= false;
         for (int step = 1; step != 6; step++)
         {
-            if (map.checkWalkerPoint(new Vector2(position.x+step,position.y)))
+            if (map.getMapObjects<StaticMapObject>((int)(position.x+step),(int)position.y, x=> x is Walker) != null )
             {
                 there_walker = true;
                 break;
             }
-            else if (map.checkWalkerPoint(new Vector2(position.x,position.y+step)))
+            else if (map.getMapObjects<StaticMapObject>((int)(position.x-step),(int)position.y,x=> x is Walker ) != null)
             {
                 there_walker = true;
                 break;
             }
-            else if (map.checkWalkerPoint(new Vector2(position.x-step,position.y)))
+            else if (map.getMapObjects<StaticMapObject>((int)position.x,(int)(position.y-step),x=> x is Walker ) != null)
             {
                 there_walker = true;
                 break;
-            } else if (map.checkWalkerPoint(new Vector2(position.x,position.y-step)))
+            } else if (map.getMapObjects<StaticMapObject>((int)position.x,(int)(position.y-step),x=> x is Walker) != null)
             {
                 there_walker = true;
                 break;

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Walker : MovableMapObject
+public class Walker : StaticMapObject
 {
+    public Vector2 linearMove;
     float sum_time;
     public float move_delay;
     public float animation_time;
@@ -15,24 +16,17 @@ public class Walker : MovableMapObject
     public override string objectName => "Walker";
     
 
-    public LinearMove linearMove {
-        get {
-            return move as LinearMove;
-        }
-    }
 
     public override void startObject()
     {
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)+3;
-        move = new LinearMove(0,0,1);
 
-        linearMove.dx = Random.Range(-1,2);
-            if (Mathf.Abs(linearMove.dx) == 0)
-                linearMove.dy = Random.Range(0,2)*2-1;
+        linearMove.x = Random.Range(-1,2);
+            if (Mathf.Abs(linearMove.x) == 0)
+                linearMove.y = Random.Range(0,2)*2-1;
 
-        radius = 0.4f;
         move_delay = Random.Range(0.1f,0.5f);
         animation_time = Random.Range(0.1f,0.5f);
     }
@@ -59,12 +53,11 @@ public class Walker : MovableMapObject
 
     public virtual void onWalkStart()
     {
-        if(map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.dx),
-             (int)(position.y + linearMove.dy), x => x.isDecoration == false) != null ||
-              map.checkWalkerPoint(new Vector2(linearMove.dx +position.x,linearMove.dy+position.y)))
+        if(map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.x),
+             (int)(position.y + linearMove.y), x => x.isDecoration == false || x as Walker != null) != null)
         {
-            linearMove.dx = -linearMove.dx;
-            linearMove.dy = -linearMove.dy;
+            linearMove.x = -linearMove.x;
+            linearMove.y = -linearMove.y;
         }
     }
 
@@ -90,7 +83,7 @@ public class Walker : MovableMapObject
             
             onWalkStart();
 
-            moving_vector =new Vector2(linearMove.dx * linearMove.speed,linearMove.dy * linearMove.speed);
+            moving_vector =new Vector2(linearMove.x,linearMove.y);
             moving_vector +=position;
 
             if (moving_vector == position)
@@ -112,7 +105,7 @@ public class Walker : MovableMapObject
                 
                 if (!fict_move)
                 {
-                    map.deleteWalkerPoint(taked_points[0]);
+                    map.deleteWalkerPoint(taked_points[0], this);
                     taked_points.Remove(taked_points[0]);
                 }
 
@@ -120,7 +113,7 @@ public class Walker : MovableMapObject
                 
             } else {
                 
-                position += new Vector2(linearMove.dx * linearMove.speed * (time / animation_time),linearMove.dy * linearMove.speed * (time / animation_time));
+                position += new Vector2(linearMove.x * (time / animation_time),linearMove.y * (time / animation_time));
             }
             onWalkAnimation();
             gameObject.transform.position = position;
@@ -146,10 +139,10 @@ public class Walker : MovableMapObject
     public override void onCollizion(MapObject obj, Vector2 orientation)
     {
         if(obj is Wall) {
-                linearMove.dx = -linearMove.dx;
-                linearMove.dy = -linearMove.dy;
+                linearMove.x = -linearMove.x;
+                linearMove.y = -linearMove.y;
         } else if (obj is Bullet) {
-
+            map.deleteObject(this);
             //animation_time +=0.1f;
         }
     }
@@ -157,5 +150,6 @@ public class Walker : MovableMapObject
         position = new Vector2(x,y);
         taked_points = new List<Vector2>();
         taked_points.Add(new Vector2((int)x,(int)y));
+        linearMove = new Vector2();
     }
 }

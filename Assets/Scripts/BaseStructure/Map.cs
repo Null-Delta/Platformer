@@ -11,7 +11,6 @@ public class Map : MonoBehaviour
     List<Group> groups = new List<Group>();
     List<StaticMapObject>[,] mapMatrix = new List<StaticMapObject>[width,height];
     int error_catcher; //err
-    Walker[,] mapWalkers = new Walker[width,height];
     List<Object> to_spawn_objects = new List<Object>();
 
     // public void RefreshAround(int x, int y)
@@ -39,19 +38,13 @@ public class Map : MonoBehaviour
     {
         to_spawn_objects.Add(obj);
     }
-
-    public bool checkWalkerPoint(Vector2 point)
-    {
-        if((int)point.x < 0 || (int)point.y < 0 || (int)point.x >= width || (int)point.y >= height) return false;
-        return mapWalkers[(int)point.x, (int)point.y] !=null;
-    }
     public void setWalkerPoint(Vector2 point, Walker obj)
     {
-        mapWalkers[(int)point.x, (int)point.y] = obj;
+        mapMatrix[(int)point.x, (int)point.y].Add(obj);
     }
-    public void deleteWalkerPoint(Vector2 point)
+    public void deleteWalkerPoint(Vector2 point, Walker obj)
     {
-        mapWalkers[(int)point.x, (int)point.y] = null;
+        mapMatrix[(int)point.x, (int)point.y].Remove(obj);
     }
 
     public List<T> getMapObjects<T>(int x, int y, Predicate<T> predicate = default(Predicate<T>)) where T: StaticMapObject {
@@ -79,10 +72,6 @@ public class Map : MonoBehaviour
                 mapMatrix[(int)(obj as StaticMapObject).position.x,(int)(obj as StaticMapObject).position.y].RemoveAll(x => x.objectName == obj.objectName);
                 mapMatrix[(int)(obj as StaticMapObject).position.x,(int)(obj as StaticMapObject).position.y].Add(obj as StaticMapObject);
             }
-            if(obj is Walker) {
-
-                mapWalkers[(int)(obj as Walker).position.x,(int)(obj as Walker).position.y] = (obj as Walker);
-            }
         }
 
         if(obj is MovableMapObject) {
@@ -93,13 +82,13 @@ public class Map : MonoBehaviour
     public void deleteObject(Object obj) {
         objects.Remove(obj);
 
-        if(obj is StaticMapObject) {
-            mapMatrix[(int)(obj as StaticMapObject).position.x,(int)(obj as StaticMapObject).position.y].Remove(obj as StaticMapObject);
-        }
-        else if(obj is Walker) {
+        if (obj is Walker) {
             var taked_points_iterator = (obj as Walker).taked_points.GetEnumerator();
             while(taked_points_iterator.MoveNext())
-                mapWalkers[(int)taked_points_iterator.Current.x, (int)taked_points_iterator.Current.y] = null;
+                mapMatrix[(int)taked_points_iterator.Current.x,(int)taked_points_iterator.Current.y].Remove(obj as Walker);
+        }
+        else if (obj is StaticMapObject) {
+            mapMatrix[(int)(obj as StaticMapObject).position.x,(int)(obj as StaticMapObject).position.y].Remove(obj as StaticMapObject);
         }
 
         if(obj is MovableMapObject) {
