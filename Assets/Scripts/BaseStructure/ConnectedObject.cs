@@ -6,7 +6,7 @@ public class ConnectedObject : StaticMapObject
 {
     const int width = 25, height = 59;
     static List<string> already_generated_names = new List<string>();
-    static List<Sprite> ready_sprites = new List<Sprite>();
+    static List<Sprite[]> ready_sprites = new List<Sprite[]>();
 
     public void setupStyle(int x, int y) {
         int sum = 0;
@@ -23,11 +23,10 @@ public class ConnectedObject : StaticMapObject
         if (!is_generated)
         {
             already_generated_names.Add(objectName);
-            for (sum = 0; sum !=256; sum++)
-                ready_sprites.Add(generateTexture(sum));
+            ready_sprites.Add(new Sprite[256]);
             is_generated = true;
-            sum = 0;
         }
+
         if (is_generated)
         {
             if (map.getMapObjects<StaticMapObject>(x - 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00000010;
@@ -38,7 +37,14 @@ public class ConnectedObject : StaticMapObject
             if (map.getMapObjects<StaticMapObject>(x, y - 1, x => x.objectName == objectName) != null)     sum = sum | 0b01000000;
             if (map.getMapObjects<StaticMapObject>(x - 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b10000000;
             if (map.getMapObjects<StaticMapObject>(x - 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00000001;
-            gameObject.GetComponent<SpriteRenderer>().sprite = ready_sprites[ind*256 + sum];
+            
+            if (ready_sprites[ind][sum] != null)
+                gameObject.GetComponent<SpriteRenderer>().sprite = ready_sprites[ind][sum];
+            else
+            {
+                ready_sprites[ind][sum] = generateTexture(sum);
+                gameObject.GetComponent<SpriteRenderer>().sprite = ready_sprites[ind][sum];
+            }
             //generateTexture(sum);
         }
     }
