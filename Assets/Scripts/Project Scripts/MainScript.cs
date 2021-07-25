@@ -22,10 +22,10 @@ public class MainScript : MonoBehaviour
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
-        objects.Add(new Player(1,10));
-        objects.Add(new Player(2,10));
+        objects.Add(new Player(5,10));
+        //objects.Add(new Player(2,10));
         //objects.Add(new Player(3,10));
-        objects.Add(new Player(4,10));
+        //objects.Add(new Player(4,10));
         objects.Add(new Walker(5,10));
         objects.Add(new Walker(9,10));
         objects.Add(new Walker(5,15));

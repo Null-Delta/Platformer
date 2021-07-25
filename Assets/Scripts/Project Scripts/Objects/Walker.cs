@@ -150,7 +150,7 @@ public class Walker : MovableMapObject
                 linearMove.dy = -linearMove.dy;
         } else if (obj is Bullet) {
 
-            animation_time +=0.1f;
+            //animation_time +=0.1f;
         }
     }
     public Walker(float x, float y) {

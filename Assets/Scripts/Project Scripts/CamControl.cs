@@ -8,7 +8,7 @@ public class CamControl : MonoBehaviour
 {
     public GameObject targetObj;
     
-    [SerializeField] float minSize = 0.5f, maxSize = 100;
+    [SerializeField] float minSize = 0.5f, maxSize = 30;
     [SerializeField] float smoothFollowingСursor = 16;
     [SerializeField] float smoothResizing = 16;
     [SerializeField] float forceZoom = 16;

@@ -146,4 +146,75 @@ public class InputHandler : MonoBehaviour
         }
         return Vector2.zero; 
     }
+
+    public bool ButtonUp()
+    {   
+        switch(platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                return Input.GetKey(KeyCode.W);
+
+            case RuntimePlatform.Android:
+            case RuntimePlatform.IPhonePlayer:
+
+            break;
+        }
+        return false; 
+    }
+
+    public bool ButtonRight()
+    {
+        switch(platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                return Input.GetKey(KeyCode.D);
+
+            case RuntimePlatform.Android:
+            case RuntimePlatform.IPhonePlayer:
+
+            break;
+        }
+        return false; 
+    }
+    
+    public bool ButtonDown()
+    {
+        switch(platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                return Input.GetKey(KeyCode.S);
+
+            case RuntimePlatform.Android:
+            case RuntimePlatform.IPhonePlayer:
+
+            break;
+        }
+        return false; 
+    }
+    public bool ButtonLeft()
+    {
+        switch(platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                return Input.GetKey(KeyCode.A);
+
+            case RuntimePlatform.Android:
+            case RuntimePlatform.IPhonePlayer:
+
+            break;
+        }
+        return false; 
+    }
 }
