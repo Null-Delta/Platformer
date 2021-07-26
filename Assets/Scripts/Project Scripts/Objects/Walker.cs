@@ -102,12 +102,24 @@ public class Walker : StaticMapObject
                 sum_time = 0f;
                 in_animation = false;
                 position = moving_vector;
-                
+
                 if (!fict_move)
                 {
                     map.deleteWalkerPoint(taked_points[0], this);
                     taked_points.Remove(taked_points[0]);
                 }
+
+                var tmpPress = map.getMapObjects<OnPressObject>((int)position.x,(int)position.y, x=> x is OnPressObject);
+                if (tmpPress != null)
+                {
+                    var iterPress = tmpPress.GetEnumerator();
+                    while (iterPress.MoveNext())
+                    {
+                        iterPress.Current.OnPress(this);
+                    }
+                }
+                
+                
 
                 onWalkFinish();
                 
@@ -142,7 +154,7 @@ public class Walker : StaticMapObject
                 linearMove.x = -linearMove.x;
                 linearMove.y = -linearMove.y;
         } else if (obj is Bullet) {
-            map.deleteObject(this);
+
             //animation_time +=0.1f;
         }
     }
