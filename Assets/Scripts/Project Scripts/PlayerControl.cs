@@ -6,6 +6,7 @@ public class PlayerControl : MonoBehaviour
 {
     public Player CurrentPlayer;
     InputHandler ih;
+
     float[] time = new float[4];
     int ind;
     void Start()
@@ -34,14 +35,19 @@ public class PlayerControl : MonoBehaviour
             for(int i = 0; i < 4; i++)
                 if (i != ind) time[i] = 0;
             
-            if(time[ind] == 0) CurrentPlayer.addDirection(ind);
+            if(time[ind] == 0) Move(ind);
             time[ind] += Time.deltaTime;
             if(time[ind] > CurrentPlayer.animation_time)
             {
                 time[ind] = 0.0001f;
-                CurrentPlayer.addDirection(ind);
+                //Move(ind);
             }
         }
         
+    }
+
+    public void Move(int dir)
+    {
+        CurrentPlayer.addDirection(dir);
     }
 }

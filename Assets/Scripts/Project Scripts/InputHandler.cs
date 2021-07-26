@@ -6,7 +6,26 @@ public class InputHandler : MonoBehaviour
 {
     RuntimePlatform platform = Application.platform;
 
+    [SerializeField] GameObject MobileUI;
     bool touchDown = false;
+
+    void Start()
+    {
+        switch(platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                
+            break;
+
+            case RuntimePlatform.Android:
+            case RuntimePlatform.IPhonePlayer:
+                MobileUI.SetActive(true);
+            break;
+        }
+    }
     public bool Pointer()
     {
         switch(platform)
