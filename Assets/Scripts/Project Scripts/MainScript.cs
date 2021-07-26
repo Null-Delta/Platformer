@@ -27,9 +27,12 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Player(3,10));
         //objects.Add(new Player(4,10));
         objects.Add(new Walker(9,10));
+        objects.Add(new Teleport(15,15, 15, 10));
+        objects.Add(new Teleport(15,10, 15, 15));
+        objects.Add(new OnPressObject(25,25));
         objects.Add(new Walker(3,15));
         objects.Add(new Turrel_bullet(3,3, 0.3f, 0.3f));
-        objects.Add(new Live_wall(25,25, 0.8f, 0.8f));
+        objects.Add(new Live_wall(5,25, 0.8f, 0.8f));
 
         SetRect<Floor>(0,0,30,30,1);
 

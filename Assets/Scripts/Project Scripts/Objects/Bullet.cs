@@ -16,7 +16,6 @@ public class Bullet : MovableMapObject
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        move = new LinearMove(-1,0,5);
         radius = 0.25f;
     }
 
@@ -55,13 +54,11 @@ public class Bullet : MovableMapObject
     public Bullet(float x, float y) {
         position = new Vector2(x,y);
         move = new LinearMove(Random.Range(-1f,1f),Random.Range(-1f,1f), 5);
-        radius = 0.25f;
     }
     public Bullet(float x, float y, float xd, float yd) {
         position = new Vector2(x,y);
         move = new LinearMove(Random.Range(-1f,1f),Random.Range(-1f,1f), 5);
         linearMove.dx = xd;
         linearMove.dy = yd;
-        radius = 0.25f;
     }
 }

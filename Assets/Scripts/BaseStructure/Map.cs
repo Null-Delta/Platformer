@@ -11,7 +11,9 @@ public class Map : MonoBehaviour
     List<Group> groups = new List<Group>();
     List<StaticMapObject>[,] mapMatrix = new List<StaticMapObject>[width,height];
     int error_catcher; //err
+
     List<Object> to_spawn_objects = new List<Object>();
+    List<Object> toDeleteObjects = new List<Object>();
 
     // public void RefreshAround(int x, int y)
     // {
@@ -33,6 +35,11 @@ public class Map : MonoBehaviour
     //         }
     //     }
     // }
+
+    public void deleteObject(Object obj)
+    {
+        toDeleteObjects.Add(obj);
+    }
 
     public void spawn_object(Object obj)
     {
@@ -79,7 +86,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    public void deleteObject(Object obj) {
+    public void destroyObject(Object obj) {
         objects.Remove(obj);
 
         if (obj is Walker) {
@@ -146,7 +153,7 @@ public class Map : MonoBehaviour
         obj.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
         obj.map = this;
         addObject(obj);
-    
+        
     }
 
     CollizionEvent collizionTime(MovableMapObject m1, MovableMapObject m2) {
@@ -304,6 +311,7 @@ public class Map : MonoBehaviour
             for (int ind = 0; ind !=to_spawn_objects.Count; ind++ )
             {
                 setupObject(to_spawn_objects[ind]);
+                to_spawn_objects[ind].startObject();
             }
             to_spawn_objects.Clear();
 
@@ -312,7 +320,7 @@ public class Map : MonoBehaviour
 
             List<Event> minEvents = new List<Event>();
             minEvents.Add(new Event(delta));
-
+            
             var objectsIterator = objects.GetEnumerator();
 
             while(objectsIterator.MoveNext()) {
@@ -365,8 +373,17 @@ public class Map : MonoBehaviour
             while(objectsIterator.MoveNext()) {
                 objectsIterator.Current.updateObject(minEvents[0].time);
             }
-            objectsIterator.Dispose();
+
+            for (int ind = 0; ind !=toDeleteObjects.Count; ind++ )
+            {
+                destroyObject(toDeleteObjects[ind]);
+            }
+            toDeleteObjects.Clear();
+
+
+
             
+            objectsIterator.Dispose();
 
             var eventIterator = minEvents.GetEnumerator();
 
