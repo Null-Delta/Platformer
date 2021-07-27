@@ -75,7 +75,7 @@ public class Walker : MapObject
             if (!fict_move) 
             {
                 taked_points.Add(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y));
-                map.setWalkerPoint(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y), this);
+                map.insertMapObject(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y), this);
             }         
         }
         
@@ -88,7 +88,7 @@ public class Walker : MapObject
 
                 if (!fict_move)
                 {
-                    map.deleteWalkerPoint(taked_points[0], this);
+                    map.removeMapObject(taked_points[0], this);
                     taked_points.Remove(taked_points[0]);
                 }
 
@@ -107,7 +107,7 @@ public class Walker : MapObject
                 onWalkFinish();
                 
             } else {
-                position = start_position + moving_vector * (sum_time - move_delay) / animation_time;
+                position = start_position + moving_vector * ((sum_time - move_delay) / animation_time);
             }
             onWalkAnimation();
             gameObject.transform.position = position;
