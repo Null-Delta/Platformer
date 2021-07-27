@@ -16,7 +16,7 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Bullet(6.3f, 10.2f));
         //objects.Add(new Walker(10,10));
 
-        Camera.main.transform.position = new Vector3(15,15, -10);
+
 
         SetRect<Wall>(0,0,30,30,0);
         //SetRect<Wall>(5,5,1,1,0);
