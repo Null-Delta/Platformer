@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour
     {
         ih = Camera.main.GetComponent<InputHandler>();
     }
+    
     void Update()
     {
         if(ih.ButtonUp())

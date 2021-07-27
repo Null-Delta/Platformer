@@ -6,7 +6,7 @@ public class Player: Walker
 {
     
     public override string objectName => "Player";
-    public int stepCount = 0, dir = 0;
+    public int stepCount = 0;
     public Queue<int> direction = new Queue<int>();
     override public void onWalkStart() {
         linearMove.x = 0;
@@ -30,8 +30,6 @@ public class Player: Walker
                 linearMove.x = -1;
             break;
         }
-            
-        dir = newDir;
 
         if(map.getMapObjects<MapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Floor") == null || map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
             (int)(position.y + linearMove.y), x => x.isCollisiable || x is Walker) != null) 
@@ -57,15 +55,14 @@ public class Player: Walker
             
         return true;
     }
-
     public override void startObject()
     {
-        base.startObject();
-        Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
+        base.startObject();   
         linearMove.x = 0;
         linearMove.y = 0;
         move_delay = 0.0f;
         animation_time = 0.2f;
+        Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
     }
     override public void onWalkFinish() {
         direction.Dequeue();

@@ -36,8 +36,6 @@ public class CamControl : MonoBehaviour
         futureSize = startCamSize;
         Camera.main.transform.position = new Vector3(startCamPosition.x, startCamPosition.y, -10);
         
-        targetObj = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
-        
         switch(platform)
         {
             case RuntimePlatform.WindowsEditor:
@@ -86,6 +84,8 @@ public class CamControl : MonoBehaviour
     
     void trackingTargetPos()
     {
+        targetObj = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
+
         Vector2 targetPos = targetObj.transform.position;
 
         Vector2 heading = targetPos - (Vector2)Camera.main.transform.position;
