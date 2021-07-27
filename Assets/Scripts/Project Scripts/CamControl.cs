@@ -47,7 +47,7 @@ public class CamControl : MonoBehaviour
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
-                smoothFollowingСursor = 1;
+                smoothFollowingСursor = 2;
                 smoothResizing = 4;
                 cameraInertiaForce = 50;
             break;

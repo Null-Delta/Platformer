@@ -11,6 +11,7 @@ public class MainScript : MonoBehaviour
     //float time = 0f; Нигде не используется
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
         map = new GameObject();
         //Time.timeScale = 0.1f;
 
