@@ -37,7 +37,7 @@ public class Walker : MapObject
     public virtual void onWalkStart()
     {
         if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
-             (int)(position.y + linearMove.y), x => x.isCollisiable == false || x as Walker != null) != null)
+             (int)(position.y + linearMove.y), x => x.isCollisiable == true || x as Walker != null) != null)
         {
             linearMove.x = -linearMove.x;
             linearMove.y = -linearMove.y;
@@ -100,18 +100,16 @@ public class Walker : MapObject
                     {
                         iterPress.Current.OnPress(this);
                     }
-                }
-                
-                
+                }   
 
                 onWalkFinish();
-                
+
             } else {
                 position = start_position + moving_vector * ((sum_time - move_delay) / animation_time);
             }
             onWalkAnimation();
             gameObject.transform.position = position;
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
         }
     }
 

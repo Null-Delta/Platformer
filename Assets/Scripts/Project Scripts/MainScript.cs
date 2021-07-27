@@ -30,7 +30,9 @@ public class MainScript : MonoBehaviour
         objects.Add(new Player(4,10));
         // objects.Add(new Walker(9,10));
         objects.Add(new Teleport(15,15, 15, 10));
-        objects.Add(new Teleport(15,10, 15, 15));
+        objects.Add(new Teleport(15,10, 10, 15));
+        objects.Add(new Teleport(10,15, 10, 10));
+        objects.Add(new Teleport(10,10, 15, 15));
         // objects.Add(new OnPressObject(25,25));
         objects.Add(new Walker(3,15));
         objects.Add(new Bullet(10,10));
@@ -42,7 +44,7 @@ public class MainScript : MonoBehaviour
 
         SetRect<Floor>(0,0,30,30,1);
 
-        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,4) == 0);
+        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,10) == 0);
 
         //objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) != null);
         

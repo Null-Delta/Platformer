@@ -10,7 +10,7 @@ public class CamControl : MonoBehaviour
     
     [SerializeField] float minSize = 0.5f, maxSize = 30;
     [SerializeField] Vector2 saveZoneEdge1 = new Vector2(-10,-10), saveZoneEdge2 = new Vector2(276, 276);
-    [SerializeField] float startCamSize = 15;   
+    [SerializeField] float startCamSize = 5;   
     [SerializeField] Vector2 startCamPosition = new Vector2 (15,15);
     [SerializeField] float smoothFollowingСursor = 16;
     [SerializeField] float smoothResizing = 16;

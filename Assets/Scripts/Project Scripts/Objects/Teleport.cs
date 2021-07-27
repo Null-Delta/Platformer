@@ -14,6 +14,15 @@ public class Teleport : OnPressObject
         map.removeMapObject(who.taked_points[0], who);
         who.taked_points = new List<Vector2>{brotherPosition};
         map.insertMapObject(brotherPosition, who);
+
+        if(who is Player) {
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/TeleportAnimation");
+            GameObject prefab2 = Resources.Load<GameObject>("Prefabs/TeleportAnimationIn");
+            map.setupGameObject(prefab, new Vector3(position.x,position.y,0));
+            map.setupGameObject(prefab2, new Vector3(brotherPosition.x,brotherPosition.y,0));
+            (who as Player).gameObject.GetComponent<Animator>().Play("OnTeleport", 0, 0);
+        }
+        //Instantiate(prefab, new Vector3(position.x,position.y,0), Quaternion.identity);
     }
 
     public override void startObject()
@@ -21,7 +30,7 @@ public class Teleport : OnPressObject
         base.startObject();
         isCollisiable = false;
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
 
         brother = map.getMapObjects<Teleport>((int)brotherPosition.x, (int)brotherPosition.y, x=> x is Teleport)[0];
     }
