@@ -15,6 +15,7 @@ public class Live_wall : MapObject
     public override void startObject()
     {
         base.startObject();
+        isCollisiable = true;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1000;
     }

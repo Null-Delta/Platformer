@@ -10,12 +10,14 @@ public class Map : MonoBehaviour
     List<Group> groups = new List<Group>();
     List<MapObject>[,] mapMatrix = new List<MapObject>[width,height];
 
-    public void setWalkerPoint(Vector2 point, Walker obj)
+    public void insertMapObject(Vector2 point, MapObject obj)
     {
+        if(point.x < 0 || point.y < 0 || point.x >= width || point.y >= height) return; 
         mapMatrix[(int)point.x, (int)point.y].Add(obj);
     }
-    public void deleteWalkerPoint(Vector2 point, Walker obj)
+    public void removeMapObject(Vector2 point, MapObject obj)
     {
+        if(point.x < 0 || point.y < 0 || point.x >= width || point.y >= height) return; 
         mapMatrix[(int)point.x, (int)point.y].Remove(obj);
     }
 
@@ -65,7 +67,7 @@ public class Map : MonoBehaviour
         Destroy(obj.gameObject);
     }
 
-    public void executeGroup(List<Action> actions) {
+    public void executeGroup(List<Command> actions) {
         var actionIterator = actions.GetEnumerator();
 
         while(actionIterator.MoveNext()) {
@@ -73,11 +75,9 @@ public class Map : MonoBehaviour
             if(group == null) return;
 
             var objectsIterator = group.objects.GetEnumerator();
+            
             while(objectsIterator.MoveNext()) {
-                var commandIterator = actionIterator.Current.commands.GetEnumerator();
-                while(commandIterator.MoveNext()) {
-                    objectsIterator.Current.execute(commandIterator.Current);
-                }
+                objectsIterator.Current.execute(actionIterator.Current);
             }
         }
 

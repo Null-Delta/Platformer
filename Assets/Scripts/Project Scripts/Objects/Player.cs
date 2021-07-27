@@ -6,7 +6,8 @@ public class Player: Walker
 {
     
     public override string objectName => "Player";
-    public int stepCount = 0;
+    public int stepCount = 0, dir = 0;
+    public bool isAnimFinish;
     public Queue<int> direction = new Queue<int>();
     override public void onWalkStart() {
         linearMove.x = 0;
@@ -14,22 +15,25 @@ public class Player: Walker
         var newDir = direction.Peek();
         switch (direction.Peek()) {
             case 0:
-                gameObject.GetComponent<Animator>().Play("MoveUp",0,0);
+                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
                 linearMove.y = 1;
             break;
             case 1:
-                gameObject.GetComponent<Animator>().Play("MoveRight",0,0);
+                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
                 linearMove.x = 1;
             break;
             case 2:
-                gameObject.GetComponent<Animator>().Play("MoveDown",0,0);
+                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
                 linearMove.y = -1;
             break;
             case 3:
-                gameObject.GetComponent<Animator>().Play("MoveLeft",0,0);
+                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
                 linearMove.x = -1;
             break;
         }
+
+        isAnimFinish = false;
+        dir = newDir;
 
         if(map.getMapObjects<MapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Floor") == null || map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
             (int)(position.y + linearMove.y), x => x.isCollisiable || x is Walker) != null) 
@@ -50,6 +54,7 @@ public class Player: Walker
         if(direction.Count == 0)
         {
             gameObject.GetComponent<Animator>().Play("MoveStop",0,0);
+            isAnimFinish = true;
             return false;
         }
             
@@ -66,7 +71,9 @@ public class Player: Walker
     }
     override public void onWalkFinish() {
         direction.Dequeue();
+        stepCount++;
     }
+
     public Player(float x, float y): base(x,y) {
 
     }
