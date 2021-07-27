@@ -41,7 +41,6 @@ public class Map : MonoBehaviour
         
         if(obj is MapObject) {
             if(obj is MapObject) {
-                mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].RemoveAll(x => x.objectName == obj.objectName);
                 mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Add(obj as MapObject);
             }
         }

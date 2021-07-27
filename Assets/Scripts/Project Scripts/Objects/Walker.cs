@@ -15,7 +15,21 @@ public class Walker : MapObject
     bool fict_move = false;
     public List<Vector2> taked_points;
     public override string objectName => "Walker";
+
+    float healthPoint= 100;
+    float immortalTime = 0.2f;
+    float immortalTimeNow = 0;
     
+    public void getDamege(float hp)
+    {
+        if (immortalTimeNow <=0)
+        {
+            healthPoint -=hp;
+            immortalTimeNow = immortalTime;
+        }
+    }
+
+
     public override void startObject()
     {
         base.startObject();
@@ -28,6 +42,7 @@ public class Walker : MapObject
 
         move_delay = Random.Range(0.1f,0.5f);
         animation_time = Random.Range(0.1f,0.5f);
+        isCollisiable = true;
     }
     public virtual bool readyCheck()
     {
@@ -37,7 +52,7 @@ public class Walker : MapObject
     public virtual void onWalkStart()
     {
         if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
-             (int)(position.y + linearMove.y), x => x.isCollisiable == false || x as Walker != null) != null)
+             (int)(position.y + linearMove.y), x => x.isCollisiable == true || x as Walker != null) != null)
         {
             linearMove.x = -linearMove.x;
             linearMove.y = -linearMove.y;
@@ -57,6 +72,17 @@ public class Walker : MapObject
         
         is_ready = readyCheck();
         sum_time+=time; //важно
+
+
+        if (immortalTimeNow >0)
+        {
+            immortalTimeNow-=time;
+        }
+        if (healthPoint <=0)
+        {
+            is_ready = false;
+            map.destroyObject(this);
+        }
         
         if (sum_time >= move_delay && !in_animation && is_ready)
         {
@@ -102,8 +128,6 @@ public class Walker : MapObject
                     }
                 }
                 
-                
-
                 onWalkFinish();
                 
             } else {
@@ -114,6 +138,18 @@ public class Walker : MapObject
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
         }
     }
+
+
+    public override void onCollizion(MapObject obj, Collision2D collision)
+    {
+        if(obj is Bullet)
+        {
+            this.getDamege(10);
+        }
+    }
+
+
+
 
     public Walker(float x, float y) {
         position = new Vector2(x,y);

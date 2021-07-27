@@ -11,18 +11,18 @@ public class OnPressObject : MapObject
 
     public virtual void OnPress(Walker who)
     {
-        // map.spawn_object(new OnPressObject((int)position.x+1, (int)position.y+1));
-        // map.spawn_object(new OnPressObject((int)position.x-1, (int)position.y-1));
-        // map.spawn_object(new OnPressObject((int)position.x-1, (int)position.y+1));
-        // map.spawn_object(new OnPressObject((int)position.x+1, (int)position.y-1));
-        // map.deleteObject(this);
+        map.setupObject(new OnPressObject((int)position.x+1, (int)position.y+1));
+        map.setupObject(new OnPressObject((int)position.x-1, (int)position.y-1));
+        map.setupObject(new OnPressObject((int)position.x-1, (int)position.y+1));
+        map.setupObject(new OnPressObject((int)position.x+1, (int)position.y-1));
+        map.destroyObject(this);
     }
 
     public override void startObject()
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
     }
 
 

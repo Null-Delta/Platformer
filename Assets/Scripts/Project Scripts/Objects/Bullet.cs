@@ -7,13 +7,12 @@ public class Bullet : MapObject
     public override string objectName => "Bullet";
     public Vector2 direction;
 
-    float speed = 5f;
+    float speed;
     public override void startObject()
     {
         base.startObject();
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
-        direction = new Vector2(1f * speed, 1f * speed);
         gameObject.GetComponent<Rigidbody2D>().velocity = direction;
     }
 
@@ -51,9 +50,16 @@ public class Bullet : MapObject
     }
     public Bullet(float x, float y) {
         position = new Vector2(x,y);
+        speed = 5;
+        direction = new Vector2(Random.Range(-1f,1f) * speed, Random.Range(-1f,1f) * speed);
     }
 
-    public Bullet(float x, float y, float xd, float yd) {
+    public Bullet(float x, float y, float xd, float yd, float _speed= 0) {
         position = new Vector2(x,y);
+        if (_speed == 0)
+            speed = 5;
+        else
+            speed = _speed;
+        direction = new Vector2(xd * speed,yd * speed);
     }
 }

@@ -9,11 +9,7 @@ public class Live_wall : MapObject
     public float animation_time;
     bool in_animation = false;
     bool is_ready = true;
-
     public override string objectName => "Live_wall";
-
-
-    
 
 
     public override void startObject()
@@ -44,7 +40,7 @@ public class Live_wall : MapObject
     public virtual void actFinish()
     {
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1000;
-        //map.spawn_object(new Bullet(position.x, position.y));
+        map.setupObject(new Bullet(position.x, position.y));
     }
 
 
