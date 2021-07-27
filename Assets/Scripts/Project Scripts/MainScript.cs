@@ -12,6 +12,8 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         map = new GameObject();
+        //Time.timeScale = 0.1f;
+
         //objects.Add(new Bullet(1.3f, 10.2f));
         //objects.Add(new Bullet(6.3f, 10.2f));
         //objects.Add(new Walker(10,10));
@@ -42,13 +44,14 @@ public class MainScript : MonoBehaviour
 
         objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) == null && Random.Range(0,4) == 0);
 
-        objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) != null);
+        //objects.RemoveAll(x1 => x1.objectName == "Floor" && objects.Find(x => x.objectName == "Wall" && (x is MapObject) && (x as MapObject).position == (x1 as MapObject).position) != null);
         
         //SetRect<Floor>(10,10,1,4,0);
 
         
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);
+        StartCoroutine("onBulletSpawn");
     }
 
     void SetRect<T>(int x, int y, int widht, int height, int hollow) where T : MapObject, new()
@@ -63,5 +66,12 @@ public class MainScript : MonoBehaviour
                 obj.position = new Vector2(i,j);
                 objects.Add(obj);
             }
+    }
+
+    IEnumerator onBulletSpawn() {
+        while(true) {
+            map.GetComponent<Map>().addObject(new Bullet(10f,10f)); 
+            yield return new WaitForSeconds(.1f);
+        }
     }
 }

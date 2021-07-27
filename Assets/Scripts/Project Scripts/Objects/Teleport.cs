@@ -11,14 +11,15 @@ public class Teleport : OnPressObject
     {
         who.position = brotherPosition;
 
-        map.deleteWalkerPoint(who.taked_points[0], who);
+        map.removeMapObject(who.taked_points[0], who);
         who.taked_points = new List<Vector2>{brotherPosition};
-        map.setWalkerPoint(brotherPosition, who);
+        map.insertMapObject(brotherPosition, who);
     }
 
     public override void startObject()
     {
         base.startObject();
+        isCollisiable = false;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
 

@@ -170,7 +170,7 @@ MonoBehaviour:
   "smoothFollowing\u0421ursor": 16
   smoothResizing: 16
   forceZoom: 16
-  targetApproachSpeed: 16
+  targetApproachSpeed: 32
   cameraInertiaForce: 65
   followingTarget: 0
 --- !u!20 &519420031
@@ -255,7 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ff265e7db9f134a9fc5086ad3b2104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  d: {fileID: 0}
 --- !u!1 &526316897
 GameObject:
   m_ObjectHideFlags: 0

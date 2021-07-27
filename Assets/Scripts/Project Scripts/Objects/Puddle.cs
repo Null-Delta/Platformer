@@ -10,7 +10,7 @@ public class Puddle : ConnectedObject
     public override void startObject()
     {
         base.startObject();
-        isCollisiable = true;
+        isCollisiable = false;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
 
