@@ -9,6 +9,9 @@ public class CamControl : MonoBehaviour
     public GameObject targetObj;
     
     [SerializeField] float minSize = 0.5f, maxSize = 30;
+    [SerializeField] Vector2 saveZoneEdge1 = new Vector2(-10,-10), saveZoneEdge2 = new Vector2(276, 276);
+    [SerializeField] float startCamSize = 15;   
+    [SerializeField] Vector2 startCamPosition = new Vector2 (15,15);
     [SerializeField] float smoothFollowingСursor = 16;
     [SerializeField] float smoothResizing = 16;
     [SerializeField] float forceZoom = 16;
@@ -29,8 +32,11 @@ public class CamControl : MonoBehaviour
     {
         ih = Camera.main.GetComponent<InputHandler>();
         
-        Camera.main.orthographicSize = 17;
-        futureSize = Camera.main.orthographicSize;
+        Camera.main.orthographicSize = startCamSize;
+        futureSize = startCamSize;
+        Camera.main.transform.position = new Vector3(startCamPosition.x, startCamPosition.y, -10);
+        
+        targetObj = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
         
         switch(platform)
         {
@@ -133,8 +139,16 @@ public class CamControl : MonoBehaviour
             // Если скорость в пт/кадр больше 0.2, уменьшать её.
             if((Math.Abs(futurePos.x)+Math.Abs(futurePos.y))*inertiaCam > 0.2f)
             {
-                //Перемещение камеры. Умножение на inertiaCam, которое стремится к нулю. futureX/smoothFollowingСursor - скорость камеры в пт/кадр. 
-                Camera.main.transform.position += (Vector3)futurePos/smoothFollowingСursor*inertiaCam;
+                Vector2 differencePos = futurePos/smoothFollowingСursor*inertiaCam;
+                Vector2 interpolationPos = Camera.main.transform.position + (Vector3)differencePos;
+
+                //Обработка saveZone
+                if(interpolationPos.x < saveZoneEdge1.x || interpolationPos.x > saveZoneEdge2.x)
+                    differencePos = new Vector2(0, differencePos.y);
+                if(interpolationPos.y < saveZoneEdge1.y || interpolationPos.y > saveZoneEdge2.y)
+                    differencePos = new Vector2(differencePos.x, 0);
+
+                Camera.main.transform.position += (Vector3)differencePos;
                 inertiaCam/=(1+(1f/cameraInertiaForce));
             }
         }
@@ -183,8 +197,18 @@ public class CamControl : MonoBehaviour
             if(!followingTarget)
             {
                 posForZoom2 = ih.GetPosForZoom();
+                
+
+                Vector2 differencePos = posForZoom1 - posForZoom2;
+                Vector2 interpolationPos = Camera.main.transform.position + (Vector3)differencePos;
+                //Обработка saveZone
+                if(interpolationPos.x < saveZoneEdge1.x || interpolationPos.x > saveZoneEdge2.x)
+                    differencePos = new Vector2(0, differencePos.y);
+                if(interpolationPos.y < saveZoneEdge1.y || interpolationPos.y > saveZoneEdge2.y)
+                    differencePos = new Vector2(differencePos.x, 0);
+
                 //Движение камеры к курсору при приближении и обратно
-                transform.position += (Vector3)(posForZoom1 - posForZoom2);
+                Camera.main.transform.position += (Vector3)differencePos;
             }
         }
     }

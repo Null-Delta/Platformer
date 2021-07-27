@@ -9,10 +9,11 @@ public class ButtonScript : EventTrigger
 {
     Sprite button, button_pressed;
     PlayerControl pc;
-
+    InputHandler ih;
     void Start()
     {
         pc = Camera.main.GetComponent<PlayerControl>();
+        ih =  Camera.main.GetComponent<InputHandler>();
         button = Resources.Load<Sprite>("Textures/button/" + gameObject.name);
         button_pressed = Resources.Load<Sprite>("Textures/button/"+ gameObject.name + "_pressed");
         gameObject.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
@@ -20,12 +21,14 @@ public class ButtonScript : EventTrigger
 
     public override void OnPointerDown(PointerEventData data)
     {
+        ih.isUI = true;
         gameObject.GetComponent<Image>().sprite = button_pressed;
         pc.Move(Int32.Parse(gameObject.name.Remove(0,7)));
     }
 
     public override void OnPointerUp(PointerEventData data)
     {
+        ih.isUI = false;
         gameObject.GetComponent<Image>().sprite = button;
     }
 }

@@ -167,6 +167,10 @@ MonoBehaviour:
   targetObj: {fileID: 4104641402059468846, guid: 2ceb45431253a49ec934c50287c82555, type: 3}
   minSize: 1
   maxSize: 50
+  saveZoneEdge1: {x: -10, y: -10}
+  saveZoneEdge2: {x: 276, y: 276}
+  startCamSize: 15
+  startCamPosition: {x: 15, y: 15}
   "smoothFollowing\u0421ursor": 16
   smoothResizing: 16
   forceZoom: 16
@@ -243,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MobileUI: {fileID: 1878945197}
+  isUI: 0
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ff265e7db9f134a9fc5086ad3b2104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  d: {fileID: 0}
 --- !u!1 &526316897
 GameObject:
   m_ObjectHideFlags: 0

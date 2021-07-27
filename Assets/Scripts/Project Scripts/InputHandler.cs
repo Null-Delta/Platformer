@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputHandler : MonoBehaviour
 {
     RuntimePlatform platform = Application.platform;
 
     [SerializeField] GameObject MobileUI;
+
+    public bool isUI = false;
+    
+    int lastFingerId = 0;
     bool touchDown = false;
 
     void Start()
@@ -41,7 +46,15 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
                 if (Input.touchCount == 1)
-                    return true;
+                {
+                    if(Input.GetTouch(0).fingerId == lastFingerId && !isUI)
+                    {
+                        lastFingerId = Input.GetTouch(0).fingerId;
+                        return true;
+                    }
+                    lastFingerId = Input.GetTouch(0).fingerId;
+                }
+                    
             break;
         }
         return false;
@@ -62,7 +75,7 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
                 if (Input.touchCount != 1) touchDown = true;
-                if (Input.touchCount == 1 && touchDown)
+                if (Input.touchCount == 1 && touchDown && !isUI)
                     {
                         touchDown = false;
                         return true;
@@ -236,4 +249,5 @@ public class InputHandler : MonoBehaviour
         }
         return false; 
     }
+
 }
