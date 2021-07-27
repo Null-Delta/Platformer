@@ -23,8 +23,13 @@ public class Door : MapObject
     public void eraseKey(Key k)
     {
         keyToOpen.Remove(k);
-        if (keyToOpen.Count == 0)
-            map.destroyObject(this);
+        if (keyToOpen.Count == 0){
+            isCollisiable = false;
+            gameObject.GetComponent<Animator>().Play("DoorOpen");
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
+            //map.destroyObject(this);
+        }
     }
 
     public Door(int x, int y) {

@@ -72,7 +72,6 @@ public class Player: Walker
         animation_time = 0.2f;
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
-        //Camera.main.GetComponent<CamControl>(
     }
     override public void onWalkFinish() {
         direction.Dequeue();
