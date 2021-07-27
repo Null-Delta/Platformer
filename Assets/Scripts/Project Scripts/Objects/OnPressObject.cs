@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnPressObject : StaticMapObject
+public class OnPressObject : MapObject
 {
     float sum_time;
 
@@ -11,18 +11,16 @@ public class OnPressObject : StaticMapObject
 
     public virtual void OnPress(Walker who)
     {
-        map.spawn_object(new OnPressObject((int)position.x+1, (int)position.y+1));
-        map.spawn_object(new OnPressObject((int)position.x-1, (int)position.y-1));
-        map.spawn_object(new OnPressObject((int)position.x-1, (int)position.y+1));
-        map.spawn_object(new OnPressObject((int)position.x+1, (int)position.y-1));
-        map.deleteObject(this);
+        // map.spawn_object(new OnPressObject((int)position.x+1, (int)position.y+1));
+        // map.spawn_object(new OnPressObject((int)position.x-1, (int)position.y-1));
+        // map.spawn_object(new OnPressObject((int)position.x-1, (int)position.y+1));
+        // map.spawn_object(new OnPressObject((int)position.x+1, (int)position.y-1));
+        // map.deleteObject(this);
     }
-
 
     public override void startObject()
     {
         base.startObject();
-        isDecoration = true;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
     }

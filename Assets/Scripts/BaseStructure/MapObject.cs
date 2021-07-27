@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MapObject: Object {
     override public string objectName => "Null";
+
+    public bool isCollisiable;
     public Vector2 position;
-    virtual public void onCollizion(MapObject obj, Vector2 orientation) {}
-    virtual public bool isCollizion(MapObject obj) {return false;}
+    virtual public void onCollizion(MapObject obj, Collision2D collision) {}
     public override void updateObject(float time) { }
-    public override StateEvent stateCheck(float time) { return null; }
     public override void startObject() { }
     public override void resetObject() { }
     public override void execute(Command command) { }

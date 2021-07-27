@@ -22,17 +22,21 @@ public class MainScript : MonoBehaviour
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
-        objects.Add(new Player(5,10));
+        //objects.Add(new Player(5,10));
         //objects.Add(new Player(2,10));
         //objects.Add(new Player(3,10));
-        //objects.Add(new Player(4,10));
-        objects.Add(new Walker(9,10));
+        objects.Add(new Player(4,10));
+        // objects.Add(new Walker(9,10));
         objects.Add(new Teleport(15,15, 15, 10));
         objects.Add(new Teleport(15,10, 15, 15));
-        objects.Add(new OnPressObject(25,25));
+        // objects.Add(new OnPressObject(25,25));
         objects.Add(new Walker(3,15));
-        objects.Add(new Turrel_bullet(3,3, 0.3f, 0.3f));
-        objects.Add(new Live_wall(5,25, 0.8f, 0.8f));
+        objects.Add(new Bullet(10,10));
+        objects.Add(new Bullet(11,10));
+        objects.Add(new Bullet(12,10));
+        objects.Add(new Bullet(13,10));
+        // objects.Add(new Turrel_bullet(3,3, 0.3f, 0.3f));
+        // objects.Add(new Live_wall(5,25, 0.8f, 0.8f));
 
         SetRect<Floor>(0,0,30,30,1);
 
@@ -47,7 +51,7 @@ public class MainScript : MonoBehaviour
         map.GetComponent<Map>().setupObjects(objects);
     }
 
-    void SetRect<T>(int x, int y, int widht, int height, int hollow) where T : StaticMapObject, new()
+    void SetRect<T>(int x, int y, int widht, int height, int hollow) where T : MapObject, new()
     {
         for(int i = x; i < x + widht; i++)
             for(int j = y; j < y + height; j++)

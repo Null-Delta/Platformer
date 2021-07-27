@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnectedObject : StaticMapObject
+public class ConnectedObject : MapObject
 {
     const int width = 25, height = 59;
     static List<string> already_generated_names = new List<string>();
@@ -29,14 +29,14 @@ public class ConnectedObject : StaticMapObject
 
         if (is_generated)
         {
-            if (map.getMapObjects<StaticMapObject>(x - 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00000010;
-            if (map.getMapObjects<StaticMapObject>(x, y + 1, x => x.objectName == objectName) != null)     sum = sum | 0b00000100;
-            if (map.getMapObjects<StaticMapObject>(x + 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00001000;
-            if (map.getMapObjects<StaticMapObject>(x + 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00010000;
-            if (map.getMapObjects<StaticMapObject>(x + 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b00100000;
-            if (map.getMapObjects<StaticMapObject>(x, y - 1, x => x.objectName == objectName) != null)     sum = sum | 0b01000000;
-            if (map.getMapObjects<StaticMapObject>(x - 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b10000000;
-            if (map.getMapObjects<StaticMapObject>(x - 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00000001;
+            if (map.getMapObjects<MapObject>(x - 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00000010;
+            if (map.getMapObjects<MapObject>(x, y + 1, x => x.objectName == objectName) != null)     sum = sum | 0b00000100;
+            if (map.getMapObjects<MapObject>(x + 1, y + 1, x => x.objectName == objectName) != null) sum = sum | 0b00001000;
+            if (map.getMapObjects<MapObject>(x + 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00010000;
+            if (map.getMapObjects<MapObject>(x + 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b00100000;
+            if (map.getMapObjects<MapObject>(x, y - 1, x => x.objectName == objectName) != null)     sum = sum | 0b01000000;
+            if (map.getMapObjects<MapObject>(x - 1, y - 1, x => x.objectName == objectName) != null) sum = sum | 0b10000000;
+            if (map.getMapObjects<MapObject>(x - 1, y, x => x.objectName == objectName) != null)     sum = sum | 0b00000001;
             
             if (ready_sprites[ind][sum] != null)
                 gameObject.GetComponent<SpriteRenderer>().sprite = ready_sprites[ind][sum];

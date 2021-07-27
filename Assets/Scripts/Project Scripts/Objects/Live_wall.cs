@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Live_wall : StaticMapObject
+public class Live_wall : MapObject
 {
     float sum_time;
     public float act_delay;
@@ -19,7 +19,6 @@ public class Live_wall : StaticMapObject
     public override void startObject()
     {
         base.startObject();
-        isDecoration = true;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1000;
     }
@@ -45,7 +44,7 @@ public class Live_wall : StaticMapObject
     public virtual void actFinish()
     {
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1000;
-        map.spawn_object(new Bullet(position.x, position.y));
+        //map.spawn_object(new Bullet(position.x, position.y));
     }
 
 

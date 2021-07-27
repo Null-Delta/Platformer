@@ -8,8 +8,6 @@ public class Turrel_bullet : Live_wall
     public override void startObject()
     {
         base.startObject();
-
-        isDecoration = true;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder  = -(int)(position.y-2)+1;
     }
@@ -21,21 +19,21 @@ public class Turrel_bullet : Live_wall
         bool there_walker= false;
         for (int step = 1; step != 6; step++)
         {
-            if (map.getMapObjects<StaticMapObject>((int)(position.x+step),(int)position.y, x=> x is Walker) != null )
+            if (map.getMapObjects<MapObject>((int)(position.x+step),(int)position.y, x=> x is Walker) != null )
             {
                 there_walker = true;
                 break;
             }
-            else if (map.getMapObjects<StaticMapObject>((int)(position.x-step),(int)position.y,x=> x is Walker ) != null)
+            else if (map.getMapObjects<MapObject>((int)(position.x-step),(int)position.y,x=> x is Walker ) != null)
             {
                 there_walker = true;
                 break;
             }
-            else if (map.getMapObjects<StaticMapObject>((int)position.x,(int)(position.y-step),x=> x is Walker ) != null)
+            else if (map.getMapObjects<MapObject>((int)position.x,(int)(position.y-step),x=> x is Walker ) != null)
             {
                 there_walker = true;
                 break;
-            } else if (map.getMapObjects<StaticMapObject>((int)position.x,(int)(position.y-step),x=> x is Walker) != null)
+            } else if (map.getMapObjects<MapObject>((int)position.x,(int)(position.y-step),x=> x is Walker) != null)
             {
                 there_walker = true;
                 break;
@@ -56,18 +54,10 @@ public class Turrel_bullet : Live_wall
 
     override public void actFinish()
     {
-        map.spawn_object(new Bullet(position.x, position.y, 1,0));
-        map.spawn_object(new Bullet(position.x, position.y, 0,1));
-        map.spawn_object(new Bullet(position.x, position.y, -1,0));
-        map.spawn_object(new Bullet(position.x, position.y, 0,-1));
-    }
-
-
-
-
-    public override bool isCollizion(MapObject obj)
-    {
-        return true;
+        // map.spawn_object(new Bullet(position.x, position.y, 1,0));
+        // map.spawn_object(new Bullet(position.x, position.y, 0,1));
+        // map.spawn_object(new Bullet(position.x, position.y, -1,0));
+        // map.spawn_object(new Bullet(position.x, position.y, 0,-1));
     }
 
     public Turrel_bullet(int x, int y, float _act_delay, float _animation_time): base(x,y, _act_delay, _animation_time) {

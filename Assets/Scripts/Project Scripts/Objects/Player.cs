@@ -31,14 +31,12 @@ public class Player: Walker
             break;
         }
             
-        if(map.getMapObjects<StaticMapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Floor") == null || map.getMapObjects<StaticMapObject>((int)(position.x + linearMove.x),
-            (int)(position.y + linearMove.y), x => x.isDecoration == false || x is Walker) != null) 
+        if(map.getMapObjects<MapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Floor") == null || map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
+            (int)(position.y + linearMove.y), x => x.isCollisiable || x is Walker) != null) 
         {
             if(linearMove.x != 0) linearMove.x = 0;
             if(linearMove.y != 0) linearMove.y = 0;
         }
-
-        
     }
 
     public void addDirection(int dir)
@@ -62,7 +60,7 @@ public class Player: Walker
     {
         base.startObject();
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
-        linearMove.x = 1;
+        linearMove.x = 0;
         linearMove.y = 0;
         move_delay = 0.0f;
         animation_time = 0.2f;
@@ -70,12 +68,6 @@ public class Player: Walker
     override public void onWalkFinish() {
         direction.Dequeue();
     }
-
-    public override bool isCollizion(MapObject obj)
-    {
-        return true;
-    }
-
     public Player(float x, float y): base(x,y) {
 
     }
