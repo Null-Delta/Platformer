@@ -46,8 +46,10 @@ public class MainScript : MonoBehaviour
         objects.Add(testK1);
 
         objects.Add(new Teleport(15,15, 15, 10));
-        objects.Add(new Teleport(15,10, 15, 15));
-        objects.Add(new OnPressObject(5,5));
+        objects.Add(new Teleport(15,10, 10, 15));
+        objects.Add(new Teleport(10,15, 10, 10));
+        objects.Add(new Teleport(10,10, 15, 15));
+        // objects.Add(new OnPressObject(25,25));
         objects.Add(new Walker(3,15));
         objects.Add(new Bullet(10,10));
         objects.Add(new Bullet(11,10));

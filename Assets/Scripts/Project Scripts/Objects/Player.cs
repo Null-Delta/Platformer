@@ -53,8 +53,11 @@ public class Player: Walker
     {
         if(direction.Count == 0)
         {
-            gameObject.GetComponent<Animator>().Play("MoveStop",0,0);
-            isAnimFinish = true;
+            if(dir != -1) {
+                dir = -1;
+                //gameObject.GetComponent<Animator>().Play("MoveStop",0,0);
+                isAnimFinish = true;
+            }
             return false;
         }
             
@@ -68,6 +71,8 @@ public class Player: Walker
         move_delay = 0.0f;
         animation_time = 0.2f;
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
+        Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
+        //Camera.main.GetComponent<CamControl>(
     }
     override public void onWalkFinish() {
         direction.Dequeue();
@@ -75,6 +80,6 @@ public class Player: Walker
     }
 
     public Player(float x, float y): base(x,y) {
-
+        
     }
 }

@@ -82,6 +82,10 @@ public class Map : MonoBehaviour
         }
 
     }
+
+    public void setupGameObject(GameObject gameObject, Vector3 to) {
+        Instantiate(gameObject, to, Quaternion.identity);
+    }
     public void setupObjects(List<Object> objs) {
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {

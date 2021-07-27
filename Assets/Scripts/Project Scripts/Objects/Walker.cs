@@ -126,16 +126,16 @@ public class Walker : MapObject
                     {
                         iterPress.Current.OnPress(this);
                     }
-                }
-                
+                }   
+
                 onWalkFinish();
-                
+
             } else {
                 position = start_position + moving_vector * ((sum_time - move_delay) / animation_time);
             }
             onWalkAnimation();
             gameObject.transform.position = position;
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
         }
     }
 
