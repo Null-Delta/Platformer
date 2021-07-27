@@ -11,7 +11,7 @@ public class Player: Walker
     override public void onWalkStart() {
         linearMove.x = 0;
         linearMove.y = 0;
-
+        var newDir = direction.Peek();
         switch (direction.Peek()) {
             case 0:
                 gameObject.GetComponent<Animator>().Play("MoveUp",0,0);
@@ -31,6 +31,8 @@ public class Player: Walker
             break;
         }
             
+        dir = newDir;
+
         if(map.getMapObjects<MapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Floor") == null || map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
             (int)(position.y + linearMove.y), x => x.isCollisiable || x is Walker) != null) 
         {
