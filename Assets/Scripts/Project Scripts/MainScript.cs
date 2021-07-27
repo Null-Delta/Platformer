@@ -11,6 +11,7 @@ public class MainScript : MonoBehaviour
     //float time = 0f; Нигде не используется
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
         map = new GameObject();
         //objects.Add(new Bullet(1.3f, 10.2f));
         //objects.Add(new Bullet(6.3f, 10.2f));

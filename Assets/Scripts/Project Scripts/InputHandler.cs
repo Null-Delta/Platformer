@@ -47,14 +47,11 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.IPhonePlayer:
                 if (Input.touchCount == 1)
                 {
-                    if(Input.GetTouch(0).fingerId == lastFingerId && !isUI)
+                    if((Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary) && !isUI)
                     {
-                        lastFingerId = Input.GetTouch(0).fingerId;
                         return true;
                     }
-                    lastFingerId = Input.GetTouch(0).fingerId;
                 }
-                    
             break;
         }
         return false;
@@ -74,12 +71,18 @@ public class InputHandler : MonoBehaviour
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
-                if (Input.touchCount != 1) touchDown = true;
-                if (Input.touchCount == 1 && touchDown && !isUI)
-                    {
-                        touchDown = false;
-                        return true;
-                    }
+                if (Input.touchCount == 1 && (Input.GetTouch(0).phase == TouchPhase.Began || touchDown) && !isUI)
+                {
+                    touchDown = false;
+                    return true;
+                }     
+                else if (Input.touchCount > 1)
+                {
+                    for (int i = 0; i < Input.touchCount; i++)
+                        if(Input.GetTouch(i).phase == TouchPhase.Ended)
+                            touchDown = true;
+                }
+                    
             break;
         }
         return false;
@@ -118,7 +121,7 @@ public class InputHandler : MonoBehaviour
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
-                if (Input.touchCount >= 2)
+                if ((Input.touchCount >= 2 && !isUI) || (Input.touchCount >= 3 && isUI))
                 {
                     Touch touch0  = Input.GetTouch(0);
                     Touch touch1 = Input.GetTouch(1);
