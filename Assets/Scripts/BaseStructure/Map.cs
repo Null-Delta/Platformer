@@ -10,6 +10,26 @@ public class Map : MonoBehaviour
     Dictionary<int, List<Object>> groups = new Dictionary<int, List<Object>>();
     List<MapObject>[,] mapMatrix = new List<MapObject>[width,height];
 
+    public void moveMapObject(Vector2 point, MapObject obj, List<Vector2> oldpoint = null)
+    {
+        obj.position = point;
+        if (obj is Walker)
+        {
+            for (int ii = 0 ; ii != (obj as Walker).taked_points.Count ; ii++)
+                removeMapObject((obj as Walker).taked_points[ii], obj);
+            (obj as Walker).taked_points = new List<Vector2>{point};
+            
+        }
+        else
+        {
+            for (int ii = 0 ; ii != oldpoint.Count ; ii++)
+                removeMapObject(oldpoint[ii], obj);
+        }
+        insertMapObject(point, obj);
+        obj.gameObject.transform.position = point;
+        obj.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(point.y - 1);
+    }
+
     public void insertMapObject(Vector2 point, MapObject obj)
     {
         if(point.x < 0 || point.y < 0 || point.x >= width || point.y >= height) return; 

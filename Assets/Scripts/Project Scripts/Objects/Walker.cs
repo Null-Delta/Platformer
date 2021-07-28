@@ -20,7 +20,7 @@ public class Walker : MapObject
     float immortalTime = 0.2f;
     float immortalTimeNow = 0;
     
-    public void getDamege(float hp)
+    public void getDamage(float hp)
     {
         if (immortalTimeNow <=0)
         {
@@ -36,12 +36,6 @@ public class Walker : MapObject
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)+3;
 
-        linearMove.x = Random.Range(-1,2);
-            if (Mathf.Abs(linearMove.x) == 0)
-                linearMove.y = Random.Range(0,2)*2-1;
-
-        move_delay = Random.Range(0.1f,0.5f);
-        animation_time = Random.Range(0.1f,0.5f);
         isCollisiable = true;
     }
     public virtual bool readyCheck()
@@ -52,11 +46,12 @@ public class Walker : MapObject
     public virtual void onWalkStart()
     {
         if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
-             (int)(position.y + linearMove.y), x => x.isCollisiable == true || x as Walker != null) != null)
+             (int)(position.y + linearMove.y), x => x.isCollisiable == true) != null)
         {
             linearMove.x = -linearMove.x;
             linearMove.y = -linearMove.y;
         }
+        
     }
 
     public virtual void onWalkAnimation()
@@ -143,7 +138,7 @@ public class Walker : MapObject
     {
         if(obj is Bullet)
         {
-            this.getDamege(10);
+            this.getDamage(10);
         }
     }
 
@@ -155,5 +150,12 @@ public class Walker : MapObject
         taked_points = new List<Vector2>();
         taked_points.Add(new Vector2((int)x,(int)y));
         linearMove = new Vector2();
+
+        linearMove.x = Random.Range(-1,2);
+            if (Mathf.Abs(linearMove.x) == 0)
+                linearMove.y = Random.Range(0,2)*2-1;
+
+        move_delay = Random.Range(0.1f,0.5f);
+        animation_time = Random.Range(0.1f,0.5f);
     }
 }

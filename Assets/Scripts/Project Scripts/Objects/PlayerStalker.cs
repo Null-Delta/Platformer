@@ -70,7 +70,7 @@ public class PlayerStalker : Walker
     {
         if(obj is Bullet)
         {
-            this.getDamege(10);
+            this.getDamage(10);
         }
     }
 

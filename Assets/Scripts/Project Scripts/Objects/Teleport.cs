@@ -9,11 +9,7 @@ public class Teleport : OnPressObject
     public override string objectName => "Teleport";
     public override void OnPress(Walker who)
     {
-        who.position = brotherPosition;
-
-        map.removeMapObject(who.taked_points[0], who);
-        who.taked_points = new List<Vector2>{brotherPosition};
-        map.insertMapObject(brotherPosition, who);
+        map.moveMapObject(brotherPosition, who);
 
         if(who is Player) {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/TeleportAnimation");
