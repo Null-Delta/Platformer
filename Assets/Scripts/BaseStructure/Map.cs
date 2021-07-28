@@ -7,7 +7,7 @@ public class Map : MonoBehaviour
 {
     const int width = 256, height = 256;
     List<Object> objects = new List<Object>();
-    List<Group> groups = new List<Group>();
+    Dictionary<int, List<Object>> groups = new Dictionary<int, List<Object>>();
     List<MapObject>[,] mapMatrix = new List<MapObject>[width,height];
 
     public void insertMapObject(Vector2 point, MapObject obj)
@@ -71,10 +71,10 @@ public class Map : MonoBehaviour
         var actionIterator = actions.GetEnumerator();
 
         while(actionIterator.MoveNext()) {
-            var group = groups.Find(x => x.groupID == actionIterator.Current.groupID);
+            var group = groups[actionIterator.Current.groupID];
             if(group == null) return;
 
-            var objectsIterator = group.objects.GetEnumerator();
+            var objectsIterator = group.GetEnumerator();
             
             while(objectsIterator.MoveNext()) {
                 objectsIterator.Current.execute(actionIterator.Current);
@@ -98,6 +98,10 @@ public class Map : MonoBehaviour
         while(objectsIterator.MoveNext()) {
             setupObject(objectsIterator.Current);
         }
+    }
+
+    public void setupGroups(Dictionary<int, List<Object>> grps) {
+        groups = grps;
     }
 
     public void setupObject(Object obj) {

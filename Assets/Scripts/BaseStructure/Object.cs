@@ -7,7 +7,8 @@ public abstract class Object
 
     public Map map;
     public GameObject gameObject;
-    virtual public string objectName { get; }
+    public Dictionary<string, List<Command>> events;
+    virtual public string objectName { get; } = "Empty";
     abstract public void execute(Command command);
     abstract public void startObject();
     abstract public void resetObject();

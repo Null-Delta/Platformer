@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MapObject: Object {
     override public string objectName => "Null";
-
     public bool isCollisiable;
     public Vector2 position;
     virtual public void onCollizion(MapObject obj, Collision2D collision) {}
