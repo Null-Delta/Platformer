@@ -6,7 +6,6 @@ public class Door : MapObject
 {
     List<Key> keyToOpen = new List<Key>();
     public override string objectName => "Door";
-
     public override void startObject()
     {
         base.startObject();
@@ -15,20 +14,22 @@ public class Door : MapObject
         isCollisiable = true;
     }
 
-    public void addKey(Key k)
+    public override void execute(Command command)
     {
-        keyToOpen.Add(k);
-        k.addDoor(this);
-    }
-    public void eraseKey(Key k)
-    {
-        keyToOpen.Remove(k);
-        if (keyToOpen.Count == 0){
-            isCollisiable = false;
-            gameObject.GetComponent<Animator>().Play("DoorOpen");
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
-            //map.destroyObject(this);
+        switch (command.name) {
+            case "Open":
+                isCollisiable = false;
+                gameObject.GetComponent<Animator>().Play("DoorOpen");
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
+            break;
+
+            case "Close":
+                isCollisiable = true;
+                gameObject.GetComponent<Animator>().Play("DoorClose");
+                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-3);
+            break;
         }
     }
 

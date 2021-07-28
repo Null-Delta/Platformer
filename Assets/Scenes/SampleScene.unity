@@ -170,14 +170,14 @@ MonoBehaviour:
   maxSize: 50
   saveZoneEdge1: {x: -10, y: -10}
   saveZoneEdge2: {x: 276, y: 276}
-  startCamSize: 15
+  startCamSize: 7
   startCamPosition: {x: 15, y: 15}
   "smoothFollowing\u0421ursor": 16
   smoothResizing: 16
   forceZoom: 16
   targetApproachSpeed: 32
   cameraInertiaForce: 65
-  followingTarget: 0
+  followingTarget: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

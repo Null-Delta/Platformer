@@ -4,22 +4,13 @@ using UnityEngine;
 
 public class Key : OnPressObject
 {
-    List<Door> doorToOpen = new List<Door>();
     public override string objectName => "Key";
-
-    public void addDoor(Door d)
-    {
-        doorToOpen.Add(d);
-    }
-
     public override void OnPress(Walker who)
     {
-        var doorIterator =  doorToOpen.GetEnumerator();
-        while (doorIterator.MoveNext())
-        {
-            doorIterator.Current.eraseKey(this);
+        if(who is Player) {
+            map.executeGroup(events["onSelect"]);
+            map.destroyObject(this);
         }
-        map.destroyObject(this);
     }
 
     public override void startObject()
@@ -29,8 +20,10 @@ public class Key : OnPressObject
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-3);
     }
 
-    public Key(int x, int y):base(x,y)
+    public Key(int x, int y, List<Command> onSelect):base(x,y)
     {
         position = new Vector2(x,y);
+        events = new Dictionary<string, List<Command>>();
+        events["onSelect"] = onSelect;
     }
 }

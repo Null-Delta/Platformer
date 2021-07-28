@@ -21,4 +21,11 @@ public class Command {
     public int groupID;
     public List<string> inputs;
     public List<string> types;
+
+    public Command(string n, int id, List<string> inp, List<string> info) {
+        name = n;
+        groupID = id;
+        inputs = inp;
+        types = info;
+    }
 }
