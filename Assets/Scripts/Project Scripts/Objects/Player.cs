@@ -38,8 +38,24 @@ public class Player: Walker
         if(map.getMapObjects<MapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Floor") == null || map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
             (int)(position.y + linearMove.y), x => x.isCollisiable || x is Walker) != null) 
         {
-            if(linearMove.x != 0) linearMove.x = 0;
-            if(linearMove.y != 0) linearMove.y = 0;
+
+            if(map.getMapObjects<MapObject>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Box") != null) {
+                int direction = -1;
+                if(linearMove.x == -1) direction = 0;
+                if(linearMove.y == 1) direction = 1;
+                if(linearMove.x == 1) direction = 2;
+                if(linearMove.y == -1) direction = 3;
+
+                map.getMapObjects<Box>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Box")[0].setDirection(direction);
+
+                if(!map.getMapObjects<Box>((int)position.x + (int)linearMove.x, (int)position.y + (int)linearMove.y, x => x.objectName == "Box")[0].willMove()) {
+                     if(linearMove.x != 0) linearMove.x = 0;
+                    if(linearMove.y != 0) linearMove.y = 0;
+                }
+            } else {
+                if(linearMove.x != 0) linearMove.x = 0;
+                if(linearMove.y != 0) linearMove.y = 0;
+            }
         }
     }
 

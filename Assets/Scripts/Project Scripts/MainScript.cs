@@ -107,6 +107,10 @@ public class MainScript : MonoBehaviour
             new Command("Add", 4, new List<string>(), new List<string>())
         }));
 
+
+        objects.Add(new Box(13,13));
+        objects.Add(new Box(14,13));
+        
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);

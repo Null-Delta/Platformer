@@ -42,7 +42,7 @@ public class Map : MonoBehaviour
         objects.Add(obj);
         
         if(obj is MapObject) {
-            if(obj is MapObject) {
+            if(!(obj is Bullet)) {
                 mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Add(obj as MapObject);
             }
         }

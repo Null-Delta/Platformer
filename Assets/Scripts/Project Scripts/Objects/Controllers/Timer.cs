@@ -33,7 +33,6 @@ public class Timer : Object
 
     public override void updateObject(float time)
     {
-        Debug.Log("now!");
         if(isActive) {
             nowTime += time;
             if(nowTime >= needTime) {

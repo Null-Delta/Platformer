@@ -5,7 +5,7 @@ using UnityEngine;
 public class Walker : MapObject
 {
     public Vector2 linearMove;
-    float sum_time;
+    public float sum_time;
     public float move_delay;
     public float animation_time;
     bool in_animation = false;
@@ -73,7 +73,6 @@ public class Walker : MapObject
         is_ready = readyCheck();
         sum_time+=time; //важно
 
-
         if (immortalTimeNow >0)
         {
             immortalTimeNow-=time;
@@ -102,6 +101,7 @@ public class Walker : MapObject
             {
                 taked_points.Add(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y));
                 map.insertMapObject(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y), this);
+                map.removeMapObject(taked_points[0], this);
             }         
         }
         
@@ -114,7 +114,6 @@ public class Walker : MapObject
 
                 if (!fict_move)
                 {
-                    map.removeMapObject(taked_points[0], this);
                     taked_points.Remove(taked_points[0]);
                 }
 
