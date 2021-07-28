@@ -77,6 +77,6 @@ public class Box : Walker
         base.startObject();
         nowDirection = -1;
         move_delay = 0f;
-        animation_time = 0.15f;
+        animation_time = 0.1f;
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Teleport : OnPressObject
 {
     Vector2 brotherPosition;
-    Teleport brother;
     public override string objectName => "Teleport";
     public override void OnPress(Walker who)
     {
@@ -21,6 +20,7 @@ public class Teleport : OnPressObject
             map.setupGameObject(prefab, new Vector3(position.x,position.y,0));
             map.setupGameObject(prefab2, new Vector3(brotherPosition.x,brotherPosition.y,0));
             (who as Player).gameObject.GetComponent<Animator>().Play("OnTeleport", 0, 0);
+            map.executeGroup(events["OnTeleport"]);
         }
         //Instantiate(prefab, new Vector3(position.x,position.y,0), Quaternion.identity);
     }
@@ -31,14 +31,13 @@ public class Teleport : OnPressObject
         isCollisiable = false;
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
-
-        brother = map.getMapObjects<Teleport>((int)brotherPosition.x, (int)brotherPosition.y, x=> x is Teleport)[0];
     }
 
-    public Teleport(int x, int y, int bx,int by): base(x,y) 
+    public Teleport(int x, int y, int bx,int by, List<Command> OnTeleport): base(x,y) 
     {
         brotherPosition = new Vector2(bx,by);
-
+        events = new Dictionary<string, List<Command>>();
+        events["OnTeleport"] = OnTeleport;
         position = new Vector2(x,y);
     }
 }

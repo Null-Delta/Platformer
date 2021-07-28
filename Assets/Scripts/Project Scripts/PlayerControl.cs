@@ -36,7 +36,10 @@ public class PlayerControl : MonoBehaviour
             for(int i = 0; i < 4; i++)
                 if (i != ind) time[i] = 0;
             
-            if(time[ind] == 0) Move(ind);
+            if(time[ind] == 0) {
+                Move(ind);
+                Debug.Log("added");
+            }
             time[ind] += Time.deltaTime;
             if(time[ind] > CurrentPlayer.animation_time)
             {
