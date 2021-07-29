@@ -13,6 +13,7 @@ public class Player: Walker
     public bool isFalling = false;
     public float fallingTime = 0.6f;
     public Vector2 lastFloor;
+    bool isOnFloor = false;
 
     override public void onWalkStart() {
         linearMove.x = 0;
@@ -41,7 +42,7 @@ public class Player: Walker
         dir = newDir;
 
         Vector2 tmpNewPosition = position+linearMove;
-        if( map.getMapObjects<MapObject>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x.isCollisiable) != null) 
+        if( map.getMapObjects<MapObject>(Mathf.RoundToInt(tmpNewPosition.x),Mathf.RoundToInt(tmpNewPosition.y), x => x.isCollisiable) != null) 
         {
 
             if(map.getMapObjects<MapObject>((int)tmpNewPosition.x, (int)tmpNewPosition.y, x => x.objectName == "Box") != null) {
@@ -62,10 +63,14 @@ public class Player: Walker
                 if(linearMove.y != 0) linearMove.y = 0;
             }
         }
+
+        if (isOnFloor)
+            isOnFloor = false;
         var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
-        if(tmpList != null)
+        if(tmpList != null && tmpList[0].onMe ==null)
         {
             tmpList[0].addWalkerOn(tmpNewPosition ,this);
+            isOnFloor = true;
         }
 
     }
@@ -120,11 +125,11 @@ public class Player: Walker
         direction.Dequeue();
         stepCount++;
 
-        if (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x.objectName == "Floor") != null)
+        if (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x.objectName == "Floor") != null && !isOnFloor)
         {
             lastFloor = position;
         }
-        else if (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x.objectName == "LiveFloor") == null)
+        else if (!isOnFloor)
         {
             // начало падения
             isFalling = true;

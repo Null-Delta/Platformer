@@ -9,12 +9,14 @@ public class Walker : MapObject
     public float move_delay;
     public float animation_time;
     bool in_animation = false;
-    Vector2 moving_vector;
+    public Vector2 moving_vector;
     Vector2 start_position;
+    public Vector2 tmpSpeed;
     bool is_ready = true;
-    bool fict_move = false;
+    public bool fict_move = false;
     public List<Vector2> taked_points;
-    public bool isMoving= false;
+    public bool halfMove = false;
+    public bool useMovingVector = true;
     public override string objectName => "Walker";
 
     float healthPoint= 100;
@@ -90,11 +92,10 @@ public class Walker : MapObject
             in_animation = true;
             fict_move = false;
             
-            isMoving = true;
+            halfMove=true;
             onWalkStart();
             
             moving_vector =linearMove + position;
-            Debug.Log(moving_vector);
             if (moving_vector == position)
                 fict_move = true;
 
@@ -102,7 +103,6 @@ public class Walker : MapObject
             {
                 taked_points.Add(new Vector2((int)moving_vector.x ,(int) moving_vector.y ));
                 map.insertMapObject(new Vector2((int)moving_vector.x, moving_vector.y ), this);
-                map.removeMapObject(taked_points[0], this);
             }         
         }
         
@@ -113,9 +113,11 @@ public class Walker : MapObject
                 sum_time = 0f;
                 in_animation = false;
 
-                if (!fict_move)
+                if (useMovingVector)
                 {
-                    taked_points.Remove(taked_points[0]);      // не фиктивное движение 
+                    position = moving_vector;
+                    gameObject.transform.position = moving_vector;
+                    gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
                 }
 
                 var tmpPress = map.getMapObjects<OnPressObject>((int)position.x,(int)position.y, x=> x is OnPressObject);
@@ -127,16 +129,22 @@ public class Walker : MapObject
                         iterPress.Current.OnPress(this);         //нажимные объекты
                     }
                 }   
-                position = moving_vector;
-                gameObject.transform.position = moving_vector;
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
-
-                isMoving = false;         // окончание движения
+                
                 onWalkFinish();
             } 
             else 
             {
-                var tmpSpeed =linearMove * (time / animation_time);
+                if (halfMove && sum_time*2 >= move_delay + animation_time)
+                {
+                    if (!fict_move)
+                    {
+                        map.removeMapObject(taked_points[0], this);
+                        taked_points.Remove(taked_points[0]); 
+                    }
+                    halfMove = false;
+                }
+
+                tmpSpeed =linearMove * (time / animation_time);
                 position += tmpSpeed;
                 gameObject.transform.position += new Vector3(tmpSpeed.x , tmpSpeed.y, 0);
                 gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
