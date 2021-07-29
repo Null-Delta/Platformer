@@ -62,7 +62,7 @@ public class MovingFloor : LiveFloor
                 onMe.position += onMeSpeedVector*time;
                 onMe.gameObject.transform.position += new Vector3(onMeSpeedVector.x*time,onMeSpeedVector.y*time,0);
                 onMe.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(onMe.gameObject.transform.position.y - 2);
-                if (objExit &&  enterExitTime <=0)
+                if (objExit && enterExitTime <=0)
                 {
                     map.moveMapObject(onMe.moving_vector, onMe);
                     onMe.gameObject.transform.position =new Vector3(onMe.moving_vector.x, onMe.moving_vector.y, 0);
@@ -92,8 +92,9 @@ public class MovingFloor : LiveFloor
     }
     public override void onWalkFinish()
     {
-
+        
     }
+    
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
         

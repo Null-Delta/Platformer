@@ -10,14 +10,20 @@ public class Walker : MapObject
     public float animation_time;
     bool in_animation = false;
     public Vector2 moving_vector;
-    Vector2 start_position;
     public Vector2 tmpSpeed;
     bool is_ready = true;
     public bool fict_move = false;
     public List<Vector2> taked_points;
     public bool halfMove = false;
-    public bool useMovingVector = true;
+
+    public bool isFalling = false;
+    public float fallingTime = 0.6f;
+    public Vector2 lastFloor;
+    public bool isOnFloor = false;
+
     public override string objectName => "Walker";
+
+    public bool useMovingVector = false;
 
     float healthPoint= 100;
     float immortalTime = 0.2f;
@@ -53,11 +59,16 @@ public class Walker : MapObject
             linearMove.x = -linearMove.x;
             linearMove.y = -linearMove.y;
         }
-        var tmpList =map.getMapObjects<MovingFloor>((int)tmpVector.x, (int)tmpVector.y, x => x is MovingFloor) ;
-        if(tmpList != null)
+
+        var tmpPress = map.getMapObjects<OnPressObject>((int)position.x,(int)position.y, x=> x is OnPressObject);
+        if (tmpPress != null)
         {
-            tmpList[0].addWalkerOn(tmpVector, this);
-        }
+            var iterPress = tmpPress.GetEnumerator();
+            while (iterPress.MoveNext())
+            {
+                iterPress.Current.OffPress(this);         //нажимные объекты
+            }
+        }   
         
     }
 
@@ -70,10 +81,13 @@ public class Walker : MapObject
         
     }
 
-    public override void updateObject(float time) {
-        
-        is_ready = readyCheck();
+    public override void updateObject(float time) 
+    {
         sum_time+=time; //важно
+        start:
+        is_ready = readyCheck();
+
+        
 
         if (immortalTimeNow >0)
         {
@@ -101,23 +115,32 @@ public class Walker : MapObject
             if (!fict_move) 
             {
                 taked_points.Add(new Vector2((int)moving_vector.x ,(int) moving_vector.y ));
-                map.insertMapObject(new Vector2((int)moving_vector.x, moving_vector.y ), this);
+                map.insertMapObject(new Vector2((int)moving_vector.x, (int)moving_vector.y ), this);
             }         
         }
         
         if (in_animation)
         {
+            if (halfMove && sum_time*2 >= move_delay + animation_time)
+                {
+                    if (!fict_move)
+                    {
+                        map.removeMapObject(taked_points[0], this);
+                        taked_points.Remove(taked_points[0]); 
+                    }
+                    halfMove = false;
+                }
+
+
             if(sum_time >= move_delay + animation_time) 
             {
-                sum_time = 0f;
+                sum_time -=  move_delay + animation_time;
                 in_animation = false;
 
-                if (useMovingVector)
-                {
-                    position = moving_vector;
-                    gameObject.transform.position = moving_vector;
-                    gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
-                }
+
+                position = moving_vector;
+                gameObject.transform.position = moving_vector;
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
 
                 var tmpPress = map.getMapObjects<OnPressObject>((int)position.x,(int)position.y, x=> x is OnPressObject);
                 if (tmpPress != null)
@@ -130,19 +153,22 @@ public class Walker : MapObject
                 }   
                 
                 onWalkFinish();
+
+                if (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x.objectName == "Floor") != null && !isOnFloor)
+                {
+                    lastFloor = position;
+                }
+                else if (!isOnFloor && fallingTime !=0)
+                {
+                                                                        // начало падения
+                    isFalling = true;
+                    sum_time = 0;
+                }
+
+                goto start;
             } 
             else 
             {
-                if (halfMove && sum_time*2 >= move_delay + animation_time)
-                {
-                    if (!fict_move)
-                    {
-                        map.removeMapObject(taked_points[0], this);
-                        taked_points.Remove(taked_points[0]); 
-                    }
-                    halfMove = false;
-                }
-                
                 tmpSpeed =linearMove * (time / animation_time);
                 position += tmpSpeed;
                 gameObject.transform.position += new Vector3(tmpSpeed.x , tmpSpeed.y, 0);
