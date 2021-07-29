@@ -23,7 +23,7 @@ public class LiveFloor : Walker
     {
         
     }
-    public override void onWalkAnimation()
+    public override void onWalkAnimation(float time)
     {
 
     }

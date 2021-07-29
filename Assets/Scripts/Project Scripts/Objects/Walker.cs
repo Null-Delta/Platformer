@@ -14,6 +14,7 @@ public class Walker : MapObject
     bool is_ready = true;
     bool fict_move = false;
     public List<Vector2> taked_points;
+    public bool isMoving= false;
     public override string objectName => "Walker";
 
     float healthPoint= 100;
@@ -45,16 +46,21 @@ public class Walker : MapObject
 
     public virtual void onWalkStart()
     {
-        if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x),
-             (int)(position.y + linearMove.y), x => x.isCollisiable == true) != null)
+        var tmpVector = position+linearMove;
+        if(map.getMapObjects<MapObject>((int)tmpVector.x, (int)tmpVector.y, x => x.isCollisiable == true) != null)
         {
             linearMove.x = -linearMove.x;
             linearMove.y = -linearMove.y;
         }
+        var tmpList =map.getMapObjects<MovingFloor>((int)tmpVector.x, (int)tmpVector.y, x => x is MovingFloor) ;
+        if(tmpList != null)
+        {
+            tmpList[0].addWalkerOn(tmpVector, this);
+        }
         
     }
 
-    public virtual void onWalkAnimation()
+    public virtual void onWalkAnimation(float time)
     {
     }
 
@@ -84,32 +90,32 @@ public class Walker : MapObject
             in_animation = true;
             fict_move = false;
             
+            isMoving = true;
             onWalkStart();
-
-            moving_vector =new Vector2(linearMove.x,linearMove.y);
-            start_position = position;
-
-            if (moving_vector + start_position == position)
+            
+            moving_vector =linearMove + position;
+            Debug.Log(moving_vector);
+            if (moving_vector == position)
                 fict_move = true;
 
             if (!fict_move) 
             {
-                taked_points.Add(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y));
-                map.insertMapObject(new Vector2((int)moving_vector.x + start_position.x,(int) moving_vector.y + start_position.y), this);
+                taked_points.Add(new Vector2((int)moving_vector.x ,(int) moving_vector.y ));
+                map.insertMapObject(new Vector2((int)moving_vector.x, moving_vector.y ), this);
                 map.removeMapObject(taked_points[0], this);
             }         
         }
         
         if (in_animation)
         {
-            if(sum_time >= move_delay + animation_time) {
+            if(sum_time >= move_delay + animation_time) 
+            {
                 sum_time = 0f;
                 in_animation = false;
-                position = moving_vector + start_position;
 
                 if (!fict_move)
                 {
-                    taked_points.Remove(taked_points[0]);
+                    taked_points.Remove(taked_points[0]);      // не фиктивное движение 
                 }
 
                 var tmpPress = map.getMapObjects<OnPressObject>((int)position.x,(int)position.y, x=> x is OnPressObject);
@@ -118,18 +124,25 @@ public class Walker : MapObject
                     var iterPress = tmpPress.GetEnumerator();
                     while (iterPress.MoveNext())
                     {
-                        iterPress.Current.OnPress(this);
+                        iterPress.Current.OnPress(this);         //нажимные объекты
                     }
                 }   
+                position = moving_vector;
+                gameObject.transform.position = moving_vector;
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
 
+                isMoving = false;         // окончание движения
                 onWalkFinish();
-
-            } else {
-                position = start_position + moving_vector * ((sum_time - move_delay) / animation_time);
+            } 
+            else 
+            {
+                var tmpSpeed =linearMove * (time / animation_time);
+                position += tmpSpeed;
+                gameObject.transform.position += new Vector3(tmpSpeed.x , tmpSpeed.y, 0);
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
+                onWalkAnimation(time);
             }
-            onWalkAnimation();
-            gameObject.transform.position = position;
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
+            
         }
     }
 

@@ -58,7 +58,7 @@ public class PlayerStalker : Walker
             }
         }
     }
-    public override void onWalkAnimation()
+    public override void onWalkAnimation(float time)
     {
 
     }

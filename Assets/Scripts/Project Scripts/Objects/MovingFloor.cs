@@ -5,7 +5,9 @@ using UnityEngine;
 public class MovingFloor : LiveFloor
 {
     Walker onMe = null;
-    Vector2 onMeVector;
+    Vector2 onMeSpeedVector2;
+    Vector3 onMeSpeedVector3;
+    float enterExitTime = 0;
     public override string objectName => "MovingFloor";
 
     public override void startObject()
@@ -20,7 +22,9 @@ public class MovingFloor : LiveFloor
     public void addWalkerOn(Vector2 point, Walker obj)
     {
         onMe = obj;
-        onMeVector = point;
+        enterExitTime = onMe.animation_time;
+        onMeSpeedVector2 = (position - point)/enterExitTime;
+        onMeSpeedVector3 = onMeSpeedVector2;
     }
     public override bool readyCheck()
     {
@@ -36,11 +40,22 @@ public class MovingFloor : LiveFloor
 
 
     }
-    public override void onWalkAnimation()
+    public override void onWalkAnimation(float time)
     {
+        
         if (onMe != null)
         {
-            
+            if (enterExitTime>0)
+            {
+                enterExitTime-=time;
+                onMe.position += onMeSpeedVector2;
+                onMe.gameObject.transform.position += onMeSpeedVector3;
+                onMe.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(onMe.gameObject.transform.position.y - 2);
+            }
+            else
+            {
+
+            }
         }
     }
     public override void onWalkFinish()
