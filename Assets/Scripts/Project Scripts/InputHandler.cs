@@ -11,7 +11,7 @@ public class InputHandler : MonoBehaviour
 
     public bool isUI = false;
     
-    int lastFingerId = 0;
+    //int lastFingerId = 0;
     bool touchDown = false;
 
     void Start()

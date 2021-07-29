@@ -10,25 +10,25 @@ public class Door : MapObject
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-3);
         isCollisiable = true;
+        order = ObjectOrder.wall;
     }
 
     public override void execute(Command command)
     {
         switch (command.name) {
             case "Open":
+                order = ObjectOrder.underWall;
                 isCollisiable = false;
                 gameObject.GetComponent<Animator>().Play("DoorOpen");
                 gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
             break;
 
             case "Close":
+                order = ObjectOrder.wall;
                 isCollisiable = true;
                 gameObject.GetComponent<Animator>().Play("DoorClose");
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-3);
             break;
         }
     }

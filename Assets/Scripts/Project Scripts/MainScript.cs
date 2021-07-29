@@ -27,7 +27,7 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Player(5,10));
         //objects.Add(new Player(2,10));
         //objects.Add(new Player(3,10));
-        Player MainPlayer = new Player(4,10);
+        Player MainPlayer = new Player(8,10);
         objects.Add(MainPlayer);
         // objects.Add(new Walker(9,10));
         // Door testD = new Door(20,20);
@@ -73,7 +73,9 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Live_wall(5,25, 0.8f, 0.8f));
         //objects.Add(new PlayerStalker(7, 7, MainPlayer));
 
-        SetRect<Floor>(0,0,30,30,1);
+        objects.Add(new MovingFloor(9, 20));
+        objects.Add(new MovingFloor(20, 9));
+        SetRect<Floor>(0,0,20,20,1);
 
 
         var door = new Door(8,8);

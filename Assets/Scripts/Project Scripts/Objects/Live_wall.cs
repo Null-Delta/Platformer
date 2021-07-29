@@ -11,13 +11,12 @@ public class Live_wall : MapObject
     bool is_ready = true;
     public override string objectName => "Live_wall";
 
-
     public override void startObject()
     {
         base.startObject();
         isCollisiable = true;
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1000;
+        order = ObjectOrder.wall;
     }
 
 

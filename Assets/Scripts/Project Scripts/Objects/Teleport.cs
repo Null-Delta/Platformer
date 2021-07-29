@@ -8,11 +8,7 @@ public class Teleport : OnPressObject
     public override string objectName => "Teleport";
     public override void OnPress(Walker who)
     {
-        who.position = brotherPosition;
-
-        map.removeMapObject(who.taked_points[0], who);
-        who.taked_points = new List<Vector2>{brotherPosition};
-        map.insertMapObject(brotherPosition, who);
+        map.moveMapObject(brotherPosition, who);
 
         if(who is Player) {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/TeleportAnimation");
@@ -22,6 +18,7 @@ public class Teleport : OnPressObject
             (who as Player).gameObject.GetComponent<Animator>().Play("OnTeleport", 0, 0);
             map.executeGroup(events["OnTeleport"]);
         }
+
         //Instantiate(prefab, new Vector3(position.x,position.y,0), Quaternion.identity);
     }
 
@@ -29,8 +26,8 @@ public class Teleport : OnPressObject
     {
         base.startObject();
         isCollisiable = false;
+        order = ObjectOrder.underWall;
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
     }
 
     public Teleport(int x, int y, int bx,int by, List<Command> OnTeleport): base(x,y) 
