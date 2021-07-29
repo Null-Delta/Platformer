@@ -9,6 +9,10 @@ public class OnPressObject : MapObject
     public override string objectName => "OnPressObject";
 
 
+    public virtual void OffPress(Walker who)
+    {
+        
+    }
     public virtual void OnPress(Walker who)
     {
         map.setupObject(new OnPressObject((int)position.x+1, (int)position.y+1));

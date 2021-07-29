@@ -8,17 +8,6 @@ public class Box : Walker
     int nowDirection;
 
     public override string objectName => "Box";
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override bool readyCheck()
     {
@@ -35,7 +24,15 @@ public class Box : Walker
 
     public override void onWalkStart()
     {
-
+        Vector2 tmpNewPosition = position+linearMove;
+        if (isOnFloor)
+            isOnFloor = false;
+        var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
+        if(tmpList != null && tmpList[0].onMe ==null)                                   // обработка возможности вхождения на движущийся пол.
+        {
+            tmpList[0].addWalkerOn(tmpNewPosition ,this);
+            isOnFloor = true;
+        }
     }
 
     public void setDirection(int dir) {
@@ -59,7 +56,7 @@ public class Box : Walker
             break;
         }
 
-        if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x), (int)(position.y + linearMove.y), x => x.isCollisiable == true || x as Walker != null) != null)
+        if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x), (int)(position.y + linearMove.y), x => x.isCollisiable == true) != null)
         {
             nowDirection = -1;
         }
@@ -78,5 +75,6 @@ public class Box : Walker
         nowDirection = -1;
         move_delay = 0f;
         animation_time = 0.15f;
+        isCollisiable = true;
     }
 }

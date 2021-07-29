@@ -39,7 +39,8 @@ public class MainScript : MonoBehaviour
 
         // testD1.addKey(testK);
         // testD1.addKey(testK1);
-
+        Time.timeScale = 1f;
+        //Application.targetFrameRate = 10;
         // objects.Add(testD);
         // objects.Add(testD1);
         // objects.Add(testK);
@@ -58,7 +59,7 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Turrel_bullet(15,25, 0.3f, 0.3f));
         //objects.Add(new Live_wall(5,25, 0.8f, 0.8f));
         //objects.Add(new PlayerStalker(7, 7, MainPlayer));
-
+        objects.Add(new MovingFloor(9, 21));
         objects.Add(new MovingFloor(9, 20));
         objects.Add(new MovingFloor(20, 9));
         SetRect<Floor>(0,0,20,20,1);
@@ -111,7 +112,7 @@ public class MainScript : MonoBehaviour
 
 
         objects.Add(new Box(13,13));
-        objects.Add(new Box(14,13));
+        //objects.Add(new Box(14,13));
         
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);

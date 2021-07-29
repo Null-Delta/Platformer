@@ -10,8 +10,6 @@ public class MovingFloor : LiveFloor
     bool objExit = false;
     public override string objectName => "MovingFloor";
 
-
-    Vector2 tmpf;
     public override void startObject()
     {
         base.startObject();
@@ -26,11 +24,8 @@ public class MovingFloor : LiveFloor
         onMe = obj;
         enterExitTime = onMe.animation_time;
         onMeSpeedVector = (position + (linearMove*enterExitTime/animation_time) - point)/enterExitTime;
-        onMe.useMovingVector = false;
-        map.removeMapObject(onMe.taked_points[0], onMe);
-        onMe.taked_points.Remove(onMe.taked_points[0]); 
+        onMe.moving_vector = position + (linearMove*enterExitTime/animation_time);
 
-        tmpf = point;
     }
     public override bool readyCheck()
     {
@@ -47,7 +42,11 @@ public class MovingFloor : LiveFloor
         if (onMe != null && !objExit && enterExitTime>0)
         {
             onMeSpeedVector = (position + (linearMove*(enterExitTime)/animation_time) - (onMe.position + onMe.linearMove*enterExitTime/onMe.animation_time) )/(enterExitTime);
-            Debug.Log(enterExitTime);
+        }
+        if (onMe != null)
+        {
+            onMe.taked_points.Add(new Vector2((int)moving_vector.x ,(int) moving_vector.y ));
+            map.insertMapObject(new Vector2((int)moving_vector.x, (int)moving_vector.y ), onMe);
         }
 
     }
@@ -62,7 +61,7 @@ public class MovingFloor : LiveFloor
                 onMe.position += onMeSpeedVector*time;
                 onMe.gameObject.transform.position += new Vector3(onMeSpeedVector.x*time,onMeSpeedVector.y*time,0);
                 onMe.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(onMe.gameObject.transform.position.y - 2);
-                if (objExit &&  enterExitTime <=0)
+                if (objExit && enterExitTime <=0)
                 {
                     map.moveMapObject(onMe.moving_vector, onMe);
                     onMe.gameObject.transform.position =new Vector3(onMe.moving_vector.x, onMe.moving_vector.y, 0);
@@ -85,14 +84,20 @@ public class MovingFloor : LiveFloor
                     var tmpTrueVec = new Vector2(Mathf.RoundToInt(onMe.moving_vector.x), Mathf.RoundToInt(onMe.moving_vector.y));
                     onMeSpeedVector = (tmpTrueVec - onMe.moving_vector)/enterExitTime;
                     onMe.moving_vector = tmpTrueVec;
-                    onMe.useMovingVector = true;
                 }
             }
         }
     }
     public override void onWalkFinish()
     {
-        
+        if (onMe != null)
+        {
+            Debug.Log(onMe.taked_points.Count);
+
+            map.removeMapObject(onMe.taked_points[0], onMe);
+
+            onMe.taked_points.Remove(onMe.taked_points[0]);
+        }
     }
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
@@ -105,7 +110,7 @@ public class MovingFloor : LiveFloor
         taked_points.Add(new Vector2((int)x,(int)y));
         linearMove = new Vector2();
 
-        linearMove.x = Random.Range(-1,2);
+        linearMove.x = Random.Range(0,2)*2 -1;
         move_delay = 0;
         animation_time = 0.5f;
     }

@@ -10,10 +10,7 @@ public class Player: Walker
     public bool isAnimFinish;
     public Queue<int> direction = new Queue<int>();
 
-    public bool isFalling = false;
-    public float fallingTime = 0.6f;
-    public Vector2 lastFloor;
-    bool isOnFloor = false;
+    
 
     override public void onWalkStart() {
         linearMove.x = 0;
@@ -42,6 +39,7 @@ public class Player: Walker
         dir = newDir;
 
         Vector2 tmpNewPosition = position+linearMove;
+
         if( map.getMapObjects<MapObject>(Mathf.RoundToInt(tmpNewPosition.x),Mathf.RoundToInt(tmpNewPosition.y), x => x.isCollisiable) != null) 
         {
 
@@ -67,10 +65,18 @@ public class Player: Walker
         if (isOnFloor)
             isOnFloor = false;
         var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
-        if(tmpList != null && tmpList[0].onMe ==null)
+        if(tmpList != null)                                   // обработка возможности вхождения на движущийся пол.
         {
-            tmpList[0].addWalkerOn(tmpNewPosition ,this);
-            isOnFloor = true;
+            if (tmpList[0].onMe ==null)
+            {
+                tmpList[0].addWalkerOn(tmpNewPosition ,this);
+                isOnFloor = true;
+            }
+            else if (tmpList[0].onMe.isCollisiable)
+            {
+                if(linearMove.x != 0) linearMove.x = 0;
+                if(linearMove.y != 0) linearMove.y = 0;
+            }
         }
 
     }
@@ -83,7 +89,7 @@ public class Player: Walker
 
     override public bool readyCheck()
     {
-        if (!isFalling)
+        if (!isFalling)                  //обработка падения
         {
             if(direction.Count == 0)
             {
@@ -131,7 +137,7 @@ public class Player: Walker
         }
         else if (!isOnFloor)
         {
-            // начало падения
+                                    // начало падения
             isFalling = true;
             sum_time = 0;
 
