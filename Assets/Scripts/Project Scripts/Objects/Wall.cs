@@ -6,16 +6,15 @@ public class Wall : ConnectedObject
 {
 
     public override string objectName => "Wall";
-    
 
     public override void startObject()
     {
         base.startObject();
         isCollisiable = true;
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-3);
 
         setupStyle((int)position.x, (int)position.y);
+        order = ObjectOrder.wall;
     }
 
     public Wall(int x, int y) {

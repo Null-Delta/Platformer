@@ -7,6 +7,7 @@ public class Player: Walker
     
     public override string objectName => "Player";
     public int stepCount = 0, dir = 0;
+
     public bool isAnimFinish;
     public Queue<int> direction = new Queue<int>();
 
@@ -66,6 +67,7 @@ public class Player: Walker
 
         if (isOnFloor)
             isOnFloor = false;
+
         var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
         if(tmpList != null && tmpList[0].onMe ==null)
         {
@@ -120,6 +122,7 @@ public class Player: Walker
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
         lastFloor = position;
+        order = ObjectOrder.wall;
     }
     override public void onWalkFinish() {
         direction.Dequeue();

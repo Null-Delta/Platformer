@@ -37,9 +37,8 @@ public class Walker : MapObject
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)+3;
-
         isCollisiable = true;
+        order = ObjectOrder.wall;
     }
     public virtual bool readyCheck()
     {
@@ -95,7 +94,7 @@ public class Walker : MapObject
             halfMove=true;
             onWalkStart();
             
-            moving_vector =linearMove + position;
+            moving_vector = linearMove + position;
             if (moving_vector == position)
                 fict_move = true;
 
@@ -143,11 +142,13 @@ public class Walker : MapObject
                     }
                     halfMove = false;
                 }
-
+                
                 tmpSpeed =linearMove * (time / animation_time);
                 position += tmpSpeed;
                 gameObject.transform.position += new Vector3(tmpSpeed.x , tmpSpeed.y, 0);
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
+
+                //gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 2);
+
                 onWalkAnimation(time);
             }
             

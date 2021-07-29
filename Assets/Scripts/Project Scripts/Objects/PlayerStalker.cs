@@ -11,7 +11,6 @@ public class PlayerStalker : Walker
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)+3;
 
         linearMove.x = 0;
         linearMove.y = 0;
@@ -19,6 +18,7 @@ public class PlayerStalker : Walker
         move_delay = Random.Range(0.1f,0.3f);
         animation_time = Random.Range(0.1f,0.3f);
         isCollisiable = true;
+        order = ObjectOrder.wall;
     }
     public override bool readyCheck()
     {

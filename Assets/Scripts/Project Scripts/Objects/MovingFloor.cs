@@ -16,9 +16,9 @@ public class MovingFloor : LiveFloor
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)-100;
 
         isCollisiable = false;
+        order = ObjectOrder.floor;
     }
 
     public void addWalkerOn(Vector2 point, Walker obj)
@@ -92,7 +92,7 @@ public class MovingFloor : LiveFloor
     }
     public override void onWalkFinish()
     {
-        
+
     }
     public override void onCollizion(MapObject obj, Collision2D collision)
     {

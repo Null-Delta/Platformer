@@ -7,18 +7,8 @@ public class Box : Walker
 
     int nowDirection;
 
-    public override string objectName => "Box";
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override string objectName => "Box";
 
     public override bool readyCheck()
     {
@@ -78,5 +68,6 @@ public class Box : Walker
         nowDirection = -1;
         move_delay = 0f;
         animation_time = 0.15f;
+        order = ObjectOrder.wall;
     }
 }

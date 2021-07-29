@@ -15,6 +15,10 @@ public class ObjectController : MonoBehaviour
     void Update()
     {
         obj.updateObject(Time.deltaTime);
+        
+        if(obj is MapObject) {
+            (obj as MapObject).setupOrder();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {

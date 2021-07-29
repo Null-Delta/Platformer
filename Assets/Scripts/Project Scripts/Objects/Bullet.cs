@@ -6,19 +6,17 @@ public class Bullet : MapObject
 {
     public override string objectName => "Bullet";
     public Vector2 direction;
-
     float speed;
     public override void startObject()
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y);
         gameObject.GetComponent<Rigidbody2D>().velocity = direction;
+        order = ObjectOrder.wall;
     }
 
     public override void updateObject(float time) {
         position = gameObject.transform.position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
     }
 
     public override void onCollizion(MapObject obj, Collision2D collision)

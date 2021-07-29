@@ -18,6 +18,7 @@ public class Teleport : OnPressObject
             map.setupGameObject(prefab2, new Vector3(brotherPosition.x,brotherPosition.y,0));
             (who as Player).gameObject.GetComponent<Animator>().Play("OnTeleport", 0, 0);
         }
+
         //Instantiate(prefab, new Vector3(position.x,position.y,0), Quaternion.identity);
     }
 
@@ -25,8 +26,8 @@ public class Teleport : OnPressObject
     {
         base.startObject();
         isCollisiable = false;
+        order = ObjectOrder.underWall;
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - 1);
 
         brother = map.getMapObjects<Teleport>((int)brotherPosition.x, (int)brotherPosition.y, x=> x is Teleport)[0];
     }

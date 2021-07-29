@@ -10,10 +10,9 @@ public class LiveFloor : Walker
     {
         base.startObject();
         gameObject.transform.position = position;
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y)+3;
-
         
         isCollisiable = false;
+        order = ObjectOrder.floor;
     }
     public override bool readyCheck()
     {
