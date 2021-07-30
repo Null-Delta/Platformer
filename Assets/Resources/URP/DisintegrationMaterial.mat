@@ -42,14 +42,15 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
-    - Progress: 1.55
+    - Progress: 1.03
     - Quality: 79
+    - Type: 1
     - Vector1_A552F35F: 1
     - _EnableExternalAlpha: 0
     - qualiy: 0
     m_Colors:
     - Color_40DFF9DA: {r: 0, g: 22.65901, b: 20.17096, a: 0}
-    - _Color: {r: 766.9961, g: 6.8699145, b: 0, a: 1}
+    - _Color: {r: 0, g: 3067.9844, b: 2971.608, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
