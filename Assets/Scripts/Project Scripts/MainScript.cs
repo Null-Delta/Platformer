@@ -121,7 +121,6 @@ public class MainScript : MonoBehaviour
         SetRect<Floor>(0,0,20,20,1);
         SetRect<Floor>(0,25,20,20,1);
 
-
         var door = new Door(8,8);
         objects.Add(door);
 
