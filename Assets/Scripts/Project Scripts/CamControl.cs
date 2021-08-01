@@ -36,22 +36,22 @@ public class CamControl : MonoBehaviour
         futureSize = startCamSize;
         Camera.main.transform.position = new Vector3(startCamPosition.x, startCamPosition.y, -10);
         
-        switch(platform)
-        {
-            case RuntimePlatform.WindowsEditor:
-            case RuntimePlatform.WindowsPlayer:
-            case RuntimePlatform.OSXEditor:
-            case RuntimePlatform.OSXPlayer:
+        // switch(platform)
+        // {
+        //     case RuntimePlatform.WindowsEditor:
+        //     case RuntimePlatform.WindowsPlayer:
+        //     case RuntimePlatform.OSXEditor:
+        //     case RuntimePlatform.OSXPlayer:
                 
-            break;
+        //     break;
 
-            case RuntimePlatform.Android:
-            case RuntimePlatform.IPhonePlayer:
-                smoothFollowingСursor = 2;
-                smoothResizing = 4;
-                cameraInertiaForce = 50;
-            break;
-        }
+        //     case RuntimePlatform.Android:
+        //     case RuntimePlatform.IPhonePlayer:
+        //         smoothFollowingСursor = 2;
+        //         smoothResizing = 4;
+        //         cameraInertiaForce = 50;
+        //     break;
+        // }
     }
 
     
@@ -133,13 +133,8 @@ public class CamControl : MonoBehaviour
             {
                 Vector2 pointerPosDinamic = ih.GetPointerPos();
                 futurePos = pointerPos - pointerPosDinamic;
-                inertiaCam = 1;
-            }
-            
-            // Если скорость в пт/кадр больше 0.2, уменьшать её.
-            if((Math.Abs(futurePos.x)+Math.Abs(futurePos.y))*inertiaCam > 0.2f)
-            {
-                Vector2 differencePos = futurePos/smoothFollowingСursor*inertiaCam;
+
+                Vector2 differencePos = futurePos/smoothFollowingСursor*(Time.deltaTime*200);
                 Vector2 interpolationPos = Camera.main.transform.position + (Vector3)differencePos;
 
                 //Обработка saveZone
@@ -149,8 +144,30 @@ public class CamControl : MonoBehaviour
                     differencePos = new Vector2(differencePos.x, 0);
 
                 Camera.main.transform.position += (Vector3)differencePos;
-                inertiaCam/=(1+(1f/cameraInertiaForce));
+
+                inertiaCam = 1;
             }
+            else
+            {
+                // Если скорость в пт/кадр больше 0.2, уменьшать её.
+                // 
+                if((Math.Abs(futurePos.x)+Math.Abs(futurePos.y))*inertiaCam > 0.2f)
+                {
+                    Vector2 differencePos = futurePos/smoothFollowingСursor*inertiaCam*(Time.deltaTime*200);
+                    Vector2 interpolationPos = Camera.main.transform.position + (Vector3)differencePos;
+
+                    //Обработка saveZone
+                    if(interpolationPos.x < saveZoneEdge1.x || interpolationPos.x > saveZoneEdge2.x)
+                        differencePos = new Vector2(0, differencePos.y);
+                    if(interpolationPos.y < saveZoneEdge1.y || interpolationPos.y > saveZoneEdge2.y)
+                        differencePos = new Vector2(differencePos.x, 0);
+
+                    Camera.main.transform.position += (Vector3)differencePos;
+                    inertiaCam/=(1+(1f/cameraInertiaForce));
+                }
+                else inertiaCam = 0;
+            }
+            
         }
 
         // if (goTarget)
@@ -170,11 +187,11 @@ public class CamControl : MonoBehaviour
         if (deltaY != 0)
         {
             inertiaCam = 0;
+            float k = futureSize/(800/forceZoom)*(Time.deltaTime*200);
             if ((futureSize - (deltaY) * k >= minSize) && (futureSize - (deltaY) * k <= maxSize))
             {
-                k = futureSize / (200/forceZoom);
+                //k = futureSize/(150/forceZoom*(Time.deltaTime*150));
                 futureSize += -(deltaY) * k;
-                
             }
         }
 
@@ -183,6 +200,7 @@ public class CamControl : MonoBehaviour
         if (size != futureSize)
         {
             posForZoom1 = ih.GetPosForZoom();
+            
             difSize = Math.Abs(size - futureSize);
             if (difSize < 0.025f) difSize = 0.025f;
             if (size > futureSize) difSize = -difSize;
