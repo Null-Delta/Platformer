@@ -10,7 +10,7 @@ public class DebugScreen : MonoBehaviour {
  
     void Start() {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 240;
+        Application.targetFrameRate = 200;
 
         style.normal.textColor = Color.white;
         style.fontSize = 32;

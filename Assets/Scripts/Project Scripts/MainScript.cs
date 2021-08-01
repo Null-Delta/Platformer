@@ -12,7 +12,7 @@ public class MainScript : MonoBehaviour
     //float time = 0f; Нигде не используется
     void Start()
     {
-        QualitySettings.vSyncCount = 0;
+        
         map = new GameObject();
         //Time.timeScale = 0.1f;
 
@@ -20,7 +20,7 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Bullet(6.3f, 10.2f));
         //objects.Add(new Walker(10,10));
 
-        SetRect<Wall>(0,0,30,30,0);
+        SetRect<Wall>(0,0,55,55,0);
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
@@ -46,10 +46,12 @@ public class MainScript : MonoBehaviour
         // objects.Add(testK);
         // objects.Add(testK1);
 
-        objects.Add(new Teleport(16,15, 15, 10, new List<Command>(){}));
-        objects.Add(new Teleport(16,10, 9, 15, new List<Command>(){}));
-        objects.Add(new Teleport(10,15, 10, 10, new List<Command>() {}));
-        objects.Add(new Teleport(11,10, 15, 15, new List<Command>(){}));
+        objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));
+        objects.Add(new Teleport(15,15, 15, 10, new List<Command>(){}));
+        objects.Add(new Teleport(15,10, 10, 10, new List<Command>(){}));
+        objects.Add(new Teleport(10,10, 10, 15, new List<Command>(){}));
+        // objects.Add(new Teleport(10,15, 11, 10, new List<Command>() {}));
+        // objects.Add(new Teleport(11,10, 16, 15, new List<Command>(){}));
 
         // objects.Add(new OnPressObject(25,25));
         //objects.Add(new Walker(3,15));

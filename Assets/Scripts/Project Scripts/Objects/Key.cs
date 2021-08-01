@@ -7,7 +7,7 @@ public class Key : PressableObject
     public override string objectName => "Key";
     public override void OnPressStart(WalkableObject walker)
     {
-        Debug.Log("PRESS");
+        //Debug.Log("PRESS");
         if(walker is Player) {
             map.executeGroup(events["onSelect"]);
             map.destroyObject(this);

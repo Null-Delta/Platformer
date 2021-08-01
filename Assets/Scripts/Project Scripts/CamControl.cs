@@ -22,7 +22,7 @@ public class CamControl : MonoBehaviour
     //[SerializeField] bool goTarget = false;  Нигде не использовалось
     [SerializeField] bool followingTarget = false;
 
-    float x, y, k = 1, size, futureSize = 0, difSize = 1, inertiaCam = 0;
+    float x, y, size, futureSize = 0, difSize = 1, inertiaCam = 0;
     RuntimePlatform platform = Application.platform;
     
     InputHandler ih;
@@ -187,8 +187,8 @@ public class CamControl : MonoBehaviour
         if (deltaY != 0)
         {
             inertiaCam = 0;
-            float k = futureSize/(800/forceZoom)*(Time.deltaTime*200);
-            if ((futureSize - (deltaY) * k >= minSize) && (futureSize - (deltaY) * k <= maxSize))
+            float k = futureSize*(forceZoom/200);
+            if ((futureSize - (deltaY * k) >= minSize) && (futureSize - (deltaY * k) <= maxSize))
             {
                 //k = futureSize/(150/forceZoom*(Time.deltaTime*150));
                 futureSize += -(deltaY) * k;
