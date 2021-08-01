@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Map : MonoBehaviour
 {
@@ -9,26 +10,7 @@ public class Map : MonoBehaviour
     List<Object> objects = new List<Object>();
     Dictionary<int, List<Object>> groups = new Dictionary<int, List<Object>>();
     List<MapObject>[,] mapMatrix = new List<MapObject>[width,height];
-
-    public void moveMapObject(Vector2 point, MapObject obj, List<Vector2> oldpoint = null)
-    {
-        obj.position = point;
-        if (obj is Walker)
-        {
-            for (int ii = 0 ; ii != (obj as Walker).taked_points.Count ; ii++)
-                removeMapObject((obj as Walker).taked_points[ii], obj);
-            (obj as Walker).taked_points = new List<Vector2>{point};
-            
-        }
-        else
-        {
-            for (int ii = 0 ; ii != oldpoint.Count ; ii++)
-                removeMapObject(oldpoint[ii], obj);
-        }
-        insertMapObject(point, obj);
-        obj.gameObject.transform.position = point;
-        obj.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(point.y - 1);
-    }
+    Image preview;
 
     public void insertMapObject(Vector2 point, MapObject obj)
     {
@@ -48,8 +30,8 @@ public class Map : MonoBehaviour
 
         var iter = mapMatrix[x,y].GetEnumerator();
         while(iter.MoveNext()) {
-            if(iter.Current != null && iter.Current is T && predicate(iter.Current as T)) {
-                list.Add(iter.Current as T);
+            if (iter.Current != null && (iter.Current is T) && predicate((iter.Current as T))) {
+                list.Add((iter.Current as T));
             }
         }
 
@@ -75,10 +57,8 @@ public class Map : MonoBehaviour
     public void destroyObject(Object obj) {
         objects.Remove(obj);
 
-        if (obj is Walker) {
-            var taked_points_iterator = (obj as Walker).taked_points.GetEnumerator();
-            while(taked_points_iterator.MoveNext())
-                mapMatrix[(int)taked_points_iterator.Current.x,(int)taked_points_iterator.Current.y].Remove(obj as Walker);
+        if (obj is WalkableObject) {
+            mapMatrix[(obj as WalkableObject).mapLocation.x, (obj as WalkableObject).mapLocation.y].Remove(obj as WalkableObject);
         }
         else if (obj is MapObject) {
             mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Remove(obj as MapObject);
@@ -135,6 +115,50 @@ public class Map : MonoBehaviour
         }
         obj.gameObject.GetComponent<ObjectController>().obj = obj;
         addObject(obj);
+    }
+
+    public void Start() {
+        preview = GameObject.Find("mapPreview").GetComponent<Image>();
+    }
+
+    public void Update() {
+        Texture2D texture = new Texture2D(32,32);
+        texture.filterMode = FilterMode.Point;
+
+        for(int x = 0; x < 32; x++) {
+            for(int y = 0; y < 32; y++) {
+                var list = mapMatrix[x,y];
+
+
+                if(list.Find(x => x is Floor) != null) {
+                    texture.SetPixel(x,y,Color.gray);
+                }
+                if(list.Find(x => x is Wall) != null) {
+                    texture.SetPixel(x,y,new Color(0.25f,0.25f,0.25f,1f));
+                } 
+
+                if(list.Find(x => x is MovingFloor) != null) {
+                    texture.SetPixel(x,y,Color.magenta);
+                }
+
+                if(list.Find(x => x is Box) != null) {
+                    texture.SetPixel(x,y,Color.green);
+                }
+
+                if(list.Find(x => x is Teleport) != null) {
+                    texture.SetPixel(x,y,Color.cyan);
+                }
+
+                if(list.Find(x => x is Player) != null) {
+                    texture.SetPixel(x,y,Color.yellow);
+                }
+            }
+        }
+
+        texture.Apply();
+
+        Sprite s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
+        preview.sprite = s;
     }
 }
 

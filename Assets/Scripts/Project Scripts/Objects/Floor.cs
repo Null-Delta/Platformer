@@ -15,6 +15,7 @@ public class Floor : ConnectedObject
         order = ObjectOrder.floor;
 
         setupStyle((int)position.x, (int)position.y);
+        setupOrder();
     }
 
     public Floor(int x, int y) {

@@ -10,7 +10,6 @@ public class Bullet : MapObject
     public override void startObject()
     {
         base.startObject();
-        gameObject.transform.position = position;
         gameObject.GetComponent<Rigidbody2D>().velocity = direction;
         order = ObjectOrder.wall;
     }
@@ -38,7 +37,7 @@ public class Bullet : MapObject
             
             gameObject.GetComponent<Rigidbody2D>().velocity = direction;
 
-        } else if(obj is Walker) {
+        } else if(obj is WalkableObject) {
             map.destroyObject(this);
         } else if(obj is Bullet) {
             var contact = collision.contacts[0];

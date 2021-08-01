@@ -15,6 +15,7 @@ public class Wall : ConnectedObject
 
         setupStyle((int)position.x, (int)position.y);
         order = ObjectOrder.wall;
+        setupOrder();
     }
 
     public Wall(int x, int y) {

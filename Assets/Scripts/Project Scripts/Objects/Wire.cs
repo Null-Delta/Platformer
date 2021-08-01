@@ -12,7 +12,7 @@ public class Wire : ConnectedObject
         gameObject.transform.position = position;
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-1);
         setupStyle((int)position.x, (int)position.y);
-
+        order = ObjectOrder.onFloor;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(0.12f, 0.12f, 0.13f, 1f);
     }
 

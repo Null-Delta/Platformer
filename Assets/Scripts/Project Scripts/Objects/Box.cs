@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : Walker
+public class Box : WalkableObject
 {
 
     int nowDirection;
 
     public override string objectName => "Box";
 
-    public override bool readyCheck()
-    {
-        return nowDirection != -1;
-    }
-
-    public override void onWalkFinish()
+    public override void onEndWalk()
     {
         nowDirection = -1;
     }
@@ -22,47 +17,38 @@ public class Box : Walker
         return nowDirection != -1;
     }
 
-    public override void onWalkStart()
-    {
-        Vector2 tmpNewPosition = position+linearMove;
-        if (isOnFloor)
-            isOnFloor = false;
-        var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
-        if(tmpList != null && tmpList[0].onMe ==null)                                   // обработка возможности вхождения на движущийся пол.
-        {
-            tmpList[0].addWalkerOn(tmpNewPosition ,this);
-            isOnFloor = true;
-        }
-    }
-
     public void setDirection(int dir) {
-        linearMove.x = 0;
-        linearMove.y = 0;
 
+        movement m = new movement();
+        m.isAnimate = true;
         nowDirection = dir;
 
         switch (dir) {
             case 0:
-                linearMove.x = -1;
+                m.point = new Vector2Int(-1,0);
             break;
             case 1:
-                linearMove.y = 1;
+                m.point = new Vector2Int(0,1);
             break;
             case 2:
-                linearMove.x = 1;
+                m.point = new Vector2Int(1,0);
             break;
             case 3:
-                linearMove.y = -1;
+                m.point = new Vector2Int(0,-1);
             break;
         }
 
-        if(map.getMapObjects<MapObject>((int)(position.x + linearMove.x), (int)(position.y + linearMove.y), x => x.isCollisiable == true) != null)
+        if(map.getMapObjects<MapObject>((int)(mapLocation.x + m.point.x), (int)(mapLocation.y + m.point.y), x => x.isCollisiable == true) != null)
         {
             nowDirection = -1;
+        } else {
+            addMovement(m);
         }
+    }
 
-        sum_time = 0f;
-
+    public override bool canMoveOn(Vector2Int point)
+    {
+        return map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable == true) == null;
     }
 
     public Box(int x, int y): base(x,y) {
@@ -73,9 +59,8 @@ public class Box : Walker
     {
         base.startObject();
         nowDirection = -1;
-        move_delay = 0f;
-        animation_time = 0.15f;
-        order = ObjectOrder.wall;
+        stayDelay = 0f;
         isCollisiable = true;
+        order = ObjectOrder.wall;
     }
 }

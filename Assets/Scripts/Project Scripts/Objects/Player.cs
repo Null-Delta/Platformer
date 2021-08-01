@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player: Walker
+public class Player: WalkableObject
 {
     
     public override string objectName => "Player";
@@ -13,73 +13,50 @@ public class Player: Walker
 
     
 
-    override public void onWalkStart() {
-        linearMove.x = 0;
-        linearMove.y = 0;
-        var newDir = direction.Peek();
-        switch (direction.Peek()) {
-            case 0:
-                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-                linearMove.y = 1;
-            break;
-            case 1:
-                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-                linearMove.x = 1;
-            break;
-            case 2:
-                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-                linearMove.y = -1;
-            break;
-            case 3:
-                gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-                linearMove.x = -1;
-            break;
-        }
+    override public void onStartWalk() {
+        // linearMove.x = 0;
+        // linearMove.y = 0;
+        var newDir = movements.Peek();
+        gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
 
-        isAnimFinish = false;
-        dir = newDir;
+        // switch (newDir.point) {
+        //     case Vector2Int.down:
+        //     break;
+        //     case 1:
+        //         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
+        //     break;
+        //     case 2:
+        //         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
+        //     break;
+        //     case 3:
+        //         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
+        //     break;
+        // }
 
-        Vector2 tmpNewPosition = position+linearMove;
+        // isAnimFinish = false;
+        // dir = newDir;
 
-        if( map.getMapObjects<MapObject>(Mathf.RoundToInt(tmpNewPosition.x),Mathf.RoundToInt(tmpNewPosition.y), x => x.isCollisiable) != null) 
-        {
+        //Vector2 tmpNewPosition = mapLocation;
 
-            if(map.getMapObjects<MapObject>((int)tmpNewPosition.x, (int)tmpNewPosition.y, x => x.objectName == "Box") != null) {
-                int direction = -1;
-                if(linearMove.x == -1) direction = 0;
-                if(linearMove.y == 1) direction = 1;
-                if(linearMove.x == 1) direction = 2;
-                if(linearMove.y == -1) direction = 3;
+        
 
-                map.getMapObjects<Box>((int)tmpNewPosition.x, (int)tmpNewPosition.y, x => x.objectName == "Box")[0].setDirection(direction);
+        // if (isOnFloor)
+        //     isOnFloor = false;
 
-                if(!map.getMapObjects<Box>((int)tmpNewPosition.x, (int)tmpNewPosition.y, x => x.objectName == "Box")[0].willMove()) {
-                     if(linearMove.x != 0) linearMove.x = 0;
-                    if(linearMove.y != 0) linearMove.y = 0;
-                }
-            } else {
-                if(linearMove.x != 0) linearMove.x = 0;
-                if(linearMove.y != 0) linearMove.y = 0;
-            }
-        }
-
-        if (isOnFloor)
-            isOnFloor = false;
-
-        var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
-        if(tmpList != null)                                   // обработка возможности вхождения на движущийся пол.
-        {
-            if (tmpList[0].onMe ==null)
-            {
-                tmpList[0].addWalkerOn(tmpNewPosition ,this);
-                isOnFloor = true;
-            }
-            else if (tmpList[0].onMe.isCollisiable)
-            {
-                if(linearMove.x != 0) linearMove.x = 0;
-                if(linearMove.y != 0) linearMove.y = 0;
-            }
-        }
+        // var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
+        // if(tmpList != null)                                   // обработка возможности вхождения на движущийся пол.
+        // {
+        //     if (tmpList[0].onMe ==null)
+        //     {
+        //         tmpList[0].addWalkerOn(tmpNewPosition ,this);
+        //         isOnFloor = true;
+        //     }
+        //     else if (tmpList[0].onMe.isCollisiable)
+        //     {
+        //         if(linearMove.x != 0) linearMove.x = 0;
+        //         if(linearMove.y != 0) linearMove.y = 0;
+        //     }
+        // }
 
     }
 
@@ -89,66 +66,39 @@ public class Player: Walker
             direction.Enqueue(dir);
     }
 
-    override public bool readyCheck()
-    {
-        if (!isFalling)                  //обработка падения
-        {
-            if(direction.Count == 0)
-            {
-                if(dir != -1) {
-                    dir = -1;
-                    //gameObject.GetComponent<Animator>().Play("MoveStop",0,0);
-                    isAnimFinish = true;
-                }
-                return false;
-            }
-                
-            return true;
-        }
-        else if (sum_time <= fallingTime)
-        {
-            Debug.Log("Падаю");
-            return false;
-        }
-        else
-        {
-            isFalling = false;
-            getDamage(15);
-            map.moveMapObject(lastFloor, this);
-            return false;
-        }
-    }
     public override void startObject()
     {
         base.startObject();   
-        linearMove.x = 0;
-        linearMove.y = 0;
-        move_delay = 0.0f;
-        animation_time = 0.2f;
+        stayDelay = 0.0f;
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
-        lastFloor = position;
         order = ObjectOrder.wall;
     }
-    override public void onWalkFinish() {
-        direction.Dequeue();
-        stepCount++;
 
-        if (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x.objectName == "Floor") != null && !isOnFloor)
+    public override bool canMoveOn(Vector2Int point)
+    {
+        if( map.getMapObjects<MapObject>(point.x,point.y, x => x.isCollisiable) != null) 
         {
-            lastFloor = position;
+            if(map.getMapObjects<MapObject>(point.x, point.y, x => x.objectName == "Box") != null) {
+                int direction = -1;
+                if(movements.Peek().point.x == -1) direction = 0;
+                if(movements.Peek().point.y == 1) direction = 1;
+                if(movements.Peek().point.x == 1) direction = 2;
+                if(movements.Peek().point.y == -1) direction = 3;
+                map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].setDirection(direction);
+                return map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].willMove();
+            }
         }
-        else if (!isOnFloor)
-        {
-                                    // начало падения
-            isFalling = true;
-            sum_time = 0;
 
-        }
 
+        return map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable == true) == null;
     }
 
-    public Player(float x, float y): base(x,y) {
+    override public void onEndWalk() {
+        stepCount++;
+    }
+
+    public Player(int x, int y): base(x,y) {
         
     }
 }

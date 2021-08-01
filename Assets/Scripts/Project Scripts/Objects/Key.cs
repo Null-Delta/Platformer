@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : OnPressObject
+public class Key : PressableObject
 {
     public override string objectName => "Key";
-    public override void OnPress(Walker who)
+    public override void OnPressStart(WalkableObject walker)
     {
-        if(who is Player) {
+        Debug.Log("PRESS");
+        if(walker is Player) {
             map.executeGroup(events["onSelect"]);
             map.destroyObject(this);
         }
