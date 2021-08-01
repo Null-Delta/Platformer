@@ -56,6 +56,7 @@ public class MovingFloor : WalkableObject
             movingObject.mapLocation = mapLocation;
         }
     }
+
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
         

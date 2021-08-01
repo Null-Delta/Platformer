@@ -39,12 +39,13 @@ public class WalkableObject: MapObject {
     float animationTime = 0f;
     bool isWalk = false;
     //-----------------------------------------------
-
+    
 
     public override void startObject()
     {
         base.startObject();
         order = ObjectOrder.wall;
+        
     }
 
     //вызывается перед началом перемещения
@@ -54,6 +55,12 @@ public class WalkableObject: MapObject {
 
     //вызывается в конце перемещения
     virtual public void onEndWalk() { 
+
+    }
+
+    //вызывается в начале updateObject, пока что предназначен только для таймеров
+    public virtual void addedUpdateObject(float time)
+    {
 
     }
 
@@ -117,6 +124,8 @@ public class WalkableObject: MapObject {
         map.insertMapObject(mapLocation, this);
     }
 
+
+
     void setupMoving() {
 
         setLocationOnMap();
@@ -140,6 +149,8 @@ public class WalkableObject: MapObject {
     public override void updateObject(float time)
     {
         animationTime += time;
+
+        addedUpdateObject(time);
 
         if(localTarget != null) {
             moveStartPosition = localTarget.gameObject.transform.position + targetOffset;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player: WalkableObject
+public class Player: WalkAndLive
 {
     
     public override string objectName => "Player";
@@ -16,7 +16,13 @@ public class Player: WalkableObject
     override public void onStartWalk() {
         // linearMove.x = 0;
         // linearMove.y = 0;
-        var newDir = movements.Peek();
+        //var newDir = movements.Peek();
+        if (savedStayDelay != -1)
+        {
+            stayDelay = savedStayDelay;
+            savedStayDelay = -1;
+        }
+
         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
 
         // switch (newDir.point) {
@@ -73,6 +79,9 @@ public class Player: WalkableObject
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
         order = ObjectOrder.wall;
+        
+        hp = 100;
+        immortalTime = 0.5f;
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -96,7 +105,17 @@ public class Player: WalkableObject
 
     override public void onEndWalk() {
         stepCount++;
+        if (map.getMapObjects<MapObject>((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, x => x.objectName == "Floor" || x.objectName == "MovingFloor") == null)
+        {
+            onFall();
+        }
+        else if (map.getMapObjects<MapObject>((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, x => x.objectName == "Floor" )!=null)
+        {
+            lastFloor = gameObject.transform.position;
+        }
     }
+
+
 
     public Player(int x, int y): base(x,y) {
         
