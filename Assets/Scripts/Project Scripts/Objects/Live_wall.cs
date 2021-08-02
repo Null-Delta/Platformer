@@ -46,9 +46,9 @@ public class Live_wall : MapObject
 
 
 
-    public override void updateObject(float time) {
+    public override void updateObject() {
         
-        sum_time+=time; //важно
+        sum_time+=Time.deltaTime; //важно
         is_ready = readyCheck();
     
         if (sum_time >= act_delay && !in_animation && is_ready)
@@ -72,8 +72,7 @@ public class Live_wall : MapObject
     }
 
 
-    public Live_wall(int x, int y, float _act_delay ,float _animation_time) {
-        position = new Vector2(x,y);
+    public Live_wall(int x, int y, float _act_delay ,float _animation_time): base(x,y) {
         act_delay = _act_delay;
         animation_time = _animation_time;
     }

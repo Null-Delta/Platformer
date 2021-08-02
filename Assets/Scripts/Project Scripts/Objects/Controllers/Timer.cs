@@ -31,10 +31,10 @@ public class Timer : Object
         nowTime = 0f;
     }
 
-    public override void updateObject(float time)
+    public override void updateObject()
     {
         if(isActive) {
-            nowTime += time;
+            nowTime += Time.deltaTime;
             if(nowTime >= needTime) {
                 nowTime = 0f;
                 isActive = false;

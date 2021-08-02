@@ -18,9 +18,7 @@ public class Floor : ConnectedObject
         setupOrder();
     }
 
-    public Floor(int x, int y) {
-        position = new Vector2(x,y);
-    }
+    public Floor(int x, int y): base(x,y) { }
 
-    public Floor() {}
+    public Floor(): base(0,0) {}
 }

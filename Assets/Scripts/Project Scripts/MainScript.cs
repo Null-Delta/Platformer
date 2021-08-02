@@ -20,7 +20,12 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Bullet(6.3f, 10.2f));
         //objects.Add(new Walker(10,10));
 
-        SetRect<Wall>(0,0,55,55,0);
+        SetRect<Wall>(0,0,30,30,0);
+        objects.Add(new Wall(3,28));
+        objects.Add(new Wall(1,28));
+        objects.Add(new Wall(3,26));
+        objects.Add(new Wall(2,26));
+        objects.Add(new Wall(1,26));
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
@@ -122,7 +127,6 @@ public class MainScript : MonoBehaviour
         //objects.Add(new MovingFloor(20, 9));
         SetRect<Floor>(0,0,20,20,1);
         SetRect<Floor>(0,25,20,20,1);
-
 
         var door = new Door(8,8);
         objects.Add(door);

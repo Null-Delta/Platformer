@@ -43,7 +43,7 @@ public class Counter: Object {
         
     }
 
-    public override void updateObject(float time)
+    public override void updateObject()
     {
         
     }

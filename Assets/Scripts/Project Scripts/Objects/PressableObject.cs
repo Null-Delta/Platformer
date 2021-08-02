@@ -23,10 +23,7 @@ public class PressableObject : MapObject
         order = ObjectOrder.onFloor;
     }
 
-    public PressableObject(int x, int y) 
-    {
-        position = new Vector2(x,y);
-    }
+    public PressableObject(int x, int y): base(x,y) { }
     
 
 }

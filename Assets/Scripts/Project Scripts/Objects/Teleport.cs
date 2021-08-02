@@ -51,7 +51,7 @@ public class Teleport : PressableObject
         isReceptionObject = true;
     }
 
-    public override void updateObject(float time)
+    public override void updateObject() 
     {
         if (isActivation)
         {
@@ -145,6 +145,5 @@ public class Teleport : PressableObject
         brotherPosition = new Vector2Int(bx, by);
         events = new Dictionary<string, List<Command>>();
         events["OnTeleport"] = OnTeleport;
-        position = new Vector2(x, y);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConnectedObject : MapObject
 {
-    const int width = 25, height = 59;
+    const int width = 33, height = 79;
     static List<string> already_generated_names = new List<string>();
     static List<Sprite[]> ready_sprites = new List<Sprite[]>();
 
@@ -45,7 +45,6 @@ public class ConnectedObject : MapObject
                 ready_sprites[ind][sum] = generateTexture(sum);
                 gameObject.GetComponent<SpriteRenderer>().sprite = ready_sprites[ind][sum];
             }
-            //generateTexture(sum);
         }
     }
 
@@ -56,8 +55,10 @@ public class ConnectedObject : MapObject
         {
             var croppedTexture = new Texture2D(width, height);
 
-            var pixels = sprites[i].texture.GetPixels(  (int) sprites[i].textureRect.x, 
-                                                    (int) sprites[i].textureRect.y, 
+            Debug.Log((int) sprites[i].rect.y);
+
+            var pixels = sprites[i].texture.GetPixels(  (int) sprites[i].rect.x, 
+                                                    (int) sprites[i].rect.y, 
                                                     width, 
                                                     height);
             croppedTexture.SetPixels(pixels);
@@ -158,7 +159,7 @@ public class ConnectedObject : MapObject
             break;
         }
         
-        Sprite s = Sprite.Create(texture, new Rect(0,0, width, height), new Vector2(0.5f,0.5f), 17);
+        Sprite s = Sprite.Create(texture, new Rect(0,0, width, height), new Vector2(0.5f,0.5f), 23);
         return s;
     }
 
@@ -171,4 +172,6 @@ public class ConnectedObject : MapObject
         }
         main.Apply();
     }
+
+    public ConnectedObject(float x, float y): base(x,y) { }
 }
