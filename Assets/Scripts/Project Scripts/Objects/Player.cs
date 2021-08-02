@@ -17,11 +17,7 @@ public class Player: WalkAndLive
         // linearMove.x = 0;
         // linearMove.y = 0;
         //var newDir = movements.Peek();
-        if (savedStayDelay != -1)
-        {
-            stayDelay = savedStayDelay;
-            savedStayDelay = -1;
-        }
+        base.onStartWalk();
 
         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
 
@@ -82,6 +78,7 @@ public class Player: WalkAndLive
         
         hp = 100;
         immortalTime = 0.5f;
+        canFall = true;
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -104,15 +101,9 @@ public class Player: WalkAndLive
     }
 
     override public void onEndWalk() {
+        base.onEndWalk();
+
         stepCount++;
-        if (map.getMapObjects<MapObject>((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, x => x.objectName == "Floor" || x.objectName == "MovingFloor") == null)
-        {
-            onFall();
-        }
-        else if (map.getMapObjects<MapObject>((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, x => x.objectName == "Floor" )!=null)
-        {
-            lastFloor = gameObject.transform.position;
-        }
     }
 
 

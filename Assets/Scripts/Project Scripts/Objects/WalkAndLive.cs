@@ -14,7 +14,12 @@ public class WalkAndLive : WalkableObject, Health
     public float savedStayDelay;
     public Vector2 lastFloor;
 
-    public virtual void getDamage(float damage)
+    //////////////////////////////////////////
+    //переменные, отвечающие за свойства
+    public bool canFall = false;
+    ///////////////////////////////////////////
+
+    public void getDamage(float damage)
     {
         if (nowImmortalTime <=0)
         {
@@ -47,10 +52,7 @@ public class WalkAndLive : WalkableObject, Health
         savedStayDelay = stayDelay;
         stayDelay = 0.7f;      //    fallingTime
         movements.Clear();
-        Debug.Log(lastFloor );
-
-        Debug.Log(lastFloor - new Vector2(gameObject.transform.position.x,gameObject.transform.position.y ));
-        movements.Enqueue(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(gameObject.transform.position.x,gameObject.transform.position.y )), false));
+        movements.Enqueue(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));
     }
 
     public override void onCollizion(MapObject obj, Collision2D collision)
@@ -60,29 +62,10 @@ public class WalkAndLive : WalkableObject, Health
 
 
 
-    public override void addedUpdateObject(float time)
-    {
-        nowImmortalTime -=time;
-    }
-
-    override public void onStartWalk()
-    {
-        if (savedStayDelay != -1)
-        {
-            stayDelay = savedStayDelay;
-            savedStayDelay = -1;
-        }
-    }
-
     public override void startObject()
     {
         base.startObject();   
-        stayDelay = 0.0f;
         isCollisiable = true;
-        order = ObjectOrder.wall;
-
-        hp = 100;
-        immortalTime = 1;
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -90,15 +73,36 @@ public class WalkAndLive : WalkableObject, Health
         return true;
     }
 
+
+
+    override public void onStartWalk()
+    {
+        if (savedStayDelay != -1)  // оглушение
+        {
+            stayDelay = savedStayDelay;
+            savedStayDelay = -1;
+        }
+    }
+
+    public override void updateObject()
+    {
+        if (nowImmortalTime > 0)
+            nowImmortalTime -= Time.deltaTime;
+        base.updateObject();
+    }
+
     override public void onEndWalk() 
     {
-        if (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x.objectName == "Floor" || x.objectName == "MovingFloor") == null)
+        if (canFall)   // падение
         {
-            onFall();
-        }
-        else
-        {
-            lastFloor = position;
+            if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor" || x.objectName == "MovingFloor") == null)
+            {
+                onFall();
+            }
+            else if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor") !=null)
+            {
+                lastFloor = position;
+            }
         }
     }
 
