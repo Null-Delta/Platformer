@@ -6,7 +6,7 @@ public interface Health
 {
     float hp { get; set;}
     float immortalTime { set; get;}
-    float nowImmortalTime { set; get;}
+    float immortalTimeForHit {get;set;}
 
     public void getDamage(float damage);
     public void onGetDamage(float damage);

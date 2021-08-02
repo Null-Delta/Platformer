@@ -8,11 +8,13 @@ public class WalkAndLive : WalkableObject, Health
 
 
     public float hp { get;set;}
+    public float immortalTimeForHit {get;set;}
     public float immortalTime {get;set;}
-    public float nowImmortalTime {get;set;}
 
     public float savedStayDelay;
     public Vector2 lastFloor;
+
+    public Vector3 savedSize;//to delet
 
     //////////////////////////////////////////
     //переменные, отвечающие за свойства
@@ -21,18 +23,19 @@ public class WalkAndLive : WalkableObject, Health
 
     public void getDamage(float damage)
     {
-        if (nowImmortalTime <=0)
+        if (immortalTime <=0)
         {
 
             hp -=damage;
             if (hp <= 0)
             {
+                hp = 0;
                 onDeath();
                 map.destroyObject(this);
             }
             else
                 onGetDamage(damage);
-            nowImmortalTime = immortalTime;
+            immortalTime = immortalTimeForHit;
         }
     }
 
@@ -48,6 +51,7 @@ public class WalkAndLive : WalkableObject, Health
 
     public virtual void onFall()
     {
+        savedSize = this.gameObject.transform.localScale;
         getDamage(15);
         savedStayDelay = stayDelay;
         stayDelay = 0.7f;      //    fallingTime
@@ -66,6 +70,7 @@ public class WalkAndLive : WalkableObject, Health
     {
         base.startObject();   
         isCollisiable = true;
+        savedSize = this.gameObject.transform.localScale;  // to delet
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -73,21 +78,27 @@ public class WalkAndLive : WalkableObject, Health
         return true;
     }
 
-
-
     override public void onStartWalk()
     {
         if (savedStayDelay != -1)  // оглушение
         {
             stayDelay = savedStayDelay;
             savedStayDelay = -1;
+
+            this.gameObject.transform.localScale = savedSize; // to delet
         }
     }
 
     public override void updateObject()
     {
-        if (nowImmortalTime > 0)
-            nowImmortalTime -= Time.deltaTime;
+        if (immortalTime > 0)
+            immortalTime -= Time.deltaTime;
+
+        if (stayDelay !=0)
+        {
+            this.gameObject.transform.localScale -= new Vector3(0.01f,0.01f,0); // to delet
+        }
+
         base.updateObject();
     }
 
@@ -95,7 +106,8 @@ public class WalkAndLive : WalkableObject, Health
     {
         if (canFall)   // падение
         {
-            if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor" || x.objectName == "MovingFloor") == null)
+            if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor" ||
+             x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
             {
                 onFall();
             }
