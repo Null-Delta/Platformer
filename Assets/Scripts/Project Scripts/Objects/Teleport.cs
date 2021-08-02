@@ -64,6 +64,12 @@ public class Teleport : PressableObject
                     map.removeMapObject(teleportationObj.position, teleportationObj);
                     map.insertMapObject(brotherPosition, teleportationObj);
                     teleportationObj.mapLocation = brotherPosition;
+                    //teleportationObj.addMovement(new movement(teleportationObj.mapLocation - brotherPosition, false));
+
+                    if(teleportationObj is PushableObject) {
+                        (teleportationObj as PushableObject).ignorePushes = true;
+                    }
+
                     teleportationObj.gameObject.GetComponent<SpriteRenderer>().material = disintegrationMaterial;
                     teleportationMaterial = teleportationObj.gameObject.GetComponent<SpriteRenderer>().material;
                     //Camera.main.GetComponent<PlayerControl>().ControlActive = false;
@@ -118,6 +124,10 @@ public class Teleport : PressableObject
                     }
                     else
                     {
+
+                        if(teleportationObj is PushableObject) {
+                            (teleportationObj as PushableObject).ignorePushes = false;
+                        }
                         //Camera.main.GetComponent<PlayerControl>().ControlActive = true;
                         teleportationMaterial.SetFloat("Progress", 1);
                         teleportationObj.gameObject.GetComponent<SpriteRenderer>().material = originalMaterial;
