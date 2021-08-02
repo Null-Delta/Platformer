@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Teleport : PressableObject
 {
     Vector2Int brotherPosition;
@@ -16,11 +17,16 @@ public class Teleport : PressableObject
     WalkableObject teleportationObj;
     Material disintegrationMaterial;
     Material teleportationMaterial;
-
     Material originalMaterial;
+
+    
+
+    
     public override string objectName => "Teleport";
     public override void OnPressStart(WalkableObject walker)
     {
+        
+        
         
         if (!isReceptionObject)
         {
@@ -36,6 +42,7 @@ public class Teleport : PressableObject
         }
 
     }
+        
 
     public override void OnPressEnd(WalkableObject walker)
     {

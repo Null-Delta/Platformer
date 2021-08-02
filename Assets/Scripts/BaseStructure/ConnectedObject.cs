@@ -55,7 +55,7 @@ public class ConnectedObject : MapObject
         {
             var croppedTexture = new Texture2D(width, height);
 
-            Debug.Log((int) sprites[i].rect.y);
+            //Debug.Log((int) sprites[i].rect.y);
 
             var pixels = sprites[i].texture.GetPixels(  (int) sprites[i].rect.x, 
                                                     (int) sprites[i].rect.y, 
