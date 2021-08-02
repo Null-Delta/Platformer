@@ -14,10 +14,6 @@ public class Bullet : MapObject
         order = ObjectOrder.wall;
     }
 
-    public override void updateObject(float time) {
-        position = gameObject.transform.position;
-    }
-
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
         if(obj is Wall || obj is Door) {
@@ -45,14 +41,12 @@ public class Bullet : MapObject
             gameObject.GetComponent<Rigidbody2D>().velocity = direction;
         }
     }
-    public Bullet(float x, float y) {
-        position = new Vector2(x,y);
+    public Bullet(float x, float y): base(x,y) {
         speed = 5;
         direction = new Vector2(Random.Range(-1f,1f) * speed, Random.Range(-1f,1f) * speed);
     }
 
-    public Bullet(float x, float y, float xd, float yd, float _speed= 0) {
-        position = new Vector2(x,y);
+    public Bullet(float x, float y, float xd, float yd, float _speed= 0): base(x,y) {
         if (_speed == 0)
             speed = 5;
         else

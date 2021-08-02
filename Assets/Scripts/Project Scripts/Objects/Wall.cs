@@ -18,12 +18,7 @@ public class Wall : ConnectedObject
         setupOrder();
     }
 
-    public Wall(int x, int y) {
-        position = new Vector2(x,y);
-    }
+    public Wall(int x, int y): base(x,y) {    }
 
-    public Wall() {}
-    
-
-    
+    public Wall(): base(0,0) {}    
 }

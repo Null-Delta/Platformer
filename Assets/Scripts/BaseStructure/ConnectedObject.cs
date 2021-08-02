@@ -172,4 +172,6 @@ public class ConnectedObject : MapObject
         }
         main.Apply();
     }
+
+    public ConnectedObject(float x, float y): base(x,y) { }
 }

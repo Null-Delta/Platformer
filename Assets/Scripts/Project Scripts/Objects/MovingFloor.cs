@@ -61,12 +61,9 @@ public class MovingFloor : WalkableObject
         
     }
 
-    public MovingFloor(int x, int y):base(x,y) {
-        position = new Vector2(x,y);
-    }
+    public MovingFloor(int x, int y):base(x,y) { }
 
     public MovingFloor(int x, int y, List<Vector2Int> ways, float speed = 0.5f):base(x,y) {
-        position = new Vector2(x,y);
         stayDelay = speed;
 
         preset = new Queue<movement>();

@@ -29,12 +29,12 @@ public class Teleport : PressableObject
         //Instantiate(prefab, new Vector3(position.x,position.y,0), Quaternion.identity);
     }
 
-    public override void updateObject(float time) 
+    public override void updateObject() 
     {
         //
         if(isTeleportation)
         {
-            sum_time += time;
+            sum_time += Time.deltaTime;
             if(sum_time < teleportatinTime)
             {
                 float t = (teleportatinTime - sum_time)/teleportatinTime;
@@ -88,6 +88,5 @@ public class Teleport : PressableObject
         brotherPosition = new Vector2Int(bx,by);
         events = new Dictionary<string, List<Command>>();
         events["OnTeleport"] = OnTeleport;
-        position = new Vector2(x,y);
     }
 }

@@ -12,5 +12,5 @@ public abstract class Object
     abstract public void execute(Command command);
     abstract public void startObject();
     abstract public void resetObject();
-    abstract public void updateObject(float time);
+    abstract public void updateObject();
 }

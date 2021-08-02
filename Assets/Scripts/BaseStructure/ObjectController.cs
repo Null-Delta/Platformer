@@ -11,13 +11,18 @@ public class ObjectController : MonoBehaviour
     {
         obj.startObject();
         if(obj is Wall || obj is Floor) isUpdatableObject = false;
+        
+        if(obj is MapObject) {
+            (obj as MapObject).setStartPosition();
+            (obj as MapObject).setupOrder();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         if(isUpdatableObject) {
-            obj.updateObject(Time.deltaTime);
+            obj.updateObject();
             if(obj is MapObject) {
                 (obj as MapObject).setupOrder();
             }

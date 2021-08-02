@@ -17,11 +17,9 @@ public class Puddle : ConnectedObject
         order = ObjectOrder.onFloor;
     }
 
-    public Puddle(int x, int y) {
-        position = new Vector2(x,y);
-    }
+    public Puddle(int x, int y): base(x,y) { }
 
-    public Puddle() {}
+    public Puddle(): base(0,0) {}
     
 
     

@@ -34,7 +34,7 @@ public class WalkableObject: MapObject {
 
     //-----внутренние переменные для перемещения-----
     Vector2 translate = Vector2.zero;
-    Vector3 targetOffset = Vector2.zero;
+    Vector2 targetOffset = Vector2.zero;
     Vector2 moveStartPosition = Vector2.zero;
     float animationTime = 0f;
     bool isWalk = false;
@@ -117,6 +117,10 @@ public class WalkableObject: MapObject {
         map.insertMapObject(mapLocation, this);
     }
 
+    virtual public void setTarget(WalkableObject target) {
+
+    }
+
     void setupMoving() {
 
         setLocationOnMap();
@@ -126,9 +130,9 @@ public class WalkableObject: MapObject {
         tryFindTarget();
 
         if(localTarget != null) {
-            targetOffset = gameObject.transform.position - localTarget.gameObject.transform.position;
+            targetOffset = position - localTarget.position;
             translate = -targetOffset;
-            moveStartPosition = localTarget.gameObject.transform.position + targetOffset;
+            moveStartPosition = localTarget.position + targetOffset;
 
         } else {
             targetOffset = Vector3.zero;
@@ -137,13 +141,13 @@ public class WalkableObject: MapObject {
         }
     }
 
-    public override void updateObject(float time)
+    public override void updateObject()
     {
-        animationTime += time;
+        animationTime += Time.deltaTime;
 
         if(localTarget != null) {
-            moveStartPosition = localTarget.gameObject.transform.position + targetOffset;
-            gameObject.transform.position = moveStartPosition;
+            moveStartPosition = localTarget.position + targetOffset;
+            position = moveStartPosition;
         }
 
         if(animationTime > stayDelay && movements.Count == 0) {
@@ -178,7 +182,7 @@ public class WalkableObject: MapObject {
                 movements.Dequeue();
 
                 animationTime -= stayDelay + moveDelay;
-                gameObject.transform.position = moveStartPosition + translate;
+                position = moveStartPosition + translate;
                 targetOffset = Vector3.zero;
                 isWalk = false;
 
@@ -194,16 +198,13 @@ public class WalkableObject: MapObject {
                     goto repeateMove;
 
             } else {
-                gameObject.transform.position = moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
+                position = moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
             }
         }
-
-        position = gameObject.transform.position;
     }
 
 
-    public WalkableObject(int x,int y) : base() {
+    public WalkableObject(int x,int y) : base(x,y) {
         mapLocation = new Vector2Int(x,y);
-        position = new Vector2(x,y);
     }
 }
