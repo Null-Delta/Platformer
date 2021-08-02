@@ -28,8 +28,5 @@ public class Wire : ConnectedObject
             break;
         }
     }
-    public Wire(int x, int y) {
-        position = new Vector2(x,y);
-
-    }
+    public Wire(int x, int y): base(x,y) { }
 }

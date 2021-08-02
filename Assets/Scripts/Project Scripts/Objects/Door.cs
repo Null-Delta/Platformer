@@ -9,7 +9,6 @@ public class Door : MapObject
     public override void startObject()
     {
         base.startObject();
-        gameObject.transform.position = position;
         isCollisiable = true;
         order = ObjectOrder.wall;
     }
@@ -33,8 +32,6 @@ public class Door : MapObject
         }
     }
 
-    public Door(int x, int y) {
-        position = new Vector2(x,y);
-    }
+    public Door(int x, int y): base(x,y) { }
 
 }

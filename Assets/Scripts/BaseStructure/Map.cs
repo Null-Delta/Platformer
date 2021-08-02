@@ -48,10 +48,6 @@ public class Map : MonoBehaviour
                 mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Add(obj as MapObject);
             }
         }
-
-        // if(obj is MovableMapObject) {
-        //     movableObjects.Add(obj as MovableMapObject);
-        // }
     }
 
     public void destroyObject(Object obj) {

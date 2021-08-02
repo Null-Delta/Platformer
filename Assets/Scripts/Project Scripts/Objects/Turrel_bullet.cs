@@ -63,7 +63,6 @@ public class Turrel_bullet : Live_wall
     }
 
     public Turrel_bullet(int x, int y, float _act_delay, float _animation_time): base(x,y, _act_delay, _animation_time) {
-        position = new Vector2(x,y);
         act_delay = _act_delay;
         animation_time = _animation_time;
     }
