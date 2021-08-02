@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
+using System.Reflection;
 
 public class Teleport : PressableObject
 {
@@ -16,12 +18,25 @@ public class Teleport : PressableObject
     WalkableObject teleportationObj;
     Material disintegrationMaterial;
     Material teleportationMaterial;
-
     Material originalMaterial;
+
+    public UnityEngine.Experimental.Rendering.Universal.Light2D shapeLight;
+
+    Vector3[] points;
     public override string objectName => "Teleport";
     public override void OnPressStart(WalkableObject walker)
     {
+        points = new Vector3[5];
+        points[0] = new Vector3(1f, 1f, 0);
+        points[1] = new Vector3(-1f, 1f, 0);
+        points[2] = new Vector3(-1f, -1f, 0);
+        points[3] = new Vector3(1f, -1f, 0);
+        points[4] = new Vector3(1.5f, 0f, 0);
         
+        shapeLight = walker.gameObject.GetComponent<Light2D>();
+        foreach(Vector3 i in shapeLight.shapePath)
+            Debug.Log(i);
+        SetShapePath(shapeLight, points);
         if (!isReceptionObject)
         {
             isActivation = true;
@@ -36,6 +51,14 @@ public class Teleport : PressableObject
         }
 
     }
+        void SetFieldValue<T>(object obj, string name, T val) {
+            var field = obj.GetType().GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            field?.SetValue(obj, val);
+        }
+        
+        void SetShapePath(Light2D light, Vector3[] path) {
+            SetFieldValue<Vector3[]>(light, "m_ShapePath",  path);
+        }
 
     public override void OnPressEnd(WalkableObject walker)
     {
@@ -55,6 +78,8 @@ public class Teleport : PressableObject
     {
         if (isActivation)
         {
+            points[4] = new Vector3(1.5f + sumTime*2, 0f, 0);
+            SetShapePath(shapeLight, points);
             sumTime += Time.deltaTime;
             if (sumTime > deleyBeforeTeleportation)
             {
@@ -84,6 +109,7 @@ public class Teleport : PressableObject
             sumTime += Time.deltaTime;
             if (sumTime < teleportatinTime)
             {
+                points[4] = new Vector3(1.5f + deleyBeforeTeleportation + sumTime*2, 0f, 0);
                 float t = (teleportatinTime - sumTime) / teleportatinTime;
                 teleportationMaterial.SetFloat("Progress", t);
             }
