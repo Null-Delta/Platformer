@@ -8,7 +8,6 @@ public class Spike : MapObject
     float damage = 10;
     float timer;
     bool isActiv;
-    SpriteRenderer spik;
 
     public override string objectName => "Spike";
 
@@ -21,12 +20,12 @@ public class Spike : MapObject
             if (isActiv)
             {
                 isActiv = false;
-                spik.enabled = false;
+                gameObject.GetComponent<Animator>().Play("Hide", 0, 0);
             }
             else
             {
                 isActiv = true;
-                spik.enabled = true;
+                gameObject.GetComponent<Animator>().Play("Show", 0, 0);
             }
         }
         if (isActiv)
@@ -49,7 +48,7 @@ public class Spike : MapObject
         isCollisiable = false;
         gameObject.transform.position = position;
         order = ObjectOrder.underWall;
-        spik = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        //spik = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     public Spike(int x, int y, float time): base(x,y) {
