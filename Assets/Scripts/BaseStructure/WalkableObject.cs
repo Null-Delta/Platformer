@@ -60,9 +60,10 @@ public class WalkableObject: MapObject {
     public void addMovement(movement move) { 
         if(move.isAnimate) {
             movements.Enqueue(move);
+            
         } else {
             movements.Enqueue(move);
-
+            
             if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject) != null) {
                 map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject).ForEach(x => {
                     (x as PressableObject).OnPressEnd(this);
@@ -179,7 +180,6 @@ public class WalkableObject: MapObject {
 
             if(animationTime > stayDelay + moveDelay) {
                 movements.Dequeue();
-
                 animationTime -= stayDelay + moveDelay;
                 position = moveStartPosition + translate;
 

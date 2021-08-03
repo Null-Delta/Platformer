@@ -52,7 +52,7 @@ public class WalkAndLive : WalkableObject, Health
     public virtual void onFall()
     {
         if (this is Player)
-            Camera.main.GetComponent<PlayerControl>().enabled = false; 
+            Camera.main.GetComponent<PlayerControl>().ControlActive = false; 
         savedSize = this.gameObject.transform.localScale;
         getDamage(15);
         savedStayDelay = stayDelay;
@@ -96,7 +96,7 @@ public class WalkAndLive : WalkableObject, Health
         if (immortalTime > 0)
             immortalTime -= Time.deltaTime;
 
-        if (Camera.main.GetComponent<PlayerControl>().enabled == false)
+        if (Camera.main.GetComponent<PlayerControl>().ControlActive == false)
         {
             this.gameObject.transform.localScale -= new Vector3(0.01f,0.01f,0); // to delet
         }

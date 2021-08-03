@@ -20,7 +20,7 @@ public class Player: WalkAndLive
         //var newDir = movements.Peek();
         if (savedStayDelay != -1)
         {
-            Camera.main.GetComponent<PlayerControl>().enabled = true;   
+            Camera.main.GetComponent<PlayerControl>().ControlActive = true;   
         }
         base.onStartWalk();
         
@@ -82,7 +82,7 @@ public class Player: WalkAndLive
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
         order = ObjectOrder.wall;
         
-        hp = 100;
+        hp = 45;
         immortalTimeForHit = 0.5f;
         canFall = true;
     }
@@ -114,7 +114,7 @@ public class Player: WalkAndLive
     {
         if (nowCheckPoint != null)
         {
-            Camera.main.GetComponent<PlayerControl>().enabled = true;
+            Camera.main.GetComponent<PlayerControl>().ControlActive = true;
             nowCheckPoint.spawnPlayer();
         }
     }
