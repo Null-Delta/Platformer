@@ -11,13 +11,19 @@ public class Player: WalkAndLive
     public bool isAnimFinish;
     public Queue<int> direction = new Queue<int>();
 
+    public CheckPoint nowCheckPoint;
     
 
     override public void onStartWalk() {
         // linearMove.x = 0;
         // linearMove.y = 0;
         //var newDir = movements.Peek();
+        if (savedStayDelay != -1)
+        {
+            Camera.main.GetComponent<PlayerControl>().enabled = true;   
+        }
         base.onStartWalk();
+        
 
         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
 
@@ -88,10 +94,14 @@ public class Player: WalkAndLive
             if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {
                 return (map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].tryPush(movements.Peek().point));
             }
+            if (map.getMapObjects<MapObject>(point.x, point.y, x => x is CheckPoint) != null)
+            {
+                return true;
+            }
         }
 
 
-        return map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable == true) == null;
+        return map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable ) == null;
     }
 
     override public void onEndWalk() {
@@ -100,6 +110,13 @@ public class Player: WalkAndLive
         stepCount++;
     }
 
+    override public void onDeath()
+    {
+        if (nowCheckPoint != null)
+        {
+            nowCheckPoint.spawnPlayer();
+        }
+    }
 
 
     public Player(int x, int y): base(x,y) {

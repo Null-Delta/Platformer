@@ -51,6 +51,8 @@ public class WalkAndLive : WalkableObject, Health
 
     public virtual void onFall()
     {
+        if (this is Player)
+            Camera.main.GetComponent<PlayerControl>().enabled = false; 
         savedSize = this.gameObject.transform.localScale;
         getDamage(15);
         savedStayDelay = stayDelay;

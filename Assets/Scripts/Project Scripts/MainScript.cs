@@ -26,6 +26,8 @@ public class MainScript : MonoBehaviour
         objects.Add(new Wall(3,26));
         objects.Add(new Wall(2,26));
         objects.Add(new Wall(1,26));
+        objects.Add(new CheckPoint(14,14));
+        objects.Add(new CheckPoint(14,15));
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);

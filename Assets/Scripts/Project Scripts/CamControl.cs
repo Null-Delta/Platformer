@@ -7,7 +7,8 @@ using System;
 public class CamControl : MonoBehaviour
 {
     public GameObject targetObj;
-    
+    public CheckPoint targetPoint;
+
     [SerializeField] float minSize = 0.5f, maxSize = 30;
     [SerializeField] Vector2 saveZoneEdge1 = new Vector2(-10,-10), saveZoneEdge2 = new Vector2(276, 276);
     [SerializeField] float startCamSize = 5;   
@@ -85,8 +86,17 @@ public class CamControl : MonoBehaviour
     void trackingTargetPos()
     {
         targetObj = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
-
-        Vector2 targetPos = targetObj.transform.position;
+        
+        Vector2 targetPos;
+        if (targetObj != null)
+        {
+            targetPos = targetObj.transform.position;
+            targetPoint =Camera.main.GetComponent<PlayerControl>().CurrentPlayer.nowCheckPoint;
+        }
+        else
+        {
+            targetPos = targetPoint.position;
+        }
 
         Vector2 heading = targetPos - (Vector2)Camera.main.transform.position;
 

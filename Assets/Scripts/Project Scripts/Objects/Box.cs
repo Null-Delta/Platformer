@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Box : PushableObject
 {
-    int nowDirection;
+    //int nowDirection;
     public override string objectName => "Box";
 
     public override void onEndWalk()
     {
-        nowDirection = -1;
+        //nowDirection = -1;
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -24,7 +24,7 @@ public class Box : PushableObject
     public override void startObject()
     {
         base.startObject();
-        nowDirection = -1;
+        //nowDirection = -1;
         stayDelay = 0f;
         isCollisiable = true;
         order = ObjectOrder.wall;
