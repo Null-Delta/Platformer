@@ -96,7 +96,7 @@ public class WalkAndLive : WalkableObject, Health
         if (immortalTime > 0)
             immortalTime -= Time.deltaTime;
 
-        if (stayDelay !=0)
+        if (Camera.main.GetComponent<PlayerControl>().enabled == false)
         {
             this.gameObject.transform.localScale -= new Vector3(0.01f,0.01f,0); // to delet
         }

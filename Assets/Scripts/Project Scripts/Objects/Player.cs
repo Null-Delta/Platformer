@@ -114,6 +114,7 @@ public class Player: WalkAndLive
     {
         if (nowCheckPoint != null)
         {
+            Camera.main.GetComponent<PlayerControl>().enabled = true;
             nowCheckPoint.spawnPlayer();
         }
     }

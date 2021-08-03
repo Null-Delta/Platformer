@@ -57,6 +57,7 @@ public class MainScript : MonoBehaviour
         objects.Add(new BreakableFloor(21,19, 1));
         objects.Add(new BreakableFloor(22,19, 1));
         objects.Add(new BreakableFloor(23,19, 1));
+        objects.Add(new Stalker(18,18));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));
         objects.Add(new Teleport(15,15, 15, 10, new List<Command>(){}));
