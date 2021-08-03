@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UsualStalker : PornoSKonyami
+public class UsualStalker : Seeker
 {
     public override string objectName => "UsualStalker";
 

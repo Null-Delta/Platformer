@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PornoSKonyami : WalkAndLive
+public class Seeker : WalkAndLive
 {
-    public override string objectName => "PornoSKonyami";
+    public override string objectName => "Seeker";
 
     public Player target;
 
@@ -50,7 +50,7 @@ public class PornoSKonyami : WalkAndLive
         
     }
 
-    public PornoSKonyami(int x, int y): base(x,y) {
+    public Seeker(int x, int y): base(x,y) {
         
     }
 }
