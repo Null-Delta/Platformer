@@ -29,25 +29,46 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
 
-        objects.Add(new Spike(8,15, 0.25f,1, 0f));
-        objects.Add(new Spike(7,15, 0.25f,1, 0.2f));
-        objects.Add(new Spike(6,15, 0.25f,1, 0.4f));
-        objects.Add(new Spike(5,15, 0.25f,1, 0.6f));
+        // objects.Add(new Spike(8,15, 0.25f, 1, 0f));
+        // objects.Add(new Spike(7,15, 0.25f, 1, 0.2f));
+        // objects.Add(new Spike(6,15, 0.25f, 1, 0.4f));
+        // objects.Add(new Spike(5,15, 0.25f, 1, 0.6f));
 
-        objects.Add(new Spike(8,16, 0.25f,1, 0.2f));
-        objects.Add(new Spike(7,16, 0.25f,1, 0.4f));
-        objects.Add(new Spike(6,16, 0.25f,1, 0.6f));
-        objects.Add(new Spike(5,16, 0.25f,1, 0.8f));
+        // objects.Add(new Spike(8,16, 0.25f, 1, 0.2f));
+        // objects.Add(new Spike(7,16, 0.25f, 1, 0.4f));
+        // objects.Add(new Spike(6,16, 0.25f, 1, 0.6f));
+        // objects.Add(new Spike(5,16, 0.25f, 1, 0.8f));
 
-        objects.Add(new Spike(8,17, 0.25f,1, 0.4f));
-        objects.Add(new Spike(7,17, 0.25f,1, 0.6f));
-        objects.Add(new Spike(6,17, 0.25f,1, 0.8f));
-        objects.Add(new Spike(5,17, 0.25f,1, 1f));
+        // objects.Add(new Spike(8,17, 0.25f, 1, 0.4f));
+        // objects.Add(new Spike(7,17, 0.25f, 1, 0.6f));
+        // objects.Add(new Spike(6,17, 0.25f, 1, 0.8f));
+        // objects.Add(new Spike(5,17, 0.25f, 1, 1f));
 
-        objects.Add(new Spike(8,18, 0.25f,1, 0.6f));
-        objects.Add(new Spike(7,18, 0.25f,1, 0.8f));
-        objects.Add(new Spike(6,18, 0.25f,1, 1.0f));
-        objects.Add(new Spike(5,18, 0.25f,1, 1.2f));
+        // objects.Add(new Spike(8,18, 0.25f, 1, 0.6f));
+        // objects.Add(new Spike(7,18, 0.25f, 1, 0.8f));
+        // objects.Add(new Spike(6,18, 0.25f, 1, 1.0f));
+        // objects.Add(new Spike(5,18, 0.25f, 1, 1.2f));
+
+        objects.Add(new Spike(8,15, 0.25f, 1, 0));
+        objects.Add(new Spike(7,15, 0.25f, 1, 0));
+        objects.Add(new Spike(6,15, 0.25f, 1, 0));
+        objects.Add(new Spike(5,15, 0.25f, 1, 0));
+
+        objects.Add(new Spike(8,16, 0.25f, 1, 0));
+        objects.Add(new Spike(7,16, 0.25f, 1, 0));
+        objects.Add(new Spike(6,16, 0.25f, 1, 0));
+        objects.Add(new Spike(5,16, 0.25f, 1, 0));
+
+        objects.Add(new Spike(8,17, 0.25f, 1, 0));
+        objects.Add(new Spike(7,17, 0.25f, 1, 0));
+        objects.Add(new Spike(6,17, 0.25f, 1, 0));
+        objects.Add(new Spike(5,17, 0.25f, 1, 0));
+
+        objects.Add(new Spike(8,18, 0.25f, 1, 0));
+        objects.Add(new Spike(7,18, 0.25f, 1, 0));
+        objects.Add(new Spike(6,18, 0.25f, 1, 0));
+        objects.Add(new Spike(5,18, 0.25f, 1, 0));
+
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);
@@ -72,10 +93,10 @@ public class MainScript : MonoBehaviour
         // objects.Add(testD1);
         // objects.Add(testK);
         // objects.Add(testK1);
-        objects.Add(new BreakableFloor(20,19, 1));
-        objects.Add(new BreakableFloor(21,19, 1));
-        objects.Add(new BreakableFloor(22,19, 1));
-        objects.Add(new BreakableFloor(23,19, 1));
+        // objects.Add(new BreakableFloor(20,19, 1));
+        // objects.Add(new BreakableFloor(21,19, 1));
+        // objects.Add(new BreakableFloor(22,19, 1));
+        // objects.Add(new BreakableFloor(23,19, 1));
         objects.Add(new UsualStalker(18,18));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));

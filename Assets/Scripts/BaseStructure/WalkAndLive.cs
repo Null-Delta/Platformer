@@ -6,7 +6,6 @@ public class WalkAndLive : WalkableObject, Health
 {
     public override string objectName => "WalkAndLive";
 
-
     public float hp { get;set;}
     public float immortalTimeForHit {get;set;}
     public float immortalTime {get;set;}
@@ -23,9 +22,10 @@ public class WalkAndLive : WalkableObject, Health
 
     public void getDamage(float damage)
     {
+        gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
         if (immortalTime <=0)
         {
-
+            Debug.Log(damage);
             hp -=damage;
             if (hp <= 0)
             {
@@ -34,11 +34,15 @@ public class WalkAndLive : WalkableObject, Health
                 map.destroyObject(this);
             }
             else
+            {
                 onGetDamage(damage);
+            }
+                
             immortalTime = immortalTimeForHit;
         }
     }
 
+    
     public virtual void onDeath()
     {
 

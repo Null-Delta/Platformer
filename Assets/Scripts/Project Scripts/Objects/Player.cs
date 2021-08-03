@@ -82,8 +82,8 @@ public class Player: WalkAndLive
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
         order = ObjectOrder.wall;
         
-        hp = 45;
-        immortalTimeForHit = 0.5f;
+        hp = float.PositiveInfinity;
+        immortalTimeForHit = 0.0f;
         canFall = true;
     }
 

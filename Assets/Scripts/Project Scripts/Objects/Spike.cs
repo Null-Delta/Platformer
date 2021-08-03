@@ -2,46 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spike : MapObject
+public class Spike : PressableObject
 {
     float activationTime;
     float disableTime;
+
+    float stayTime = 1;
     float damage = 10;
-    float timer;
+    float time;
     bool isActiv;
 
+    bool[] b = new bool[]{true, true, true, true};
     public override string objectName => "Spike";
 
     public override void updateObject()
     {
-        timer -= Time.deltaTime;
-        if (timer <0)
+        time += Time.deltaTime;
+        if (time > 0)
         {
-            timer = (isActiv ? disableTime : activationTime) + timer;
-
-            if (isActiv)
+            if(b[0])
             {
-                isActiv = false;
-                gameObject.GetComponent<Animator>().Play("Hide", 0, 0);
-            }
-            else
-            {
-                isActiv = true;
                 gameObject.GetComponent<Animator>().Play("Show", 0, 0);
+                b[0] = false;
             }
-        }
-        if (isActiv)
-        {
-            var tmpList = map.getMapObjects<WalkAndLive>((int)position.x, (int)position.y, x => (x is WalkAndLive) );
-            if (tmpList != null)
+
+            if (time > activationTime/2)
             {
-                var tmpIter = tmpList.GetEnumerator();
-                while (tmpIter.MoveNext())
+                if(b[1])
                 {
-                    tmpIter.Current.getDamage(damage);
+                    isActiv = true;
+                    if(map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x is WalkAndLive) != null)
+                    {
+                        (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x is WalkAndLive)[0] as WalkAndLive).getDamage(damage);
+                    }
+                    b[1] = false;
+                }
+
+                if (time > stayTime + activationTime)
+                {
+                    if(b[2])
+                    {
+                        
+                        gameObject.GetComponent<Animator>().Play("Hide", 0, 0);
+                        b[2] = false;
+                    }
+
+                    if (time > stayTime + activationTime + activationTime/2)
+                    {
+                        isActiv = false;
+
+                        if(time > stayTime + activationTime*2)
+                        {
+                            time = -disableTime;
+                            b[0] = true;
+                            b[1] = true;
+                            b[2] = true;
+                        }
+                    }
                 }
             }
         }
+    }
+
+    public override void OnPressStart(WalkableObject walker)
+    {
+        if(isActiv)
+            if(map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x is WalkAndLive) != null)
+            {
+                (map.getMapObjects<MapObject>((int)position.x, (int)position.y, x => x is WalkAndLive)[0] as WalkAndLive).getDamage(damage);
+            }
     }
 
     public override void startObject()
@@ -53,9 +82,9 @@ public class Spike : MapObject
         //spik = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
-    public Spike(int x, int y, float time, float disable, float startOffset): base(x,y) {
-        activationTime = time;
-        timer = time + startOffset;
+    public Spike(int x, int y, float activationTime, float disable, float startOffset): base(x,y) {
+        this.activationTime = activationTime;
+        time = -startOffset;
         disableTime = disable;
      }
 }

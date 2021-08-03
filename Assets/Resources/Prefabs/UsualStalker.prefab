@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1741616460026212607}
   - component: {fileID: 7482975109508783331}
   - component: {fileID: 4794779990530656779}
+  - component: {fileID: 1306641817445495035}
   m_Layer: 2
   m_Name: UsualStalker
   m_TagString: Untagged
@@ -145,3 +146,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1fa0b585c2f948c785693d6632710a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1306641817445495035
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238006710077134284}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8898c91eedbb934096e64189871372a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
