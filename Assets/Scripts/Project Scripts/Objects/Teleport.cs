@@ -68,9 +68,6 @@ public class Teleport : PressableObject
                 //TODO: Сделать ограничение на перемещение в WalkableObject 
                 if (map.getMapObjects<MapObject>(brotherPosition.x, brotherPosition.y, x => x is WalkableObject) == null)
                 {
-                    map.removeMapObject(teleportationObj.position, teleportationObj);
-                    map.insertMapObject(brotherPosition, teleportationObj);
-                    teleportationObj.mapLocation = brotherPosition;
                     //teleportationObj.addMovement(new movement(teleportationObj.mapLocation - brotherPosition, false));
 
                     if (teleportationObj is PushableObject)
