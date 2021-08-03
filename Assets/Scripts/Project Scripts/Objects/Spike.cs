@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spike : MapObject
 {
     float activationTime;
+    float disableTime;
     float damage = 10;
     float timer;
     bool isActiv;
@@ -16,7 +17,8 @@ public class Spike : MapObject
         timer -= Time.deltaTime;
         if (timer <0)
         {
-            timer =activationTime;
+            timer = (isActiv ? disableTime : activationTime) + timer;
+
             if (isActiv)
             {
                 isActiv = false;
@@ -51,8 +53,9 @@ public class Spike : MapObject
         //spik = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
-    public Spike(int x, int y, float time): base(x,y) {
+    public Spike(int x, int y, float time, float disable, float startOffset): base(x,y) {
         activationTime = time;
-        timer = time;
+        timer = time + startOffset;
+        disableTime = disable;
      }
 }
