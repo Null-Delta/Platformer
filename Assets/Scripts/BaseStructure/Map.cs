@@ -15,6 +15,13 @@ public class Map : MonoBehaviour
     List<MapObject>[,] mapMatrix = new List<MapObject>[width,height];
     Image preview;
 
+
+    public GameObject createHpLine(MapObject obj)
+    {
+        return Instantiate(Resources.Load<GameObject>("Prefabs/hpLine"),obj.position, Quaternion.identity);
+    }
+
+
     public void insertMapObject(Vector2 point, MapObject obj)
     {
         if(point.x < 0 || point.y < 0 || point.x >= width || point.y >= height) return; 
@@ -64,6 +71,7 @@ public class Map : MonoBehaviour
         }
 
         Destroy(obj.gameObject);
+        obj = null;
     }
 
     public void executeGroup(List<Command> actions) {
@@ -168,3 +176,6 @@ public class Group {
     public int groupID;
     public List<Object> objects;
 }
+
+
+

@@ -14,6 +14,8 @@ public class WalkAndLive : WalkableObject, Health
     public Vector2 lastFloor;
     bool actFall = false;
 
+    GameObject lookHp;
+
     //////////////////////////////////////////
     //переменные, отвечающие за свойства
     public bool canFall = false;
@@ -21,11 +23,16 @@ public class WalkAndLive : WalkableObject, Health
 
     public void getDamage(float damage)
     {
-        gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
+        if (!actFall)
+            gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
         if (immortalTime <=0)
         {
-            Debug.Log(damage);
+            //Debug.Log(damage);
             hp -=damage;
+
+            lookHp.SetActive(true);
+            lookHp.transform.localScale = new Vector3(hp/50f,lookHp.transform.localScale.y, lookHp.transform.localScale.z );
+            
             if (hp <= 0)
             {
                 hp = 0;
@@ -70,6 +77,11 @@ public class WalkAndLive : WalkableObject, Health
     {
         base.startObject();   
         isCollisiable = true;
+
+        lookHp = map.createHpLine(this);
+        lookHp.transform.SetParent(this.gameObject.transform);
+        lookHp.SetActive(false);
+        
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -91,19 +103,25 @@ public class WalkAndLive : WalkableObject, Health
 
     public override void updateObject()
     {
-        if (immortalTime > 0)        //время бессмертия
+        if (immortalTime > 0) //время бессмертия
+        {
             immortalTime -= Time.deltaTime;
-
+            if (immortalTime <=0)
+            {
+                lookHp.SetActive(false);
+            }
+        }        
+            
         if (stanTime > 0)          // механика оглушения
         {
             stanTime-= Time.deltaTime;
             stopTime = true;
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0,0,0); // to delet
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.1f,0.1f,0.1f, 0.5f); // to delet
             if ( stanTime <= 0)
             {
                 stopTime = false;
                 movements.Clear();
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(255,255,255); // to delet
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1, 1); // to delet
                 addMovement(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));
             }
         }

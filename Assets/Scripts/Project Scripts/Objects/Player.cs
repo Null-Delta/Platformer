@@ -79,14 +79,13 @@ public class Player: WalkAndLive
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
         order = ObjectOrder.wall;
         
-        hp = float.PositiveInfinity;
-        immortalTimeForHit = 0.0f;
+        hp = 100;
+        immortalTimeForHit = 0.5f;
         canFall = true;
     }
 
     public override bool canMoveOn(Vector2Int point)
     {
-        
         if( map.getMapObjects<MapObject>(point.x,point.y, x => x.isCollisiable) != null) 
         {
             if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {
