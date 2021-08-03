@@ -18,10 +18,7 @@ public class Player: WalkAndLive
         // linearMove.x = 0;
         // linearMove.y = 0;
         //var newDir = movements.Peek();
-        if (savedStayDelay != -1)
-        {
-            Camera.main.GetComponent<PlayerControl>().ControlActive = true;   
-        }
+
         base.onStartWalk();
         
 
@@ -89,6 +86,7 @@ public class Player: WalkAndLive
 
     public override bool canMoveOn(Vector2Int point)
     {
+        
         if( map.getMapObjects<MapObject>(point.x,point.y, x => x.isCollisiable) != null) 
         {
             if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {

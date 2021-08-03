@@ -7,9 +7,7 @@ public class MainScript : MonoBehaviour
     public GameObject map;
     List<Object> objects = new List<Object>();
     Dictionary<int, List<Object>> groups = new Dictionary<int, List<Object>>();
-    //int i = 0; Нигде не используется
 
-    //float time = 0f; Нигде не используется
     void Start()
     {
         
@@ -72,10 +70,6 @@ public class MainScript : MonoBehaviour
         // objects.Add(testD1);
         // objects.Add(testK);
         // objects.Add(testK1);
-        objects.Add(new BreakableFloor(20,19, 1));
-        objects.Add(new BreakableFloor(21,19, 1));
-        objects.Add(new BreakableFloor(22,19, 1));
-        objects.Add(new BreakableFloor(23,19, 1));
         objects.Add(new UsualStalker(18,18));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));

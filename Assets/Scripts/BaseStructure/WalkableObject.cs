@@ -31,6 +31,9 @@ public class WalkableObject: MapObject {
     //волкер, относительно которого двигается данный волкер
     public WalkableObject localTarget = null;
 
+    // переменная, отвечающая за остановку изменения animationTime
+    public bool stopTime = false;
+
     //-----внутренние переменные для перемещения-----
     Vector2 translate = Vector2.zero;
     Vector2 targetOffset = Vector2.zero;
@@ -58,9 +61,13 @@ public class WalkableObject: MapObject {
 
     //добавляет в очередь перемещение
     public void addMovement(movement move) { 
+        if (movements.Count == 0 && !isWalk)
+            animationTime = 0;
+
         if(move.isAnimate) {
             movements.Enqueue(move);
         } else {
+            
             movements.Enqueue(move);
 
             if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject) != null) {
@@ -142,7 +149,8 @@ public class WalkableObject: MapObject {
 
     public override void updateObject()
     {
-        animationTime += Time.deltaTime;
+        if (!stopTime)
+            animationTime += Time.deltaTime;
 
         if(localTarget != null) {
             moveStartPosition = localTarget.position + targetOffset;

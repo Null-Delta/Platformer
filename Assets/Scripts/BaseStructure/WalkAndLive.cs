@@ -11,10 +11,9 @@ public class WalkAndLive : WalkableObject, Health
     public float immortalTimeForHit {get;set;}
     public float immortalTime {get;set;}
 
-    public float savedStayDelay = -1;
+    public float stanTime = 0;
     public Vector2 lastFloor;
-
-    public Vector3 savedSize;//to delet
+    bool actFall = false;
 
     //////////////////////////////////////////
     //переменные, отвечающие за свойства
@@ -51,14 +50,9 @@ public class WalkAndLive : WalkableObject, Health
 
     public virtual void onFall()
     {
-        if (this is Player)
-            Camera.main.GetComponent<PlayerControl>().ControlActive = false; 
-        savedSize = this.gameObject.transform.localScale;
-        getDamage(15);
-        savedStayDelay = stayDelay;
-        stayDelay = 0.7f;      //    fallingTime
+        getDamage(5);
+        stanTime = 0.7f;      //    fallingTime
         movements.Clear();
-        movements.Enqueue(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));
     }
 
     public override void onCollizion(MapObject obj, Collision2D collision)
@@ -72,7 +66,6 @@ public class WalkAndLive : WalkableObject, Health
     {
         base.startObject();   
         isCollisiable = true;
-        savedSize = this.gameObject.transform.localScale;  // to delet
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -82,23 +75,33 @@ public class WalkAndLive : WalkableObject, Health
 
     override public void onStartWalk()
     {
-        if (savedStayDelay != -1)  // оглушение
+        if (canFall)   // падение
         {
-            stayDelay = savedStayDelay;
-            savedStayDelay = -1;
-
-            this.gameObject.transform.localScale = savedSize; // to delet
+            if (map.getMapObjects<MapObject>((int)(mapLocation + movements.Peek().point).x, (int)(mapLocation + movements.Peek().point).y, x => x.objectName == "Floor" ||
+             x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
+            {
+                actFall = true;
+            }
         }
     }
 
     public override void updateObject()
     {
-        if (immortalTime > 0)
+        if (immortalTime > 0)        //время бессмертия
             immortalTime -= Time.deltaTime;
 
-        if (Camera.main.GetComponent<PlayerControl>().ControlActive == false)
+        if (stanTime > 0)          // механика оглушения
         {
-            this.gameObject.transform.localScale -= new Vector3(0.01f,0.01f,0); // to delet
+            stanTime-= Time.deltaTime;
+            stopTime = true;
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0,0,0); // to delet
+            if ( stanTime <= 0)
+            {
+                stopTime = false;
+                movements.Clear();
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(255,255,255); // to delet
+                addMovement(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));
+            }
         }
 
         base.updateObject();
@@ -106,17 +109,14 @@ public class WalkAndLive : WalkableObject, Health
 
     override public void onEndWalk() 
     {
-        if (canFall)   // падение
+        if (actFall)
         {
-            if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor" ||
-             x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
-            {
-                onFall();
-            }
-            else if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor") !=null)
-            {
-                lastFloor = position;
-            }
+            onFall();
+            actFall = false;
+        }
+        if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor") !=null)
+        {
+            lastFloor = position;
         }
     }
 
