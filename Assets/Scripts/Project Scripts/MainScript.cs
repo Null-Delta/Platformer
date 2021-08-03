@@ -72,6 +72,11 @@ public class MainScript : MonoBehaviour
         // objects.Add(testD1);
         // objects.Add(testK);
         // objects.Add(testK1);
+        objects.Add(new BreakableFloor(20,19, 1));
+        objects.Add(new BreakableFloor(21,19, 1));
+        objects.Add(new BreakableFloor(22,19, 1));
+        objects.Add(new BreakableFloor(23,19, 1));
+        objects.Add(new UsualStalker(18,18));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));
         objects.Add(new Teleport(15,15, 15, 10, new List<Command>(){}));

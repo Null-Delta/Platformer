@@ -11,7 +11,7 @@ public class WalkAndLive : WalkableObject, Health
     public float immortalTimeForHit {get;set;}
     public float immortalTime {get;set;}
 
-    public float savedStayDelay;
+    public float savedStayDelay = -1;
     public Vector2 lastFloor;
 
     public Vector3 savedSize;//to delet
@@ -52,7 +52,7 @@ public class WalkAndLive : WalkableObject, Health
     public virtual void onFall()
     {
         if (this is Player)
-            Camera.main.GetComponent<PlayerControl>().enabled = false; 
+            Camera.main.GetComponent<PlayerControl>().ControlActive = false; 
         savedSize = this.gameObject.transform.localScale;
         getDamage(15);
         savedStayDelay = stayDelay;
@@ -63,7 +63,7 @@ public class WalkAndLive : WalkableObject, Health
 
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
-
+        
     }
 
 
@@ -96,7 +96,7 @@ public class WalkAndLive : WalkableObject, Health
         if (immortalTime > 0)
             immortalTime -= Time.deltaTime;
 
-        if (stayDelay !=0)
+        if (Camera.main.GetComponent<PlayerControl>().ControlActive == false)
         {
             this.gameObject.transform.localScale -= new Vector3(0.01f,0.01f,0); // to delet
         }
