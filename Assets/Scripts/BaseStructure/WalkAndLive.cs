@@ -11,7 +11,7 @@ public class WalkAndLive : WalkableObject, Health
     public float immortalTimeForHit {get;set;}
     public float immortalTime {get;set;}
 
-    public float savedStayDelay;
+    public float savedStayDelay = -1;
     public Vector2 lastFloor;
 
     public Vector3 savedSize;//to delet
@@ -63,7 +63,7 @@ public class WalkAndLive : WalkableObject, Health
 
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
-
+        
     }
 
 
