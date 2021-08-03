@@ -31,7 +31,6 @@ public class WalkableObject: MapObject {
     //волкер, относительно которого двигается данный волкер
     public WalkableObject localTarget = null;
 
-
     //-----внутренние переменные для перемещения-----
     Vector2 translate = Vector2.zero;
     Vector2 targetOffset = Vector2.zero;
@@ -90,7 +89,7 @@ public class WalkableObject: MapObject {
     virtual public void tryFindTarget() {
         if(localTarget as MovingFloor != null && (localTarget as MovingFloor).movingObject == this) (localTarget as MovingFloor).movingObject = null;
         localTarget = null;
-
+        
         if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
             localTarget = (map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
             (localTarget as MovingFloor).movingObject = this;
@@ -118,7 +117,8 @@ public class WalkableObject: MapObject {
     }
 
     virtual public void setTarget(WalkableObject target) {
-
+        localTarget = target;
+        targetOffset = position - localTarget.position;
     }
 
     void setupMoving() {
@@ -133,7 +133,6 @@ public class WalkableObject: MapObject {
             targetOffset = position - localTarget.position;
             translate = -targetOffset;
             moveStartPosition = localTarget.position + targetOffset;
-
         } else {
             targetOffset = Vector3.zero;
             moveStartPosition = gameObject.transform.position;
@@ -183,7 +182,12 @@ public class WalkableObject: MapObject {
 
                 animationTime -= stayDelay + moveDelay;
                 position = moveStartPosition + translate;
-                targetOffset = Vector3.zero;
+
+                if(localTarget != null) {
+                    targetOffset = position - localTarget.position;
+                } else {
+                    targetOffset = Vector3.zero;
+                }
                 isWalk = false;
 
                 if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject) != null) {

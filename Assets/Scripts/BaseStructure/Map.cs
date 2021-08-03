@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class Map : MonoBehaviour
 {
+    Texture2D texture;
+    Sprite s;
+
     const int width = 256, height = 256;
     List<Object> objects = new List<Object>();
     Dictionary<int, List<Object>> groups = new Dictionary<int, List<Object>>();
@@ -115,16 +118,20 @@ public class Map : MonoBehaviour
 
     public void Start() {
         preview = GameObject.Find("mapPreview").GetComponent<Image>();
+        texture = new Texture2D(32,32);
+        s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
     }
 
     public void Update() {
-        Texture2D texture = new Texture2D(32,32);
+        
         texture.filterMode = FilterMode.Point;
 
         for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 32; y++) {
                 var list = mapMatrix[x,y];
 
+                texture.SetPixel(x,y,Color.white);
+                
 
                 if(list.Find(x => x is Floor) != null) {
                     texture.SetPixel(x,y,Color.gray);
@@ -153,7 +160,6 @@ public class Map : MonoBehaviour
 
         texture.Apply();
 
-        Sprite s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
         preview.sprite = s;
     }
 }

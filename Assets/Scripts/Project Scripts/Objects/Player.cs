@@ -85,14 +85,8 @@ public class Player: WalkAndLive
     {
         if( map.getMapObjects<MapObject>(point.x,point.y, x => x.isCollisiable) != null) 
         {
-            if(map.getMapObjects<MapObject>(point.x, point.y, x => x.objectName == "Box") != null) {
-                int direction = -1;
-                if(movements.Peek().point.x == -1) direction = 0;
-                if(movements.Peek().point.y == 1) direction = 1;
-                if(movements.Peek().point.x == 1) direction = 2;
-                if(movements.Peek().point.y == -1) direction = 3;
-                map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].setDirection(direction);
-                return map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].willMove();
+            if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {
+                return (map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].tryPush(movements.Peek().point));
             }
         }
 

@@ -182,7 +182,25 @@ public class MainScript : MonoBehaviour
 
         objects.Add(new Box(13,13));
         objects.Add(new Box(14,13));
-        
+
+        SetRect<Grass>(0,0,100,100,1);
+
+        //objects.RemoveAll(x => x is Grass && 
+            //objects.Find(y => y is MapObject && (!(y is Grass) && (y as MapObject).position == (x as MapObject).position) || (y is MovingFloor)) == null);
+
+        Random.InitState(228);
+
+        objects.RemoveAll(x => x is Grass && objects.Find(y => (y is Floor) && (y as MapObject).position == (x as MapObject).position) == null);
+        objects.RemoveAll(x => x is Grass && Random.Range(0,5) == 1);
+
+        List<Grass> newGrasses = new List<Grass>();
+        objects.ForEach(x => {
+            if(x is Wall) {
+                newGrasses.Add(new Grass((int)(x as MapObject).position.x, (int)(x as MapObject).position.y));
+            }
+        });
+
+        objects.AddRange(newGrasses);
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);
