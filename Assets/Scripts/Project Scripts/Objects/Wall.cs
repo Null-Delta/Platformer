@@ -11,7 +11,6 @@ public class Wall : ConnectedObject
     {
         base.startObject();
         isCollisiable = true;
-        gameObject.transform.position = position;
 
         setupStyle((int)position.x, (int)position.y);
         order = ObjectOrder.wall;

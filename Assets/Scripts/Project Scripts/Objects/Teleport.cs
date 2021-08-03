@@ -19,22 +19,22 @@ public class Teleport : PressableObject
     Material teleportationMaterial;
     Material originalMaterial;
 
-    
 
-    
+
+
     public override string objectName => "Teleport";
     public override void OnPressStart(WalkableObject walker)
     {
-        
-        
-        
+
+
+
         if (!isReceptionObject)
         {
             isActivation = true;
             teleportationObj = walker;
             originalMaterial = teleportationObj.gameObject.GetComponent<SpriteRenderer>().material;
             map.executeGroup(events["OnTeleport"]);
-            
+
         }
         else
         {
@@ -42,12 +42,12 @@ public class Teleport : PressableObject
         }
 
     }
-        
+
 
     public override void OnPressEnd(WalkableObject walker)
     {
         isActivation = false;
-        if(!isTeleportation)
+        if (!isTeleportation)
         {
             sumTime = 0;
         }
@@ -58,7 +58,7 @@ public class Teleport : PressableObject
         isReceptionObject = true;
     }
 
-    public override void updateObject() 
+    public override void updateObject()
     {
         if (isActivation)
         {
@@ -66,14 +66,15 @@ public class Teleport : PressableObject
             if (sumTime > deleyBeforeTeleportation)
             {
                 //TODO: Сделать ограничение на перемещение в WalkableObject 
-                if(map.getMapObjects<MapObject>(brotherPosition.x, brotherPosition.y, x => x is WalkableObject) == null)
+                if (map.getMapObjects<MapObject>(brotherPosition.x, brotherPosition.y, x => x is WalkableObject) == null)
                 {
                     map.removeMapObject(teleportationObj.position, teleportationObj);
                     map.insertMapObject(brotherPosition, teleportationObj);
                     teleportationObj.mapLocation = brotherPosition;
                     //teleportationObj.addMovement(new movement(teleportationObj.mapLocation - brotherPosition, false));
 
-                    if(teleportationObj is PushableObject) {
+                    if (teleportationObj is PushableObject)
+                    {
                         (teleportationObj as PushableObject).ignorePushes = true;
                     }
 
@@ -82,12 +83,12 @@ public class Teleport : PressableObject
                     //Camera.main.GetComponent<PlayerControl>().ControlActive = false;
                     isTeleportation = true;
                     isActivation = false;
-                    sumTime = 0;  
+                    sumTime = 0;
                 }
                 else
                 {
                     //Ну типа анимация шо ты еблан куды телепортируешь, не видишь занято?
-                    sumTime = 0; 
+                    sumTime = 0;
                 }
             }
         }
@@ -132,7 +133,8 @@ public class Teleport : PressableObject
                     else
                     {
 
-                        if(teleportationObj is PushableObject) {
+                        if (teleportationObj is PushableObject)
+                        {
                             (teleportationObj as PushableObject).ignorePushes = false;
                         }
                         //Camera.main.GetComponent<PlayerControl>().ControlActive = true;
