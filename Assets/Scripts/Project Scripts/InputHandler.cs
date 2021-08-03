@@ -190,7 +190,7 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.WindowsPlayer:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                return Input.GetKey(KeyCode.W);
+                return Input.GetKeyDown(KeyCode.W);
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
@@ -208,7 +208,7 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.WindowsPlayer:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                return Input.GetKey(KeyCode.D);
+                return Input.GetKeyDown(KeyCode.D);
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
@@ -226,7 +226,7 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.WindowsPlayer:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                return Input.GetKey(KeyCode.S);
+                return Input.GetKeyDown(KeyCode.S);
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
@@ -243,7 +243,7 @@ public class InputHandler : MonoBehaviour
             case RuntimePlatform.WindowsPlayer:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                return Input.GetKey(KeyCode.A);
+                return Input.GetKeyDown(KeyCode.A);
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:

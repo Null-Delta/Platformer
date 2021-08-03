@@ -8,8 +8,8 @@ public class PlayerControl : MonoBehaviour
     public bool ControlActive = true;
     InputHandler ih;
 
-    float[] time = new float[4];
-    int ind;
+    
+    string moveDirection;
     void Start()
     {
         ih = Camera.main.GetComponent<InputHandler>();
@@ -29,60 +29,46 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (ih.ButtonUp())
-            ind = 0;
-        else if (ih.ButtonRight())
-            ind = 1;
-        else if (ih.ButtonDown())
-            ind = 2;
+        if (ih.ButtonRight())
+        {   
+            Move("Right");
+        }  
+        else if (ih.ButtonUp())
+        {
+            Move("Up");
+        } 
         else if (ih.ButtonLeft())
-            ind = 3;
-        else
         {
-            ind = -1;
-            for (int i = 0; i < 4; i++)
-                if (i != ind) time[i] = 0;
-        }
-
-        if (ind >= 0)
+            Move("Left");
+        }  
+        else if (ih.ButtonDown())
         {
-            for (int i = 0; i < 4; i++)
-                if (i != ind) time[i] = 0;
-
-            if (time[ind] == 0)
-            {
-                Move(ind);
-            }
-            time[ind] += Time.deltaTime;
-            if (time[ind] > 0.2f)
-            {
-                time[ind] = 0.0001f;
-                //Move(ind);
-            }
+            Move("Down");
         }
-
+            
+        
     }
 
-    public void Move(int dir)
+    public void Move(string moveDirection)
     {
         if (ControlActive)
         {
             movement move = new movement();
             move.isAnimate = true;
 
-            switch (dir)
+            switch (moveDirection)
             {
-                case 0:
-                    move.point = new Vector2Int(0, 1);
-                    break;
-                case 1:
+                case "Right":
                     move.point = new Vector2Int(1, 0);
                     break;
-                case 2:
-                    move.point = new Vector2Int(0, -1);
+                case "Up":
+                    move.point = new Vector2Int(0, 1);
                     break;
-                case 3:
+                case "Left":
                     move.point = new Vector2Int(-1, 0);
+                    break;
+                case "Down":
+                    move.point = new Vector2Int(0, -1);
                     break;
             }
 

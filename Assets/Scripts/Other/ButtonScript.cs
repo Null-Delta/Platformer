@@ -23,7 +23,7 @@ public class ButtonScript : EventTrigger
     {
         ih.isUI = true;
         gameObject.GetComponent<Image>().sprite = button_pressed;
-        pc.Move(Int32.Parse(gameObject.name.Remove(0,7)));
+        pc.Move(gameObject.name.Remove(0,7));
     }
 
     public override void OnPointerUp(PointerEventData data)
