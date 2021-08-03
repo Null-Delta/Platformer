@@ -28,6 +28,7 @@ public class MainScript : MonoBehaviour
         objects.Add(new Wall(1,26));
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
+        objects.Add(new Spike(9,15, 1));
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
         //SetRect<Wall>(12,12,6,6,1);

@@ -83,7 +83,7 @@ public class Player: WalkAndLive
         order = ObjectOrder.wall;
         
         hp = 100;
-        immortalTime = 0.5f;
+        immortalTimeForHit = 0.5f;
         canFall = true;
     }
 
