@@ -53,10 +53,6 @@ public class MainScript : MonoBehaviour
         // objects.Add(testD1);
         // objects.Add(testK);
         // objects.Add(testK1);
-        objects.Add(new BreakableFloor(20,19, 1));
-        objects.Add(new BreakableFloor(21,19, 1));
-        objects.Add(new BreakableFloor(22,19, 1));
-        objects.Add(new BreakableFloor(23,19, 1));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));
         objects.Add(new Teleport(15,15, 15, 10, new List<Command>(){}));
@@ -204,6 +200,29 @@ public class MainScript : MonoBehaviour
         });
 
         objects.AddRange(newGrasses);
+
+        objects.RemoveAll(x => x is MapObject && new Rect(3,3,4,4).Contains((x as MapObject).position));
+
+        objects.Add(new BreakableFloor(6,6,0.5f,2f));
+        objects.Add(new BreakableFloor(6,5,0.5f,2f));
+        objects.Add(new BreakableFloor(6,4,0.5f,2f));
+        objects.Add(new BreakableFloor(6,3,0.5f,2f));
+
+        objects.Add(new BreakableFloor(5,6,0.5f,2f));
+        objects.Add(new BreakableFloor(5,5,0.5f,2f));
+        objects.Add(new BreakableFloor(5,4,0.5f,2f));
+        objects.Add(new BreakableFloor(5,3,0.5f,2f));
+
+        objects.Add(new BreakableFloor(4,6,0.5f,2f));
+        objects.Add(new BreakableFloor(4,5,0.5f,2f));
+        objects.Add(new BreakableFloor(4,4,0.5f,2f));
+        objects.Add(new BreakableFloor(4,3,0.5f,2f));
+
+        objects.Add(new BreakableFloor(3,6,0.5f,2f));
+        objects.Add(new BreakableFloor(3,5,0.5f,2f));
+        objects.Add(new BreakableFloor(3,4,0.5f,2f));
+        objects.Add(new BreakableFloor(3,3,0.5f,2f));
+
         map.AddComponent<Map>();
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);

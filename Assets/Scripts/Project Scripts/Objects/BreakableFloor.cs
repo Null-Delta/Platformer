@@ -8,6 +8,7 @@ public class BreakableFloor : PressableObject
 
     float timer;
     float timeToDestroy;
+    float timeToRestore;
     bool isDestroying;
     public bool isReal;
 
@@ -16,6 +17,7 @@ public class BreakableFloor : PressableObject
         isDestroying = true;
         timer =timeToDestroy;
         // начало исчезновения
+        // gameObject.GetComponent<Animator>().Play("Break",0,0f);
     }
 
     public override void startObject()
@@ -34,7 +36,7 @@ public class BreakableFloor : PressableObject
             timer -= Time.deltaTime;
             if (timer <=0)
             {
-                timer =timeToDestroy;
+                timer = timeToRestore;
                 isReal = false;
                 var tmpOnMe = map.getMapObjects<WalkAndLive>((int)position.x, (int)position.y, x => x.canFall);
                 if (tmpOnMe != null)
@@ -45,7 +47,7 @@ public class BreakableFloor : PressableObject
                     }
                 }
                 // полное исчезновение
-                this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                gameObject.GetComponent<Animator>().Play("Break",0,0f);
             }
         }
         else if (isDestroying && !isReal)
@@ -56,14 +58,15 @@ public class BreakableFloor : PressableObject
                 isReal = true;
                 isDestroying = false;
                 // полное восстановление
-                this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                gameObject.GetComponent<Animator>().Play("Restore",0,0f);
             }
         }
     }
 
-    public BreakableFloor(int x, int y, float time):base(x,y)
+    public BreakableFloor(int x, int y, float time, float restore):base(x,y)
     {
         position = new Vector2(x,y);
         timeToDestroy = time;
+        timeToRestore = restore;
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1079811787792035964}
   - component: {fileID: 522876467057056179}
   - component: {fileID: 5472004117202113896}
+  - component: {fileID: 258870352934458496}
   m_Layer: 0
   m_Name: BreakableFloor
   m_TagString: Untagged
@@ -52,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5413850237332849526, guid: ea15a495377bc409e9e5821acdf0116d, type: 3}
-  m_Color: {r: 0.10980391, g: 0.29521787, b: 0.81960785, a: 1}
+  m_Sprite: {fileID: 4352860349533771561, guid: 1bfcbded4e88e4e95b1037d794f12ca6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,3 +97,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1fa0b585c2f948c785693d6632710a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &258870352934458496
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316875277612510983}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c587a2f509bfd49c0b64da6104d9d440, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
