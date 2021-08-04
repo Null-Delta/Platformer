@@ -117,6 +117,8 @@ public class Map : MonoBehaviour
 
         if(obj is MapObject) {
             obj.gameObject = Instantiate(prefab,(obj as MapObject).position, Quaternion.identity);
+            if(obj is Wall)
+                obj.gameObject.transform.SetParent(GameObject.Find("Walls").transform);
         } else {
             obj.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
         }
@@ -124,52 +126,52 @@ public class Map : MonoBehaviour
         addObject(obj);
     }
 
-    public void Start() {
-        preview = GameObject.Find("mapPreview").GetComponent<Image>();
-        texture = new Texture2D(32,32);
-        s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
-    }
+    // public void Start() {
+    //     preview = GameObject.Find("mapPreview").GetComponent<Image>();
+    //     texture = new Texture2D(32,32);
+    //     s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
+    // }
 
-    public void Update() {
+    // public void Update() {
         
-        texture.filterMode = FilterMode.Point;
+    //     texture.filterMode = FilterMode.Point;
 
-        for(int x = 0; x < 32; x++) {
-            for(int y = 0; y < 32; y++) {
-                var list = mapMatrix[x,y];
+    //     for(int x = 0; x < 32; x++) {
+    //         for(int y = 0; y < 32; y++) {
+    //             var list = mapMatrix[x,y];
 
-                texture.SetPixel(x,y,Color.white);
+    //             texture.SetPixel(x,y,Color.white);
                 
 
-                if(list.Find(x => x is Floor) != null) {
-                    texture.SetPixel(x,y,Color.gray);
-                }
-                if(list.Find(x => x is Wall) != null) {
-                    texture.SetPixel(x,y,new Color(0.25f,0.25f,0.25f,1f));
-                } 
+    //             if(list.Find(x => x is Floor) != null) {
+    //                 texture.SetPixel(x,y,Color.gray);
+    //             }
+    //             if(list.Find(x => x is Wall) != null) {
+    //                 texture.SetPixel(x,y,new Color(0.25f,0.25f,0.25f,1f));
+    //             } 
 
-                if(list.Find(x => x is MovingFloor) != null) {
-                    texture.SetPixel(x,y,Color.magenta);
-                }
+    //             if(list.Find(x => x is MovingFloor) != null) {
+    //                 texture.SetPixel(x,y,Color.magenta);
+    //             }
 
-                if(list.Find(x => x is Box) != null) {
-                    texture.SetPixel(x,y,Color.green);
-                }
+    //             if(list.Find(x => x is Box) != null) {
+    //                 texture.SetPixel(x,y,Color.green);
+    //             }
 
-                if(list.Find(x => x is Teleport) != null) {
-                    texture.SetPixel(x,y,Color.cyan);
-                }
+    //             if(list.Find(x => x is Teleport) != null) {
+    //                 texture.SetPixel(x,y,Color.cyan);
+    //             }
 
-                if(list.Find(x => x is Player) != null) {
-                    texture.SetPixel(x,y,Color.yellow);
-                }
-            }
-        }
+    //             if(list.Find(x => x is Player) != null) {
+    //                 texture.SetPixel(x,y,Color.yellow);
+    //             }
+    //         }
+    //     }
 
-        texture.Apply();
+    //     texture.Apply();
 
-        preview.sprite = s;
-    }
+    //     preview.sprite = s;
+    // }
 }
 
 public class Group {

@@ -18,6 +18,15 @@ public class CheckPoint : PressableObject
         }
     }
 
+    public override void OnPressEnd(WalkableObject walker)
+    {
+        if (walker is Player)
+        {
+            (walker as Player).nowCheckPoint = this;
+            //игрок вышел на чекпоинт
+        }
+    }
+
     public void spawnPlayer()
     {
         timer = respawnTime;

@@ -7,13 +7,10 @@ public class Player: WalkAndLive
     
     public override string objectName => "Player";
     public int stepCount = 0, dir = 0;
-
     public bool isAnimFinish;
     public Queue<int> direction = new Queue<int>();
 
     public CheckPoint nowCheckPoint;
-    
-
     override public void onStartWalk() {
         // linearMove.x = 0;
         // linearMove.y = 0;
@@ -73,7 +70,7 @@ public class Player: WalkAndLive
 
     public override void startObject()
     {
-        base.startObject();   
+        base.startObject();
         stayDelay = 0.0f;
         Camera.main.GetComponent<PlayerControl>().CurrentPlayer = this;
         Camera.main.GetComponent<CamControl>().targetObj = this.gameObject;
