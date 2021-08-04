@@ -11,8 +11,12 @@ public class WalkAndLive : WalkableObject, Health
     public float immortalTime {get;set;}
 
     public float stanTime = 0;
+
+    public float deathTime = 0.33f;
     public Vector2 lastFloor;
     bool actFall = false;
+
+    bool isDeath = false;
 
     GameObject lookHp;
 
@@ -27,22 +31,24 @@ public class WalkAndLive : WalkableObject, Health
             gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
         if (immortalTime <=0)
         {
-            //Debug.Log(damage);
-            hp -=damage;
-
-            lookHp.SetActive(true);
-            lookHp.transform.localScale = new Vector3(hp/50f,lookHp.transform.localScale.y, lookHp.transform.localScale.z );
-            
-            if (hp <= 0)
+            if (hp - damage <= 0)
             {
                 hp = 0;
-                onDeath();
-                map.destroyObject(this);
+                isDeath = true;
             }
             else
             {
+                hp -=damage;
                 onGetDamage(damage);
             }
+
+            
+
+            //lookHp.SetActive(true);
+            lookHp.transform.GetChild(0).localScale = new Vector3(hp/100f, lookHp.transform.GetChild(0).localScale.y, lookHp.transform.GetChild(0).localScale.z);
+            lookHp.transform.GetChild(2).GetComponentInChildren<UnityEngine.UI.Text>().text = "" + hp;
+            
+            
                 
             immortalTime = immortalTimeForHit;
         }
@@ -80,7 +86,7 @@ public class WalkAndLive : WalkableObject, Health
 
         lookHp = map.createHpLine(this);
         lookHp.transform.SetParent(this.gameObject.transform);
-        lookHp.SetActive(false);
+        //lookHp.SetActive(false);
         
     }
 
@@ -94,7 +100,7 @@ public class WalkAndLive : WalkableObject, Health
         if (canFall)   // падение
         {
             if (map.getMapObjects<MapObject>((int)(mapLocation + movements.Peek().point).x, (int)(mapLocation + movements.Peek().point).y, x => x.objectName == "Floor" ||
-             x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
+            x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
             {
                 actFall = true;
             }
@@ -103,12 +109,25 @@ public class WalkAndLive : WalkableObject, Health
 
     public override void updateObject()
     {
+        if(isDeath)
+        {
+            deathTime-= Time.deltaTime;
+            if(deathTime < 0)
+            {
+                onDeath();
+                map.destroyObject(this);
+                deathTime = 0.33f;
+                isDeath = false;
+            }
+            
+        }
+
         if (immortalTime > 0) //время бессмертия
         {
             immortalTime -= Time.deltaTime;
             if (immortalTime <=0)
             {
-                lookHp.SetActive(false);
+                //lookHp.SetActive(false);
             }
         }        
             
