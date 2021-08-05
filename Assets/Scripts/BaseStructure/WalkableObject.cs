@@ -27,16 +27,18 @@ public class WalkableObject: MapObject {
 
     //текущее целочисленное положение объекта на карте
     public Vector2Int mapLocation;
-
+    
     //волкер, относительно которого двигается данный волкер
     public WalkableObject localTarget = null;
+    public List<WalkableObject> subTargets = new List<WalkableObject>();
+
+    Vector2Int targetOffset = Vector2Int.zero;
 
     // переменная, отвечающая за остановку изменения animationTime
     public bool stopTime = false;
 
     //-----внутренние переменные для перемещения-----
     Vector2 translate = Vector2.zero;
-    Vector2 targetOffset = Vector2.zero;
     Vector2 moveStartPosition = Vector2.zero;
     float animationTime = 0f;
     bool isWalk = false;
@@ -93,14 +95,21 @@ public class WalkableObject: MapObject {
 
     //вызывается, когда объект переместил свои координаты в матрице карты. здесь объект пытается найти волкера, относительно которого он будет двигаться
     //это не конечная реализация
-    virtual public void tryFindTarget() {
-        if(localTarget as MovingFloor != null && (localTarget as MovingFloor).movingObject == this) (localTarget as MovingFloor).movingObject = null;
-        localTarget = null;
+    virtual public bool tryFindTarget() {
+        if(localTarget != null) clearTarget();
+        //if(localTarget as MovingFloor != null && (localTarget as MovingFloor).movingObject == this) (localTarget as MovingFloor).movingObject = null;
+        //localTarget = null;
         
         if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
-            localTarget = (map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
-            (localTarget as MovingFloor).movingObject = this;
+            setTarget(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
+            //(localTarget as MovingFloor).movingObject = this;
+            translate = -(position - localTarget.position);
+            targetOffset = Vector2Int.zero;
+            moveStartPosition = -translate;
+            return true;
         }
+
+        return false;
     }
 
 
@@ -115,17 +124,45 @@ public class WalkableObject: MapObject {
     //метод перемещяющий объект в матрице карты. 
     //он виртуальный для переопределения в двигяющемся полу.
     //Возможно такое рещение будет переделанно
-    virtual public void setLocationOnMap() {
+    public void setLocationOnMap() {
         Vector2Int move = movements.Peek().point;
 
         map.removeMapObject(mapLocation, this);
+
+        subTargets.ForEach(x => {
+            map.removeMapObject(x.mapLocation,x);
+        });
+
         mapLocation = move + mapLocation;
+
         map.insertMapObject(mapLocation, this);
+
+        subTargets.ForEach( x => {
+            x.mapLocation = mapLocation + x.targetOffset;
+            Debug.Log(x.targetOffset);
+        });
+        subTargets.ForEach(x => {
+            map.insertMapObject(x.mapLocation,x);
+        });
+    }
+
+
+    public void setLocationInSubTargets() {
+        subTargets.ForEach(x => {
+            x.addMovement(new movement(Vector2Int.zero, false));
+            x.setLocationOnMap();
+        });
     }
 
     virtual public void setTarget(WalkableObject target) {
         localTarget = target;
-        targetOffset = position - localTarget.position;
+        localTarget.subTargets.Add(this);
+        targetOffset = mapLocation - localTarget.mapLocation;
+    }
+
+    virtual public void clearTarget() {
+        localTarget.subTargets.Remove(this);
+        localTarget = null;
     }
 
     void setupMoving() {
@@ -134,16 +171,20 @@ public class WalkableObject: MapObject {
 
         Vector2Int move = movements.Peek().point;
 
-        tryFindTarget();
+        bool isFindTarget = tryFindTarget();
 
-        if(localTarget != null) {
-            targetOffset = position - localTarget.position;
-            translate = -targetOffset;
-            moveStartPosition = localTarget.position + targetOffset;
-        } else {
-            targetOffset = Vector3.zero;
-            moveStartPosition = gameObject.transform.position;
+        if(localTarget == null) {
+            moveStartPosition = position;
             translate = move + ((mapLocation - move) - moveStartPosition);
+
+        } else {
+            moveStartPosition = localTarget.position - position;
+
+            if(!isFindTarget) {
+                translate = move;
+                targetOffset += move;
+            }
+
         }
     }
 
@@ -153,8 +194,7 @@ public class WalkableObject: MapObject {
             animationTime += Time.deltaTime;
 
         if(localTarget != null) {
-            moveStartPosition = localTarget.position + targetOffset;
-            position = moveStartPosition;
+            position = localTarget.position - moveStartPosition;
         }
 
         if(animationTime > stayDelay && movements.Count == 0) {
@@ -187,16 +227,18 @@ public class WalkableObject: MapObject {
 
             if(animationTime > stayDelay + moveDelay) {
                 movements.Dequeue();
+                isWalk = false;
 
                 animationTime -= stayDelay + moveDelay;
-                position = moveStartPosition + translate;
 
                 if(localTarget != null) {
-                    targetOffset = position - localTarget.position;
+                    position = localTarget.position - moveStartPosition + translate;
+                    moveStartPosition = localTarget.mapLocation - mapLocation;
+                    //targetOffset = mapLocation - localTarget.mapLocation;
                 } else {
-                    targetOffset = Vector3.zero;
+                    targetOffset = Vector2Int.zero;
+                    position = moveStartPosition + translate;
                 }
-                isWalk = false;
 
                 if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject) != null) {
                     map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject).ForEach(x => {
@@ -210,7 +252,11 @@ public class WalkableObject: MapObject {
                     goto repeateMove;
 
             } else {
-                position = moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
+                if(localTarget == null) {
+                    position = moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
+                } else {
+                    position = localTarget.position - moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
+                }
             }
         }
     }

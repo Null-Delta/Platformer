@@ -34,28 +34,29 @@ public class MovingFloor : WalkableObject
         }
     }
 
-    override public void tryFindTarget() {
-        localTarget = null;
+    override public bool tryFindTarget() {
+        //localTarget = null;
+        return false;
     }
     
-    override public void setLocationOnMap() {
-        Vector2Int move = movements.Peek().point;
+    // override public void setLocationOnMap() {
+    //     Vector2Int move = movements.Peek().point;
 
-        map.removeMapObject(mapLocation, this);
+    //     map.removeMapObject(mapLocation, this);
 
-        //var enumer = movingObject
-        if(movingObject != null) {
-            map.removeMapObject(mapLocation, movingObject);
-        }
+    //     //var enumer = movingObject
+    //     if(movingObject != null) {
+    //         map.removeMapObject(mapLocation, movingObject);
+    //     }
 
-        mapLocation = move + mapLocation;
-        map.insertMapObject(mapLocation, this);
+    //     mapLocation = move + mapLocation;
+    //     map.insertMapObject(mapLocation, this);
 
-        if(movingObject != null) {
-            map.insertMapObject(mapLocation, movingObject);
-            movingObject.mapLocation = mapLocation;
-        }
-    }
+    //     if(movingObject != null) {
+    //         map.insertMapObject(mapLocation, movingObject);
+    //         movingObject.mapLocation = mapLocation;
+    //     }
+    // }
 
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
