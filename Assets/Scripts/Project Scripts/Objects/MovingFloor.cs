@@ -17,11 +17,11 @@ public class MovingFloor : WalkableObject
 
         isCollisiable = false;
         order = ObjectOrder.floor;
-        movements = new Queue<movement>();
+        movements = new List<movement>();
 
         var enumer = preset.GetEnumerator();
         while(enumer.MoveNext()) {
-            movements.Enqueue(enumer.Current);
+            movements.Add(enumer.Current);
         }
     }
 
@@ -29,7 +29,7 @@ public class MovingFloor : WalkableObject
         if(movements.Count == 0) {
             var enumer = preset.GetEnumerator();
             while(enumer.MoveNext()) {
-                movements.Enqueue(enumer.Current);
+                movements.Add(enumer.Current);
             }
         }
     }

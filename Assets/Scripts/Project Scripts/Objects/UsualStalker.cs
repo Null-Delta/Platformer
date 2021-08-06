@@ -28,10 +28,10 @@ public class UsualStalker : Seeker
         if( map.getMapObjects<MapObject>(point.x,point.y, x => x.isCollisiable) != null) 
         {
             if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {
-                tmpReturn = (map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].tryPush(movements.Peek().point));
+                tmpReturn = (map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].tryPush(movements[0].point));
                 if (!tmpReturn)
                 {
-                    var tmpMov = movements.Peek();
+                    var tmpMov = movements[0];
 
                     var tmpInt = tmpMov.point.x;
                     tmpMov.point.x = tmpMov.point.y;
@@ -46,7 +46,7 @@ public class UsualStalker : Seeker
         tmpReturn = map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable ) == null;
         if (!tmpReturn)
         {
-            var tmpMov = movements.Peek();
+            var tmpMov = movements[0];
 
             var tmpInt = tmpMov.point.x;
             tmpMov.point.x = tmpMov.point.y;

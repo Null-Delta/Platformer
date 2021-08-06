@@ -20,7 +20,7 @@ public class WalkableObject: MapObject {
     public const float moveDelay = 0.2f;
 
     //список запланированных перемещений
-    public Queue<movement> movements = new Queue<movement>();
+    public List<movement> movements = new List<movement>();
 
     //время которое волкер находится в покое перед следующим ходом
     public float stayDelay = 0.0f;
@@ -29,13 +29,25 @@ public class WalkableObject: MapObject {
     public Vector2Int mapLocation;
     
     //волкер, относительно которого двигается данный волкер
-    public WalkableObject localTarget = null;
-    public List<WalkableObject> subTargets = new List<WalkableObject>();
+    public WalkableObject targetWalker = null;
+    public List<WalkableObject> subWalkers = new List<WalkableObject>();
 
+    //отступ, относительно targetWalker
     Vector2Int targetOffset = Vector2Int.zero;
 
-    // переменная, отвечающая за остановку изменения animationTime
-    public bool stopTime = false;
+    //переменная, отвечающяя за игнорирование перемещений
+    private bool _isIgnoreMoves = false;
+    public bool isIgnoreMoves {
+        get {
+            return _isIgnoreMoves;
+        }
+        set{
+            if(value) {
+                movements.RemoveAll(x => true);
+            }
+            _isIgnoreMoves = value;
+        }
+    }
 
     //-----внутренние переменные для перемещения-----
     Vector2 translate = Vector2.zero;
@@ -43,7 +55,6 @@ public class WalkableObject: MapObject {
     float animationTime = 0f;
     bool isWalk = false;
     //-----------------------------------------------
-
 
     public override void startObject()
     {
@@ -62,15 +73,15 @@ public class WalkableObject: MapObject {
     }
 
     //добавляет в очередь перемещение
-    public void addMovement(movement move) { 
+    public void addMovement(movement move) {         
         if (movements.Count == 0 && !isWalk)
             animationTime = 0;
 
-        if(move.isAnimate) {
-            movements.Enqueue(move);
-        } else {
+        if(move.isAnimate && !isIgnoreMoves) {
+            movements.Add(move);
+        } else if(!move.isAnimate) {
             
-            movements.Enqueue(move);
+            movements.Add(move);
 
             if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject) != null) {
                 map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is PressableObject).ForEach(x => {
@@ -89,21 +100,18 @@ public class WalkableObject: MapObject {
                 });
             }
 
-            movements.Dequeue();
+            movements.RemoveAt(0);
         }
     }
 
     //вызывается, когда объект переместил свои координаты в матрице карты. здесь объект пытается найти волкера, относительно которого он будет двигаться
     //это не конечная реализация
     virtual public bool tryFindTarget() {
-        if(localTarget != null) clearTarget();
-        //if(localTarget as MovingFloor != null && (localTarget as MovingFloor).movingObject == this) (localTarget as MovingFloor).movingObject = null;
-        //localTarget = null;
+        if(targetWalker != null) clearTarget();
         
         if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
             setTarget(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
-            //(localTarget as MovingFloor).movingObject = this;
-            translate = -(position - localTarget.position);
+            translate = -(position - targetWalker.position);
             targetOffset = Vector2Int.zero;
             moveStartPosition = -translate;
             return true;
@@ -125,11 +133,11 @@ public class WalkableObject: MapObject {
     //он виртуальный для переопределения в двигяющемся полу.
     //Возможно такое рещение будет переделанно
     public void setLocationOnMap() {
-        Vector2Int move = movements.Peek().point;
+        Vector2Int move = movements[0].point;
 
         map.removeMapObject(mapLocation, this);
 
-        subTargets.ForEach(x => {
+        subWalkers.ForEach(x => {
             map.removeMapObject(x.mapLocation,x);
         });
 
@@ -137,48 +145,50 @@ public class WalkableObject: MapObject {
 
         map.insertMapObject(mapLocation, this);
 
-        subTargets.ForEach( x => {
+        subWalkers.ForEach( x => {
             x.mapLocation = mapLocation + x.targetOffset;
             Debug.Log(x.targetOffset);
         });
-        subTargets.ForEach(x => {
+        subWalkers.ForEach(x => {
             map.insertMapObject(x.mapLocation,x);
         });
+
+        setLocationInSubTargets();
     }
 
-
     public void setLocationInSubTargets() {
-        subTargets.ForEach(x => {
-            x.addMovement(new movement(Vector2Int.zero, false));
+        subWalkers.ForEach(x => {
+            x.movements.Insert(0, new movement(Vector2Int.zero,false));
             x.setLocationOnMap();
+            x.movements.RemoveAt(0);
         });
     }
 
     virtual public void setTarget(WalkableObject target) {
-        localTarget = target;
-        localTarget.subTargets.Add(this);
-        targetOffset = mapLocation - localTarget.mapLocation;
+        targetWalker = target;
+        targetWalker.subWalkers.Add(this);
+        targetOffset = mapLocation - targetWalker.mapLocation;
     }
 
     virtual public void clearTarget() {
-        localTarget.subTargets.Remove(this);
-        localTarget = null;
+        targetWalker.subWalkers.Remove(this);
+        targetWalker = null;
     }
 
     void setupMoving() {
 
         setLocationOnMap();
 
-        Vector2Int move = movements.Peek().point;
+        Vector2Int move = movements[0].point;
 
         bool isFindTarget = tryFindTarget();
 
-        if(localTarget == null) {
+        if(targetWalker == null) {
             moveStartPosition = position;
             translate = move + ((mapLocation - move) - moveStartPosition);
 
         } else {
-            moveStartPosition = localTarget.position - position;
+            moveStartPosition = targetWalker.position - position;
 
             if(!isFindTarget) {
                 translate = move;
@@ -190,11 +200,10 @@ public class WalkableObject: MapObject {
 
     public override void updateObject()
     {
-        if (!stopTime)
-            animationTime += Time.deltaTime;
-
-        if(localTarget != null) {
-            position = localTarget.position - moveStartPosition;
+        animationTime += Time.deltaTime;
+        
+        if(targetWalker != null) {
+            position = targetWalker.position - moveStartPosition;
         }
 
         if(animationTime > stayDelay && movements.Count == 0) {
@@ -205,8 +214,8 @@ public class WalkableObject: MapObject {
         if(animationTime > stayDelay && movements.Count != 0) {
             if(!isWalk) {
 
-                if(!canMoveOn(mapLocation + movements.Peek().point)) {
-                    movements.Dequeue();
+                if(!canMoveOn(mapLocation + movements[0].point)) {
+                    movements.RemoveAt(0);
                     if(movements.Count != 0)
                         goto repeateMove;
                     return;
@@ -226,14 +235,14 @@ public class WalkableObject: MapObject {
             }
 
             if(animationTime > stayDelay + moveDelay) {
-                movements.Dequeue();
+                movements.RemoveAt(0);
                 isWalk = false;
 
                 animationTime -= stayDelay + moveDelay;
 
-                if(localTarget != null) {
-                    position = localTarget.position - moveStartPosition + translate;
-                    moveStartPosition = localTarget.mapLocation - mapLocation;
+                if(targetWalker != null) {
+                    position = targetWalker.position - moveStartPosition + translate;
+                    moveStartPosition = targetWalker.mapLocation - mapLocation;
                     //targetOffset = mapLocation - localTarget.mapLocation;
                 } else {
                     targetOffset = Vector2Int.zero;
@@ -252,10 +261,10 @@ public class WalkableObject: MapObject {
                     goto repeateMove;
 
             } else {
-                if(localTarget == null) {
+                if(targetWalker == null) {
                     position = moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
                 } else {
-                    position = localTarget.position - moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
+                    position = targetWalker.position - moveStartPosition + translate * ((animationTime - stayDelay) / moveDelay);
                 }
             }
         }

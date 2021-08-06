@@ -168,46 +168,54 @@ public class MainScript : MonoBehaviour
         objects.Add(new MovingFloor(13, 23,moveRight,0.5f));
         objects.Add(new MovingFloor(13, 24,moveLeft,0.5f));
 
-        var main = new MovingFloor(14,5,new List<Vector2Int>() {
-            Vector2Int.left,
-            Vector2Int.left,
-            Vector2Int.left,
-            Vector2Int.right,
-            Vector2Int.right,
-            Vector2Int.right,
-        }, 0.5f);
+        // var main = new MovingFloor(16,5,new List<Vector2Int>() {
+        //     Vector2Int.left,
+        //     Vector2Int.left,
+        //     Vector2Int.left,
+        //     Vector2Int.right,
+        //     Vector2Int.right,
+        //     Vector2Int.right,
+        // }, 0.25f);
 
-        var subMain = new MovingFloor(13,5, new List<Vector2Int>() {
-            Vector2Int.up,
-            Vector2Int.right,
-            Vector2Int.right,
-            Vector2Int.down,
-            Vector2Int.down,
-            Vector2Int.left,
-            Vector2Int.left,
-            Vector2Int.up,
-        }, 0.25f);
-        
-        var subMain2 = new MovingFloor(15,5, new List<Vector2Int>() {
-            Vector2Int.down,
-            Vector2Int.left,
-            Vector2Int.left,
-            Vector2Int.up,
-            Vector2Int.up,
-            Vector2Int.right,
-            Vector2Int.right,
-            Vector2Int.down,
-        }, 0.25f);
+        // var subMain = new MovingFloor(14,5, new List<Vector2Int>() {
+        //     Vector2Int.up,
+        //     Vector2Int.up,
+        //     Vector2Int.right,
+        //     Vector2Int.right,
+        //     Vector2Int.right,
+        //     Vector2Int.right,
+        //     Vector2Int.down,
+        //     Vector2Int.down,
+        //     Vector2Int.down,
+        //     Vector2Int.down,
+        //     Vector2Int.left,
+        //     Vector2Int.left,
+        //     Vector2Int.left,
+        //     Vector2Int.left,
+        //     Vector2Int.up,
+        //     Vector2Int.up,
+        // }, 0.25f);
 
-        subMain.setTarget(main);
-        subMain2.setTarget(main);
+        // var subSubMain = new MovingFloor(13,5, new List<Vector2Int>() {
+        //     Vector2Int.up,
+        //     Vector2Int.right,
+        //     Vector2Int.right,
+        //     Vector2Int.down,
+        //     Vector2Int.down,
+        //     Vector2Int.left,
+        //     Vector2Int.left,
+        //     Vector2Int.up,
+        // }, 0.25f);
 
-        objects.Add(main);
-        objects.Add(subMain);
-        objects.Add(subMain2);
+        // subMain.setTarget(main);
+        // subSubMain.setTarget(subMain);
+
+        // objects.Add(main);
+        // objects.Add(subMain);
+        // objects.Add(subSubMain);
 
         //objects.Add(new MovingFloor(20, 9));
-        SetRect<Floor>(0,0,10,20,1);
+        SetRect<Floor>(0,0,20,20,1);
         SetRect<Floor>(0,25,20,20,1);
 
         var door = new Door(8,8);

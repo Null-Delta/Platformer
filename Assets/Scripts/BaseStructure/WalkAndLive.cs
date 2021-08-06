@@ -99,7 +99,7 @@ public class WalkAndLive : WalkableObject, Health
     {
         if (canFall)   // падение
         {
-            if (map.getMapObjects<MapObject>((int)(mapLocation + movements.Peek().point).x, (int)(mapLocation + movements.Peek().point).y, x => x.objectName == "Floor" ||
+            if (map.getMapObjects<MapObject>((int)(mapLocation + movements[0].point).x, (int)(mapLocation + movements[0].point).y, x => x.objectName == "Floor" ||
             x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
             {
                 actFall = true;
@@ -134,11 +134,11 @@ public class WalkAndLive : WalkableObject, Health
         if (stanTime > 0)          // механика оглушения
         {
             stanTime-= Time.deltaTime;
-            stopTime = true;
+            isIgnoreMoves = true;
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.1f,0.1f,0.1f, 0.5f); // to delet
             if ( stanTime <= 0)
             {
-                stopTime = false;
+                isIgnoreMoves = false;
                 movements.Clear();
                 this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1, 1); // to delet
                 addMovement(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));

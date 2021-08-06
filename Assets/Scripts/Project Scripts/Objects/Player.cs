@@ -12,54 +12,8 @@ public class Player: WalkAndLive
 
     public CheckPoint nowCheckPoint;
     override public void onStartWalk() {
-        // linearMove.x = 0;
-        // linearMove.y = 0;
-        //var newDir = movements.Peek();
-
         base.onStartWalk();
-        
-
         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-
-        // switch (newDir.point) {
-        //     case Vector2Int.down:
-        //     break;
-        //     case 1:
-        //         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-        //     break;
-        //     case 2:
-        //         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-        //     break;
-        //     case 3:
-        //         gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
-        //     break;
-        // }
-
-        // isAnimFinish = false;
-        // dir = newDir;
-
-        //Vector2 tmpNewPosition = mapLocation;
-
-        
-
-        // if (isOnFloor)
-        //     isOnFloor = false;
-
-        // var tmpList = map.getMapObjects<MovingFloor>((int)tmpNewPosition.x,(int)tmpNewPosition.y, x => x is MovingFloor);
-        // if(tmpList != null)                                   // обработка возможности вхождения на движущийся пол.
-        // {
-        //     if (tmpList[0].onMe ==null)
-        //     {
-        //         tmpList[0].addWalkerOn(tmpNewPosition ,this);
-        //         isOnFloor = true;
-        //     }
-        //     else if (tmpList[0].onMe.isCollisiable)
-        //     {
-        //         if(linearMove.x != 0) linearMove.x = 0;
-        //         if(linearMove.y != 0) linearMove.y = 0;
-        //     }
-        // }
-
     }
 
     public void addDirection(int dir)
@@ -86,7 +40,7 @@ public class Player: WalkAndLive
         if( map.getMapObjects<MapObject>(point.x,point.y, x => x.isCollisiable) != null) 
         {
             if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {
-                return (map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].tryPush(movements.Peek().point));
+                return ((map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject)[0] as PushableObject).tryPush(movements[0].point));
             }
             if (map.getMapObjects<MapObject>(point.x, point.y, x => x is CheckPoint) != null)
             {
@@ -95,7 +49,7 @@ public class Player: WalkAndLive
         }
 
 
-        return map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable ) == null;
+        return map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable) == null;
     }
 
     override public void onEndWalk() {

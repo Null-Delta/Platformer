@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PushableObject: WalkableObject {
 
-    public bool ignorePushes = false;
-
     public bool tryPush(Vector2Int to) {
-        if(!ignorePushes && canMoveOn(mapLocation + to)) {
+        if(!isIgnoreMoves && canMoveOn(mapLocation + to)) {
             addMovement(new movement(to, true));
             return true;
         }

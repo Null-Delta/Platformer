@@ -10,7 +10,7 @@ public class ObjectController : MonoBehaviour
     void Start()
     {
         obj.startObject();
-        if(obj is Wall || obj is Floor) this.enabled = false;
+        if(obj is Wall || obj is Floor || obj is Grass) this.enabled = false;
         
         if(obj is MapObject) {
             (obj as MapObject).setStartPosition();
