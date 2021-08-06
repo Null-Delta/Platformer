@@ -18,7 +18,7 @@ public class Map : MonoBehaviour
 
     public GameObject createHpLine(MapObject obj)
     {
-        return Instantiate(Resources.Load<GameObject>("Prefabs/hpLine"),obj.position, Quaternion.identity);
+        return Instantiate(Resources.Load<GameObject>("Other/hpLine"),obj.position, Quaternion.identity);
     }
 
 
@@ -113,7 +113,7 @@ public class Map : MonoBehaviour
 
     public void setupObject(Object obj) {
         obj.map = this;
-        GameObject prefab = Resources.Load<GameObject>("Components/" + obj.objectName + "/" + obj.objectName);
+        GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
 
         if(obj is MapObject) {
             obj.gameObject = Instantiate(prefab,(obj as MapObject).position, Quaternion.identity);
@@ -126,11 +126,11 @@ public class Map : MonoBehaviour
         addObject(obj);
     }
 
-    public void Start() {
-        preview = GameObject.Find("mapPreview").GetComponent<Image>();
-        texture = new Texture2D(32,32);
-        s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
-    }
+    // public void Start() {
+    //     preview = GameObject.Find("mapPreview").GetComponent<Image>();
+    //     texture = new Texture2D(32,32);
+    //     s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
+    // }
 
     public void Update() {
         /*
