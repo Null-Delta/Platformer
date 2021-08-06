@@ -27,7 +27,7 @@ public class InputHandler : MonoBehaviour
 
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
-                MobileUI.SetActive(true);
+                //MobileUI.SetActive(true);
             break;
         }
     }
