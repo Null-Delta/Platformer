@@ -19,6 +19,7 @@ public class UsualStalker : Seeker
         immortalTimeForHit = 0.5f;
         foundRange = 5;
         canFall = true;
+        getTarget(Camera.main.GetComponent<PlayerControl>().CurrentPlayer);
     }
 
 
@@ -66,29 +67,21 @@ public class UsualStalker : Seeker
     }
 
 
-    override public void onStartWalk()
+    void foundWay()
     {
-        base.onStartWalk();
-        
-    }
-
-    override public void onEndWalk() 
-    {
-        base.onEndWalk();
         if (foundTarget)
-            if (Mathf.Abs(target.transform.position.x - position.x) + Mathf.Abs(target.transform.position.y - position.y) > rangeOfAttack)
+            if (Mathf.Abs(target.position.x - position.x) + Mathf.Abs(target.position.y - position.y) > rangeOfAttack)
             {
-                stayDelay = 0.3f;
-                if (Mathf.Abs(target.transform.position.x - position.x) >= Mathf.Abs(target.transform.position.y - position.y))
+                if (Mathf.Abs(target.position.x - position.x) >= Mathf.Abs(target.position.y - position.y))
                 {
-                    if (target.transform.position.x - position.x > 0)
+                    if (target.position.x - position.x > 0)
                         addMovement(new movement(new Vector2Int(1,0), true));
                     else
                         addMovement(new movement(new Vector2Int(-1,0), true));
                 }
                 else
                 {
-                    if (target.transform.position.y - position.y > 0)
+                    if (target.position.y - position.y > 0)
                         addMovement(new movement(new Vector2Int(0,1), true));
                     else
                         addMovement(new movement(new Vector2Int(0,-1), true));
@@ -101,29 +94,21 @@ public class UsualStalker : Seeker
             }
     }
 
+    override public void onStartWalk()
+    {
+        base.onStartWalk();
+        
+    }
+
+    override public void onEndWalk() 
+    {
+        base.onEndWalk();
+        foundWay();
+    }
+
     public override void firstLook()
     {
-        if (Mathf.Abs(target.transform.position.x - position.x) + Mathf.Abs(target.transform.position.y - position.y) > rangeOfAttack)
-            if (Mathf.Abs(target.transform.position.x - position.x) >= Mathf.Abs(target.transform.position.y - position.y))
-            {
-                if (target.transform.position.x - position.x > 0)
-                    addMovement(new movement(new Vector2Int(1,0), true));
-                else
-                    addMovement(new movement(new Vector2Int(-1,0), true));
-            }
-            else
-            {
-                if (target.transform.position.y - position.y > 0)
-                    addMovement(new movement(new Vector2Int(0,1), true));
-                else
-                    addMovement(new movement(new Vector2Int(0,-1), true));
-            }
-        else
-        {
-            isAttack = true;
-            startOfAttack();
-        }
-
+        foundWay();
     }
 
     public virtual void startOfAttack()
