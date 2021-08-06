@@ -47,25 +47,25 @@ public class MainScript : MonoBehaviour
         // objects.Add(new Spike(6,18, 0.25f, 1, 1.0f));
         // objects.Add(new Spike(5,18, 0.25f, 1, 1.2f));
 
-        objects.Add(new Spike(8,15, 0.25f, 1, 0));
-        objects.Add(new Spike(7,15, 0.25f, 1, 0));
-        objects.Add(new Spike(6,15, 0.25f, 1, 0));
-        objects.Add(new Spike(5,15, 0.25f, 1, 0));
+        // objects.Add(new Spike(8,15, 0.25f, 1, 0));
+        // objects.Add(new Spike(7,15, 0.25f, 1, 0));
+        // objects.Add(new Spike(6,15, 0.25f, 1, 0));
+        // objects.Add(new Spike(5,15, 0.25f, 1, 0));
 
-        objects.Add(new Spike(8,16, 0.25f, 1, 0));
-        objects.Add(new Spike(7,16, 0.25f, 1, 0));
-        objects.Add(new Spike(6,16, 0.25f, 1, 0));
-        objects.Add(new Spike(5,16, 0.25f, 1, 0));
+        // objects.Add(new Spike(8,16, 0.25f, 1, 0));
+        // objects.Add(new Spike(7,16, 0.25f, 1, 0));
+        // objects.Add(new Spike(6,16, 0.25f, 1, 0));
+        // objects.Add(new Spike(5,16, 0.25f, 1, 0));
 
-        objects.Add(new Spike(8,17, 0.25f, 1, 0));
-        objects.Add(new Spike(7,17, 0.25f, 1, 0));
-        objects.Add(new Spike(6,17, 0.25f, 1, 0));
-        objects.Add(new Spike(5,17, 0.25f, 1, 0));
+        // objects.Add(new Spike(8,17, 0.25f, 1, 0));
+        // objects.Add(new Spike(7,17, 0.25f, 1, 0));
+        // objects.Add(new Spike(6,17, 0.25f, 1, 0));
+        // objects.Add(new Spike(5,17, 0.25f, 1, 0));
 
-        objects.Add(new Spike(8,18, 0.25f, 1, 0));
-        objects.Add(new Spike(7,18, 0.25f, 1, 0));
-        objects.Add(new Spike(6,18, 0.25f, 1, 0));
-        objects.Add(new Spike(5,18, 0.25f, 1, 0));
+        // objects.Add(new Spike(8,18, 0.25f, 1, 0));
+        // objects.Add(new Spike(7,18, 0.25f, 1, 0));
+        // objects.Add(new Spike(6,18, 0.25f, 1, 0));
+        // objects.Add(new Spike(5,18, 0.25f, 1, 0));
 
         //SetRect<Wall>(5,5,1,1,0);
         //SetRect<Wall>(5,5,20,20,0);
@@ -91,7 +91,8 @@ public class MainScript : MonoBehaviour
         // objects.Add(testD1);
         // objects.Add(testK);
         // objects.Add(testK1);
-        objects.Add(new UsualStalker(18,18));
+        objects.Add(new SmartStalker(18,19));
+        objects.Add(new Wall(19,19));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));
         objects.Add(new Teleport(15,15, 15, 10, new List<Command>(){}));

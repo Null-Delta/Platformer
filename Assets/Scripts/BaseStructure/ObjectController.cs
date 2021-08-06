@@ -5,12 +5,22 @@ using UnityEngine;
 public class ObjectController : MonoBehaviour
 {
     public Object obj;
-    bool isUpdatableObject = true;
-    // Start is called before the first frame update
+    
+    // статичные объекты
+    static List<string> unUpdateObjects=  new List<string>{"Wall", "Floor", "Grass"};
+
     void Start()
     {
         obj.startObject();
-        if(obj is Wall || obj is Floor) this.enabled = false;
+        foreach (var item in unUpdateObjects)
+        {
+            if(obj.objectName == item) 
+            {
+                this.enabled = false;
+                break;
+            }
+        }
+        
         
         if(obj is MapObject) {
             (obj as MapObject).setStartPosition();
@@ -18,14 +28,11 @@ public class ObjectController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(isUpdatableObject) {
-            obj.updateObject();
-            if(obj is MapObject) {
-                (obj as MapObject).setupOrder();
-            }
+        obj.updateObject();
+        if(obj is MapObject) {
+            (obj as MapObject).setupOrder();
         }
     }
 

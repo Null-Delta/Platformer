@@ -131,7 +131,7 @@ public class Map : MonoBehaviour
     }
 
     public void Update() {
-        
+        /*
         texture.filterMode = FilterMode.Point;
 
         for(int x = 0; x < 32; x++) {
@@ -169,6 +169,7 @@ public class Map : MonoBehaviour
         texture.Apply();
 
         preview.sprite = s;
+        */
     }
 }
 

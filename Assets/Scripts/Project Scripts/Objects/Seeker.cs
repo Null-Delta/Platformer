@@ -6,9 +6,10 @@ public class Seeker : WalkAndLive
 {
     public override string objectName => "Seeker";
 
-    public GameObject target;
+    public WalkableObject target;
+    public WalkableObject saveTarget;
 
-    // найден ли игрок
+    // найден ли объект
     public bool foundTarget;
     // дальность для обнаружения
     public int foundRange;
@@ -18,27 +19,28 @@ public class Seeker : WalkAndLive
         base.startObject();   
         stayDelay = 0.0f;
         order = ObjectOrder.wall;
-
+        
         hp = 100;
         immortalTimeForHit = 0.5f;
         foundRange = 5;
+        isCollisiable = true;
     }
     public override void updateObject()
     {
-        if (target == null)
+        if (foundTarget && saveTarget != target)
         {
-            target = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
+            saveTarget = target;
             foundTarget = false;
         }
-        else if (!foundTarget)
+        if (!foundTarget && target != null)
         {
             
-            RaycastHit2D lookRay = Physics2D.Raycast(position, (new Vector2(target.transform.position.x, target.transform.position.y) - position).normalized, foundRange, 9);
-            Debug.DrawRay(position, (new Vector2(target.transform.position.x, target.transform.position.y) - position));
+            RaycastHit2D lookRay = Physics2D.Raycast(position, (new Vector2(target.position.x, target.position.y) - position).normalized, foundRange, 9);
+            Debug.DrawRay(position, (new Vector2(target.position.x, target.position.y) - position));
             if (lookRay.collider !=null && lookRay.collider.gameObject.layer == 3)
             {
                 
-                // видит игрока
+                // увидел цель
                 foundTarget = true;
                 firstLook();
             }
@@ -50,6 +52,11 @@ public class Seeker : WalkAndLive
     public virtual void firstLook()
     {
         
+    }
+
+    public virtual void getTarget(WalkableObject m)
+    {
+        target = m;
     }
 
     public Seeker(int x, int y): base(x,y) {

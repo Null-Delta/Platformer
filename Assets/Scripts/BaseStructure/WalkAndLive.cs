@@ -10,9 +10,10 @@ public class WalkAndLive : WalkableObject, Health
     public float immortalTimeForHit {get;set;}
     public float immortalTime {get;set;}
 
-    public float stanTime = 0;
+    public float stunTime = 0;
     public Vector2 lastFloor;
     bool actFall = false;
+    bool isFalling = false;
 
     GameObject lookHp;
 
@@ -62,8 +63,9 @@ public class WalkAndLive : WalkableObject, Health
     public virtual void onFall()
     {
         getDamage(5);
-        stanTime = 0.7f;      //    fallingTime
+        stunTime = 0.7f;      //    fallingTime
         movements.Clear();
+        isFalling = true;
     }
 
     public override void onCollizion(MapObject obj, Collision2D collision)
@@ -112,17 +114,21 @@ public class WalkAndLive : WalkableObject, Health
             }
         }        
             
-        if (stanTime > 0)          // механика оглушения
+        if (stunTime > 0)          // механика оглушения
         {
-            stanTime-= Time.deltaTime;
+            stunTime-= Time.deltaTime;
             stopTime = true;
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.1f,0.1f,0.1f, 0.5f); // to delet
-            if ( stanTime <= 0)
+            if ( stunTime <= 0)
             {
                 stopTime = false;
                 movements.Clear();
                 this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1, 1); // to delet
-                addMovement(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));
+                if (isFalling)
+                {
+                    isFalling = false;
+                    addMovement(new movement(Vector2Int.RoundToInt(lastFloor - new Vector2(position.x,position.y )), false));
+                }
             }
         }
 

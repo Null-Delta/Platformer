@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4794779990530656779}
   - component: {fileID: 1306641817445495035}
   m_Layer: 2
-  m_Name: UsualStalker
+  m_Name: SmartStalker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
