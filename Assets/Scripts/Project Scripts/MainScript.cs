@@ -274,7 +274,7 @@ public class MainScript : MonoBehaviour
         //objects.RemoveAll(x => x is Grass && 
             //objects.Find(y => y is MapObject && (!(y is Grass) && (y as MapObject).position == (x as MapObject).position) || (y is MovingFloor)) == null);
 
-        Random.InitState(228);
+        //Random.InitState(228);
 
         objects.RemoveAll(x => x is Grass && objects.Find(y => (y is Floor) && (y as MapObject).position == (x as MapObject).position) == null);
         objects.RemoveAll(x => x is Grass && Random.Range(0,5) == 1);

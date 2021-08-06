@@ -113,7 +113,7 @@ public class Map : MonoBehaviour
 
     public void setupObject(Object obj) {
         obj.map = this;
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/" + obj.objectName);
+        GameObject prefab = Resources.Load<GameObject>("Components/" + obj.objectName + "/" + obj.objectName);
 
         if(obj is MapObject) {
             obj.gameObject = Instantiate(prefab,(obj as MapObject).position, Quaternion.identity);

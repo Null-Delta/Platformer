@@ -7,7 +7,7 @@ public class CheckPoint : PressableObject
     float respawnTime = 2; //время респавна
     float timer;
 
-    public override string objectName => "OnPressObject";
+    public override string objectName => "CheckPoint";
 
     public override void OnPressStart(WalkableObject walker)
     {

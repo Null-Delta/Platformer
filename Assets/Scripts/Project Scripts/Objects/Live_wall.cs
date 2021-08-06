@@ -29,7 +29,6 @@ public class Live_wall : MapObject
     public virtual void actStart()
     {
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y-2);
-        
     }
 
     public virtual void actAnimation()

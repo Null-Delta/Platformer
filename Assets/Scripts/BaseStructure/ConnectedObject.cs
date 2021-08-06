@@ -50,7 +50,7 @@ public class ConnectedObject : MapObject
 
     Sprite generateTexture(int code) {
         List<Texture2D> textures = new List<Texture2D>();
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Textures/"+ objectName);
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Components/"+ objectName + "/Textures/" + objectName);
         for (int i = 0; i < 20; i++)
         {
             var croppedTexture = new Texture2D(width, height);

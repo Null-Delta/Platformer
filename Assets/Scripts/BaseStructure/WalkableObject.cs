@@ -30,9 +30,11 @@ public class WalkableObject: MapObject {
     
     //волкер, относительно которого двигается данный волкер
     public WalkableObject targetWalker = null;
+
+    //волкеры, которые двигаются относительно данного волкера
     public List<WalkableObject> subWalkers = new List<WalkableObject>();
 
-    //отступ, относительно targetWalker
+    //отступ, относительно координат targetWalker'а
     Vector2Int targetOffset = Vector2Int.zero;
 
     //переменная, отвечающяя за игнорирование перемещений
@@ -164,17 +166,15 @@ public class WalkableObject: MapObject {
         });
     }
 
-    virtual public void setTarget(WalkableObject target) {
+    void setTarget(WalkableObject target) {
         targetWalker = target;
         targetWalker.subWalkers.Add(this);
         targetOffset = mapLocation - targetWalker.mapLocation;
     }
-
-    virtual public void clearTarget() {
+    void clearTarget() {
         targetWalker.subWalkers.Remove(this);
         targetWalker = null;
     }
-
     void setupMoving() {
 
         setLocationOnMap();
@@ -194,7 +194,6 @@ public class WalkableObject: MapObject {
                 translate = move;
                 targetOffset += move;
             }
-
         }
     }
 
@@ -213,7 +212,6 @@ public class WalkableObject: MapObject {
         repeateMove:
         if(animationTime > stayDelay && movements.Count != 0) {
             if(!isWalk) {
-
                 if(!canMoveOn(mapLocation + movements[0].point)) {
                     movements.RemoveAt(0);
                     if(movements.Count != 0)
@@ -243,7 +241,6 @@ public class WalkableObject: MapObject {
                 if(targetWalker != null) {
                     position = targetWalker.position - moveStartPosition + translate;
                     moveStartPosition = targetWalker.mapLocation - mapLocation;
-                    //targetOffset = mapLocation - localTarget.mapLocation;
                 } else {
                     targetOffset = Vector2Int.zero;
                     position = moveStartPosition + translate;
