@@ -20,6 +20,7 @@ public class MainScript : MonoBehaviour
 
         SetRect<Wall>(0,0,30,30,0);
         SetRect<Wall>(3,3,5,1,0);
+        
         objects.Add(new Wall(3,28));
         objects.Add(new Wall(1,28));
         objects.Add(new Wall(3,26));
@@ -28,8 +29,9 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(8,10));
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
-
-        // objects.Add(new Spike(8,15, 0.25f, 1, 0f));
+        SetRect<Floor>(30,30,50,50,1);
+        SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
+        //objects.Add(new Spike(8,15, 0.25f, 1, 0f));
         // objects.Add(new Spike(7,15, 0.25f, 1, 0.2f));
         // objects.Add(new Spike(6,15, 0.25f, 1, 0.4f));
         // objects.Add(new Spike(5,15, 0.25f, 1, 0.6f));
@@ -329,6 +331,20 @@ public class MainScript : MonoBehaviour
 
                 T obj = new T();
                 obj.position = new Vector2(i,j);
+                objects.Add(obj);
+            }
+    }
+
+    void SetRectSpike(int x, int y, int widht, int height, int hollow, float activationTime, float disable, float startOffset)
+    {
+        for(int i = x; i < x + widht; i++)
+            for(int j = y; j < y + height; j++)
+            {
+                if(hollow == 0)
+                    if (!(i == x || j == y || i == x + widht -1 || j == y + height -1)) continue;
+
+                Spike obj = new Spike(i,j,activationTime,disable,startOffset);
+                //obj.position = new Vector2(i,j);
                 objects.Add(obj);
             }
     }

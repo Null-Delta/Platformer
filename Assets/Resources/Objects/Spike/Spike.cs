@@ -10,13 +10,14 @@ public class Spike : PressableObject
     float stayTime = 1;
     float damage = 10;
     float time;
-    bool isActiv;
+    public bool isActiv;
 
     bool[] b = new bool[]{true, true, true, true};
     public override string objectName => "Spike";
 
     public override void updateObject()
     {
+        
         time += Time.deltaTime;
         if (time > 0)
         {
@@ -79,6 +80,8 @@ public class Spike : PressableObject
         isCollisiable = false;
         gameObject.transform.position = position;
         order = ObjectOrder.underWall;
+        
+        
         //spik = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
