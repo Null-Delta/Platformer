@@ -62,7 +62,8 @@ public class Player: WalkAndLive
     {
         if (nowCheckPoint != null)
         {
-            Camera.main.GetComponent<PlayerControl>().ControlActive = true;
+            Camera.main.GetComponent<PlayerControl>().ControlActive = false;
+            Camera.main.GetComponent<PlayerControl>().CurrentPlayer = null;
             nowCheckPoint.spawnPlayer();
         }
     }

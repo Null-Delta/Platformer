@@ -18,7 +18,7 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Bullet(6.3f, 10.2f));
         //objects.Add(new Walker(10,10));
 
-        SetRect<Wall>(0,0,30,30,0);
+        SetRect<Wall>(0,0,60,30,0);
         SetRect<Wall>(3,3,5,1,0);
         
         objects.Add(new Wall(3,28));
@@ -29,14 +29,14 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(8,10));
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
-        SetRect<Floor>(30,30,50,50,1);
-        SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
+        //SetRect<Floor>(30,30,50,50,1);
+        //SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
         //objects.Add(new Spike(8,15, 0.25f, 1, 0f));
         // objects.Add(new Spike(7,15, 0.25f, 1, 0.2f));
         // objects.Add(new Spike(6,15, 0.25f, 1, 0.4f));
         // objects.Add(new Spike(5,15, 0.25f, 1, 0.6f));
 
-        // objects.Add(new Spike(8,16, 0.25f, 1, 0.2f));
+        objects.Add(new Spike(8,16, 0.25f, 1, 0.2f));
         // objects.Add(new Spike(7,16, 0.25f, 1, 0.4f));
         // objects.Add(new Spike(6,16, 0.25f, 1, 0.6f));
         // objects.Add(new Spike(5,16, 0.25f, 1, 0.8f));
@@ -95,7 +95,14 @@ public class MainScript : MonoBehaviour
         // objects.Add(testD1);
         // objects.Add(testK);
         // objects.Add(testK1);
-        objects.Add(new SmartStalker(18,19));
+        if (true)
+        {
+            objects.Add(new Warrior(28,19));
+            objects.Add(new Bowman(28,2));
+            SetRect<Floor>(19,0,20,20,1);
+        }
+
+
         objects.Add(new Wall(19,19));
 
         objects.Add(new Teleport(10,15, 15, 15, new List<Command>(){}));

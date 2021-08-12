@@ -167,9 +167,6 @@ public class DoubleList
 public class SmartStalker : Seeker
 {
     public override string objectName => "SmartStalker";
-    
-    public bool isAttack = false;
-    public float rangeOfAttack = 1;
 
     public override void startObject()
     {
@@ -231,15 +228,6 @@ public class SmartStalker : Seeker
     override public void updateObject()
     {
         base.updateObject();
-        if (movements.Count == 0 && foundTarget)
-        {
-            foundTarget = false;
-        }
-        if (target == null)
-        {
-            saveTarget = Camera.main.GetComponent<PlayerControl>().CurrentPlayer;
-            getTarget(Camera.main.GetComponent<PlayerControl>().CurrentPlayer);
-        }
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -285,7 +273,7 @@ public class SmartStalker : Seeker
     }
 
     //////////////////////////////////////////////////////////////////////////////
-    void foundWay()
+    public override void foundWay()
     {
         if (foundTarget)
             if (Mathf.Abs(target.position.x - position.x) + Mathf.Abs(target.position.y - position.y) > rangeOfAttack)
@@ -305,7 +293,6 @@ public class SmartStalker : Seeker
     override public void onStartWalk()
     {
         base.onStartWalk();
-        
     }
 
     override public void onEndWalk() 
@@ -317,10 +304,6 @@ public class SmartStalker : Seeker
     public override void firstLook()
     {
         foundWay();
-    }
-
-    public virtual void startOfAttack()
-    {
     }
 
 

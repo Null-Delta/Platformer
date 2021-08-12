@@ -85,7 +85,8 @@ public class CamControl : MonoBehaviour
     
     void trackingTargetPos()
     {
-        targetObj = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
+        if (Camera.main.GetComponent<PlayerControl>().CurrentPlayer != null)
+            targetObj = Camera.main.GetComponent<PlayerControl>().CurrentPlayer.gameObject;
         
         Vector2 targetPos;
         if (targetObj != null)

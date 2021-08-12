@@ -17,7 +17,7 @@ public class WalkAndLive : WalkableObject, IHealth
     bool actFall = false;
     bool isFalling = false;
 
-    bool isDeath = false;
+    public bool isDeath = false;
 
     GameObject lookHp;
 

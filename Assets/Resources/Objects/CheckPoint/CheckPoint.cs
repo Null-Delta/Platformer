@@ -23,7 +23,7 @@ public class CheckPoint : PressableObject
         if (walker is Player)
         {
             (walker as Player).nowCheckPoint = this;
-            //игрок вышел на чекпоинт
+            //игрок вышел c чекпоинтa
         }
     }
 
@@ -41,6 +41,8 @@ public class CheckPoint : PressableObject
                         Player tmpPlayer = new Player((int)position.x, (int)position.y);
                         tmpPlayer.nowCheckPoint = this;
                         map.setupObject(tmpPlayer);
+                        Camera.main.GetComponent<PlayerControl>().ControlActive = true;
+                        Camera.main.GetComponent<PlayerControl>().CurrentPlayer = tmpPlayer;
                         //игрок возродился
                     }
             }

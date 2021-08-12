@@ -5,9 +5,6 @@ using UnityEngine;
 public class UsualStalker : Seeker
 {
     public override string objectName => "UsualStalker";
-    
-    public bool isAttack = false;
-    public float rangeOfAttack = 1;
 
     public override void startObject()
     {
@@ -19,7 +16,6 @@ public class UsualStalker : Seeker
         immortalTimeForHit = 0.5f;
         foundRange = 5;
         canFall = true;
-        getTarget(Camera.main.GetComponent<PlayerControl>().CurrentPlayer);
     }
 
 
@@ -62,12 +58,10 @@ public class UsualStalker : Seeker
     override public void updateObject()
     {
         base.updateObject();
-        if (movements.Count == 0)
-            foundTarget = false;
     }
 
 
-    void foundWay()
+    public override void foundWay()
     {
         if (foundTarget)
             if (Mathf.Abs(target.position.x - position.x) + Mathf.Abs(target.position.y - position.y) > rangeOfAttack)
@@ -109,11 +103,6 @@ public class UsualStalker : Seeker
     public override void firstLook()
     {
         foundWay();
-    }
-
-    public virtual void startOfAttack()
-    {
-        Debug.Log(1);
     }
 
 
