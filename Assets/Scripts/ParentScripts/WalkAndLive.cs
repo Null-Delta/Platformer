@@ -28,10 +28,14 @@ public class WalkAndLive : WalkableObject, IHealth
 
     public void getDamage(float damage)
     {
-        if (!actFall)
-            gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
+        
         if (immortalTime <=0)
         {
+            if (!actFall)
+            {
+                gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
+                stunTime = 0.2f;
+            }
             if (hp - damage <= 0)
             {
                 hp = 0;

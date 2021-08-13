@@ -88,17 +88,6 @@ public class UsualStalker : Seeker
             }
     }
 
-    override public void onStartWalk()
-    {
-        base.onStartWalk();
-        
-    }
-
-    override public void onEndWalk() 
-    {
-        base.onEndWalk();
-        foundWay();
-    }
 
     public override void firstLook()
     {

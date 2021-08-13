@@ -97,8 +97,9 @@ public class MainScript : MonoBehaviour
         // objects.Add(testK1);
         if (true)
         {
-            objects.Add(new Warrior(28,19));
-            objects.Add(new Bowman(28,2));
+            //objects.Add(new Warrior(28,19));
+            //objects.Add(new Bowman(28,2));
+            objects.Add(new Bull(34,7));
             SetRect<Floor>(19,0,20,20,1);
         }
 

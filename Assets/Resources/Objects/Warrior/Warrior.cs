@@ -65,7 +65,11 @@ public class Warrior : UsualStalker
         base.dealDamage();
     }
 
-
+    override public void onEndWalk() 
+    {
+        base.onEndWalk();
+        foundWay();
+    }
 
     public Warrior(int x, int y): base(x,y) {
         

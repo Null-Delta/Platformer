@@ -180,7 +180,7 @@ public class SmartStalker : Seeker
         canFall = true;
     }
 
-    Vector2Int toInt(Vector2 v)
+    public Vector2Int toInt(Vector2 v)
     {
         return new Vector2Int((int)v.x,(int)v.y);
     }
@@ -192,31 +192,11 @@ public class SmartStalker : Seeker
         {
             if(map.getMapObjects<MapObject>(point.x, point.y, x => x is PushableObject) != null) {
                 tmpReturn = (map.getMapObjects<Box>(point.x, point.y, x => x.objectName == "Box")[0].tryPush(movements[0].point));
-                if (!tmpReturn)
-                {
-                    var tmpMov = movements[0];
-
-                    var tmpInt = tmpMov.point.x;
-                    tmpMov.point.x = tmpMov.point.y;
-                    tmpMov.point.y = tmpInt;
-
-                    addMovement(tmpMov);
-                }
                 return tmpReturn;
             }
         }
 
         tmpReturn = map.getMapObjects<MapObject>(point.x, point.y, x => x.isCollisiable ) == null;
-        if (!tmpReturn)
-        {
-            var tmpMov = movements[0];
-
-            var tmpInt = tmpMov.point.x;
-            tmpMov.point.x = tmpMov.point.y;
-            tmpMov.point.y = tmpInt;
-
-            addMovement(tmpMov);
-        }
         return tmpReturn;
     }
 
@@ -234,7 +214,7 @@ public class SmartStalker : Seeker
     
 
 
-    Vector2 aStar(Vector2 start, Vector2 end)
+    public Vector2 aStar(Vector2 start, Vector2 end)
     {
         start = toInt(start);
         if (!this.canBePath(end))
@@ -295,11 +275,6 @@ public class SmartStalker : Seeker
         base.onStartWalk();
     }
 
-    override public void onEndWalk() 
-    {
-        base.onEndWalk();
-        foundWay();
-    }
 
     public override void firstLook()
     {

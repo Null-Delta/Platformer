@@ -58,7 +58,11 @@ public class Bowman : UsualStalker
         map.setupObject(tmpBullet);
     }
 
-
+    override public void onEndWalk() 
+    {
+        base.onEndWalk();
+        foundWay();
+    }
 
     public Bowman(int x, int y): base(x,y) {
         
