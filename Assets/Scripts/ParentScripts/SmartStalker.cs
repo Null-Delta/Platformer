@@ -18,6 +18,7 @@ public class PathPoint
     }
     public static float HeuristicRange(Vector2 start, Vector2 end)
     {
+        //return (end-start).magnitude;
         return Mathf.Abs(end.x - start.x) + Mathf.Abs(end.y - start.y);
     }
 

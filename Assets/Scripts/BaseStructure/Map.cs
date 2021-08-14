@@ -49,6 +49,23 @@ public class Map : MonoBehaviour
 
         return list;
     }
+    public List<T> getMapObjects<T>(List<Vector2Int> points, Predicate<T> predicate = default(Predicate<T>)) where T: MapObject {
+        var iterPoints = points.GetEnumerator();
+        List<T> list = new List<T>();
+        while (iterPoints.MoveNext())
+        {
+            if(iterPoints.Current.x < 0 || iterPoints.Current.y < 0 || iterPoints.Current.x >= width || iterPoints.Current.y >= height) continue; 
+
+            var iter = mapMatrix[iterPoints.Current.x,iterPoints.Current.y].GetEnumerator();
+            while(iter.MoveNext()) {
+                if (iter.Current != null && (iter.Current is T) && predicate((iter.Current as T))) {
+                    list.Add((iter.Current as T));
+                }
+            }
+        }
+        if(list.Count == 0) return null;
+        return list;
+    }
 
     public void addObject(Object obj) {
         objects.Add(obj);

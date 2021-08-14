@@ -8,6 +8,7 @@ public class Bullet : MapObject
     public Vector2 direction;
     float speed;
     float damage = 5;
+    MapObject owner = null;
     public override void startObject()
     {
         base.startObject();
@@ -34,7 +35,11 @@ public class Bullet : MapObject
             
             gameObject.GetComponent<Rigidbody2D>().velocity = direction;
 
-        }else if(obj is WalkAndLive) {
+        }
+        else if(obj == owner) {
+           map.destroyObject(this);
+        }
+        else if(obj is WalkAndLive) {
             (obj as WalkAndLive).getDamage(damage);
             map.destroyObject(this);
         }
@@ -58,5 +63,14 @@ public class Bullet : MapObject
             speed = _speed;
         direction = new Vector2(xd * speed,yd * speed);
         damage = _damag;
+    }
+    public Bullet(float x, float y, float xd, float yd, float _speed= 0, float _damag = 5, MapObject _owner = null): base(x,y) {
+        if (_speed == 0)
+            speed = 5;
+        else
+            speed = _speed;
+        direction = new Vector2(xd * speed,yd * speed);
+        damage = _damag;
+        owner = _owner;
     }
 }

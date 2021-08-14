@@ -7,6 +7,7 @@ public class Bowman : UsualStalker
     public override string objectName => "Bowman";
     
     bool notFire = true;
+    Vector2 floatLockAttackPosition;
 
     public override void startObject()
     {
@@ -27,8 +28,8 @@ public class Bowman : UsualStalker
     public override void startOfAttack()
     {
         base.startOfAttack();
-        lockAttackPosition = target.position - position;
-        lockAttackPosition.Normalize();
+        floatLockAttackPosition = target.position - position;
+        floatLockAttackPosition.Normalize();
     }
 
     public override void updateObject()
@@ -54,7 +55,7 @@ public class Bowman : UsualStalker
     {
         base.dealDamage();
         notFire = false;
-        Bullet tmpBullet = new Bullet((lockAttackPosition.x*1.5f + position.x), (lockAttackPosition.y*1.5f + position.y), lockAttackPosition.x, lockAttackPosition.y, 8, damage);
+        Bullet tmpBullet = new Bullet((floatLockAttackPosition.x*1.5f + position.x), (floatLockAttackPosition.y*1.5f + position.y), lockAttackPosition.x, lockAttackPosition.y, 8, damage);
         map.setupObject(tmpBullet);
     }
 

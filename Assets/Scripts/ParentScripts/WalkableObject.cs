@@ -10,6 +10,10 @@ public struct movement {
         point = p;
         isAnimate = isAnim;
     }
+    public movement(int x, int y, bool isAnim) {
+        point = new Vector2Int(x,y);
+        isAnimate = isAnim;
+    }
 }
 
 public class WalkableObject: MapObject {
@@ -55,7 +59,7 @@ public class WalkableObject: MapObject {
     Vector2 translate = Vector2.zero;
     Vector2 moveStartPosition = Vector2.zero;
     float animationTime = 0f;
-    bool isWalk = false;
+    public bool isWalk = false;
     //-----------------------------------------------
 
     public override void startObject()

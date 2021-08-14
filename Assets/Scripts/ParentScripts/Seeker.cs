@@ -16,7 +16,7 @@ public class Seeker : WalkAndLive
     public float endOfDamageTime = 0.0f;
     public float attackRunner;
     public float damage = 5;
-    public Vector2 lockAttackPosition;
+    public Vector2Int lockAttackPosition;
     public List<WalkAndLive> damagedList;
 
     // найден ли объект

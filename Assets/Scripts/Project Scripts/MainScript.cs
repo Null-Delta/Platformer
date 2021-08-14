@@ -71,35 +71,16 @@ public class MainScript : MonoBehaviour
         // objects.Add(new Spike(6,18, 0.25f, 1, 0));
         // objects.Add(new Spike(5,18, 0.25f, 1, 0));
 
-        //SetRect<Wall>(5,5,1,1,0);
-        //SetRect<Wall>(5,5,20,20,0);
-        //SetRect<Wall>(12,12,6,6,1);
-        //objects.Add(new Player(5,10));
-        //objects.Add(new Player(2,10));
-        //objects.Add(new Player(3,10));
-        //objects.Add(new WalkableObject(10,10));
-
-        // objects.Add(new Walker(9,10));
-        // Door testD = new Door(20,20);
-        // Door testD1 = new Door(20,19);
-        // Key testK = new Key(22,22);
-        // Key testK1 = new Key(21,22);
-        // testD.addKey(testK);
-        // testD.addKey(testK1);
-
-        // testD1.addKey(testK);
-        // testD1.addKey(testK1);
-        //Time.timeScale = 1f;
-        //Application.targetFrameRate = 10;
-        // objects.Add(testD);
-        // objects.Add(testD1);
-        // objects.Add(testK);
-        // objects.Add(testK1);
         if (true)
         {
-            //objects.Add(new Warrior(28,19));
-            //objects.Add(new Bowman(28,2));
+            objects.Add(new Assassin(30,10));
+            objects.Add(new Warrior(28,15));
+            objects.Add(new Bowman(28,2));
             objects.Add(new Bull(34,7));
+            objects.Add(new Mina(24,7));
+            objects.Add(new Mina(27,14));
+            objects.Add(new Mina(22,3));
+            objects.Add(new Mina(25,9));
             SetRect<Floor>(19,0,20,20,1);
         }
 
@@ -110,19 +91,7 @@ public class MainScript : MonoBehaviour
         objects.Add(new Teleport(15,15, 15, 10, new List<Command>(){}));
         objects.Add(new Teleport(15,10, 10, 10, new List<Command>(){}));
         objects.Add(new Teleport(10,10, 10, 15, new List<Command>(){}));
-        // objects.Add(new Teleport(10,15, 11, 10, new List<Command>() {}));
-        // objects.Add(new Teleport(11,10, 16, 15, new List<Command>(){}));
-
-        // objects.Add(new OnPressObject(25,25));
-        //objects.Add(new Walker(3,15));
-        // objects.Add(new Bullet(10,10));
-        // objects.Add(new Bullet(11,10));
-        // objects.Add(new Bullet(12,10));
-        // objects.Add(new Bullet(13,10));
-        //objects.Add(new Turrel_bullet(15,25, 0.3f, 0.3f));
-        //objects.Add(new Live_wall(5,25, 0.8f, 0.8f));
-        //objects.Add(new PlayerStalker(7, 7, MainPlayer));
-        //objects.Add(new MovingFloor(9, 21));
+        
         List<Vector2Int> moveLeft = new List<Vector2Int>() {
             Vector2Int.left,
             Vector2Int.left,

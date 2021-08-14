@@ -47,16 +47,16 @@ public class Warrior : UsualStalker
         if (Mathf.Abs(target.position.x - position.x) >= Mathf.Abs(target.position.y - position.y))
         {
             if (target.position.x - position.x > 0)
-                lockAttackPosition = this.mapLocation + Vector2.right;
+                lockAttackPosition = this.mapLocation + Vector2Int.right;
             else
-                lockAttackPosition = this.mapLocation + Vector2.left;
+                lockAttackPosition = this.mapLocation + Vector2Int.left;
         }
         else
         {
             if (target.position.y - position.y > 0)
-                lockAttackPosition = this.mapLocation + Vector2.up;
+                lockAttackPosition = this.mapLocation + Vector2Int.up;
             else
-                lockAttackPosition = this.mapLocation + Vector2.down;
+                lockAttackPosition = this.mapLocation + Vector2Int.down;
         }
     }
 

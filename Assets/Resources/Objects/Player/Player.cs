@@ -8,6 +8,7 @@ public class Player: WalkAndLive
     public override string objectName => "Player";
     public int stepCount = 0, dir = 0;
     public bool isAnimFinish;
+    public float damage = 10;
     public Queue<int> direction = new Queue<int>();
 
     public CheckPoint nowCheckPoint;
@@ -65,6 +66,20 @@ public class Player: WalkAndLive
             Camera.main.GetComponent<PlayerControl>().ControlActive = false;
             Camera.main.GetComponent<PlayerControl>().CurrentPlayer = null;
             nowCheckPoint.spawnPlayer();
+        }
+    }
+
+    public void doAttack(Vector2Int direct)
+    {
+        if (!isWalk)
+        {
+            stunTime = 0.2f;
+            var tmpList =map.getMapObjects<WalkAndLive>((int)position.x + direct.x, (int)position.y + direct.y, x => x is WalkAndLive);
+            if(tmpList != null)
+            {
+                for (int i = 0; i != tmpList.Count; i++)
+                    tmpList[i].getDamage(damage);
+            }
         }
     }
 

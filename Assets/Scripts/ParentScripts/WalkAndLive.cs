@@ -34,7 +34,6 @@ public class WalkAndLive : WalkableObject, IHealth
             if (!actFall)
             {
                 gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
-                stunTime = 0.2f;
             }
             if (hp - damage <= 0)
             {
