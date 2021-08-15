@@ -55,7 +55,7 @@ public class Bowman : UsualStalker
     {
         base.dealDamage();
         notFire = false;
-        Bullet tmpBullet = new Bullet((floatLockAttackPosition.x*1.5f + position.x), (floatLockAttackPosition.y*1.5f + position.y), lockAttackPosition.x, lockAttackPosition.y, 8, damage);
+        Bullet tmpBullet = new Bullet((floatLockAttackPosition.x*1.5f + position.x), (floatLockAttackPosition.y*1.5f + position.y), floatLockAttackPosition.x, floatLockAttackPosition.y, 8, damage);
         map.setupObject(tmpBullet);
     }
 

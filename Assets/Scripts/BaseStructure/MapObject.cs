@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapObject: Object {
     override public string objectName => "Null";
 
-    Vector2 startPosition;
+    public Vector2 startPosition;
 
     public void setStartPosition() {
         position = startPosition;
@@ -42,5 +42,7 @@ public class MapObject: Object {
 
     public MapObject(float x, float y) {
         startPosition = new Vector2(x,y);
+    }
+    public MapObject() {
     }
 }

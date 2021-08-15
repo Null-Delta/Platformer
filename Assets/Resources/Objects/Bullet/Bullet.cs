@@ -11,7 +11,6 @@ public class Bullet : MapObject
     MapObject owner = null;
     public override void startObject()
     {
-        base.startObject();
         gameObject.GetComponent<Rigidbody2D>().velocity = direction;
         order = ObjectOrder.wall;
     }
