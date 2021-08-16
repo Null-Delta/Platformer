@@ -11,15 +11,24 @@ public class PathPoint
     public float rangeFromEnd;
     public Vector2 position;
     public PathPoint PreviosPoint;
+    
 
     float neighbourRange()
     {
         return 1;
     }
-    public static float HeuristicRange(Vector2 start, Vector2 end)
+    public static float HeuristicRange(Vector2 start, Vector2 end, int type)
     {
         //return (end-start).magnitude;
-        return Mathf.Abs(end.x - start.x) + Mathf.Abs(end.y - start.y);
+        //(Mathf.Abs(end.x - start.x) + Mathf.Abs(end.y - start.y))*
+        if (type == 1)
+            return  (Mathf.Abs(end.x - start.x) + Mathf.Abs(end.y - start.y)) * (Mathf.Abs(end.x - start.x)+1) * (Mathf.Abs(end.y - start.y)+1);
+        else if (type == 0)
+        {
+            return  (Mathf.Abs(end.x - start.x) + Mathf.Abs(end.y - start.y));
+        }
+        else
+            return (end-start).magnitude;
     }
 
 
@@ -56,7 +65,7 @@ public class PathPoint
         foreach (var item in neighbours)
         {
             if (me.canBePath(item))
-                rezult.Add( new PathPoint(item, this.rangeFromStart + neighbourRange(), HeuristicRange(item, end), this));
+                rezult.Add( new PathPoint(item, this.rangeFromStart + neighbourRange(), HeuristicRange(item, end, me.typeOfWalk), this));
         }
         return rezult;  
     }
@@ -168,7 +177,9 @@ public class DoubleList
 public class SmartStalker : Seeker
 {
     public override string objectName => "SmartStalker";
+    public int typeOfWalk =0;
 
+    float waitTime = 0;
     public override void startObject()
     {
         base.startObject();   
@@ -209,6 +220,8 @@ public class SmartStalker : Seeker
     override public void updateObject()
     {
         base.updateObject();
+        if (waitTime >0)
+            waitTime-=Time.deltaTime;
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -222,11 +235,16 @@ public class SmartStalker : Seeker
             return new Vector2(0,0);
         DoubleList waitPoint = new DoubleList();
         DoubleList lookedPoint = new DoubleList();
-        PathPoint startPoint = new PathPoint(start, 0, PathPoint.HeuristicRange(start,end));
+        PathPoint startPoint = new PathPoint(start, 0, PathPoint.HeuristicRange(start,end, this.typeOfWalk));
         waitPoint.add(startPoint);
-
+        int count =0;
         while (waitPoint.count > 0)
         {
+            count++;
+            if (count > 100)
+            {
+                return new Vector2(0,0);
+            }
             PathPoint nowPoint = waitPoint.takeMinPoint();
             if (nowPoint.position == end)
             {
@@ -256,12 +274,15 @@ public class SmartStalker : Seeker
     //////////////////////////////////////////////////////////////////////////////
     public override void foundWay()
     {
-        if (foundTarget)
+        if (waitTime<=0 && foundTarget)
             if (Mathf.Abs(target.position.x - position.x) + Mathf.Abs(target.position.y - position.y) > rangeOfAttack)
             {
                 var tmpVector = aStar(position, target.mapLocation);
                 if (tmpVector.x == 0 && tmpVector.y == 0)
+                {
+                    waitTime = 1f;
                     return;
+                }
                 addMovement(new movement(toInt(tmpVector -position), true));
             }
             else

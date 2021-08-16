@@ -75,6 +75,7 @@ public class Player: WalkAndLive
         {
             stunTime = 0.2f;
             var tmpList =map.getMapObjects<WalkAndLive>((int)position.x + direct.x, (int)position.y + direct.y, x => x is WalkAndLive);
+            
             if(tmpList != null)
             {
                 for (int i = 0; i != tmpList.Count; i++)

@@ -21,6 +21,15 @@ public class Map : MonoBehaviour
         return Instantiate(Resources.Load<GameObject>("Other/hpLine"),obj.position, Quaternion.identity);
     }
 
+    public GameObject createLazerPath(Vector2Int p) // to delet
+    {
+        return Instantiate(Resources.Load<GameObject>("Other/hpLine"),new Vector3(p.x,p.y,0), Quaternion.identity);
+    }
+    public void delet(GameObject g)
+    {
+        Destroy(g);
+    }
+
 
     public void insertMapObject(Vector2 point, MapObject obj)
     {
@@ -82,6 +91,7 @@ public class Map : MonoBehaviour
 
         if (obj is WalkableObject) {
             mapMatrix[(obj as WalkableObject).mapLocation.x, (obj as WalkableObject).mapLocation.y].Remove(obj as WalkableObject);
+            
         }
         else if (obj is MapObject) {
             mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Remove(obj as MapObject);

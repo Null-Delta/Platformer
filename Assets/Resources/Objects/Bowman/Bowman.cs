@@ -21,7 +21,7 @@ public class Bowman : UsualStalker
         attackTime = 0.7f;
         startOfDamageTime = 0.5f;
         //endOfDamageTime = 0.0f;
-        rangeOfAttack = 7;
+        rangeOfAttack = 10;
     }
 
 

@@ -40,7 +40,6 @@ public class Mina : PressableObject
     {
         base.startObject();
         isCollisiable = false;
-        gameObject.transform.position = position;
         order = ObjectOrder.underWall;
         
     }

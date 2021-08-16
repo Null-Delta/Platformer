@@ -73,11 +73,13 @@ public class MainScript : MonoBehaviour
 
         if (true)
         {
-            objects.Add(new Runner(26,10));
+            objects.Add(new LazerChel(26,9));
+            objects.Add(new EarthWizard(36,9));
+            objects.Add(new Runner(36,10));
             objects.Add(new RoundWizard(36,5));
-            objects.Add(new Assassin(36,10));
-            objects.Add(new Warrior(28,15));
-            objects.Add(new Bowman(28,2));
+            objects.Add(new Assassin(36,13));
+            objects.Add(new Warrior(32,15));
+            objects.Add(new Bowman(33,2));
             objects.Add(new Bull(34,7));
             objects.Add(new Mina(24,7));
             objects.Add(new Mina(27,14));

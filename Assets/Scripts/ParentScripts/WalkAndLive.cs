@@ -38,6 +38,7 @@ public class WalkAndLive : WalkableObject, IHealth
             if (hp - damage <= 0)
             {
                 hp = 0;
+                startDeath();
                 isDeath = true;
             }
             else
@@ -58,6 +59,10 @@ public class WalkAndLive : WalkableObject, IHealth
         }
     }
 
+    public virtual void startDeath()
+    {
+
+    }
     
     public virtual void onDeath()
     {

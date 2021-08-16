@@ -19,8 +19,10 @@ public class PressableObject : MapObject
     {
         base.startObject();
         isCollisiable = false;
-        gameObject.transform.position = position;
         order = ObjectOrder.onFloor;
+        var tmpList = map.getMapObjects<WalkableObject>((int)position.x, (int)position.y, x => x is WalkableObject);
+        if (tmpList != null)
+            OnPressStart(tmpList[0]);
     }
 
     public PressableObject(int x, int y): base(x,y) { }

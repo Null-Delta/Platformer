@@ -78,7 +78,6 @@ public class RoundWizard : SmartStalker
 
     public override void dealDamage()
     {
-        base.dealDamage();
         notFire = false;
         RoundBullet tmpBullet = new RoundBullet(this, 5, damage);
         map.setupObject(tmpBullet);

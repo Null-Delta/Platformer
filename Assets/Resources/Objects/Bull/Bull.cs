@@ -21,6 +21,7 @@ public class Bull : SmartStalker
         startOfDamageTime = 0.7f;
         endOfDamageTime = 0.6f;
         rangeOfAttack = 1f;
+        typeOfWalk=1;
     }
 
     public override void updateObject()
