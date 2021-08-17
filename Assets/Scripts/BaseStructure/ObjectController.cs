@@ -39,4 +39,9 @@ public class ObjectController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) {
         (obj as MapObject).onCollizion(collision.gameObject.GetComponent<ObjectController>().obj as MapObject, collision);
     }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        (obj as MapObject).onCollizion(collision.gameObject.GetComponent<ObjectController>().obj as MapObject, collision);
+    }
+   
 }

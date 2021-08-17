@@ -32,6 +32,7 @@ public class MapObject: Object {
     }
 
     virtual public void onCollizion(MapObject obj, Collision2D collision) {}
+    virtual public void onCollizion(MapObject obj, Collider2D collision) {}
     public override void updateObject() { }
     public override void startObject() { }
     public override void resetObject() { }
