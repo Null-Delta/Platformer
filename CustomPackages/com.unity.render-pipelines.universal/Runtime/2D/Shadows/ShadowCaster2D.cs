@@ -128,17 +128,18 @@ namespace UnityEngine.Experimental.Rendering.Universal
             {
                 m_Mesh = new Mesh();
                 ShadowUtility.GenerateShadowMesh(m_Mesh, m_ShapePath);
+                m_InstanceId = GetInstanceID();
                 m_isFirstLaunch = false;
             }
-            if (m_InstanceId != GetInstanceID())
+            if(m_InstanceId != GetInstanceID())
             {
                 m_InstanceId = GetInstanceID();
-            } 
+            }
+            m_ShadowCasterGroup = null;
         }
 
         protected void OnDisable()
         {   
-            m_ShadowCasterGroup = null;
             ShadowCasterGroup2DManager.RemoveFromShadowCasterGroup(this, m_ShadowCasterGroup);
             ShadowCasterGroup2DManager.RemoveGroup(this); 
         }
