@@ -32,6 +32,7 @@ namespace UnityEngine.Experimental.Rendering.Universal
 
         int m_PreviousShadowGroup = 0;
         bool m_PreviousCastsShadows = true;
+        bool m_isFirstLaunch = true;
         int m_PreviousPathHash = 0;
 
 
@@ -60,24 +61,6 @@ namespace UnityEngine.Experimental.Rendering.Universal
         {
             set { m_CastsShadows = value; }
             get { return m_CastsShadows; }
-        }
-
-        static int[] SetDefaultSortingLayers()
-        {
-            int layerCount = SortingLayer.layers.Length;
-            int[] allLayers = new int[layerCount];
-
-            for (int layerIndex = 0; layerIndex < layerCount; layerIndex++)
-            {
-                allLayers[layerIndex] = SortingLayer.layers[layerIndex].id;
-            }
-
-            return allLayers;
-        }
-
-        internal bool IsShadowedLayer(int layer)
-        {
-            return m_ApplyToSortingLayers != null ? Array.IndexOf(m_ApplyToSortingLayers, layer) >= 0 : false;
         }
 
         private void Awake()
@@ -121,21 +104,43 @@ namespace UnityEngine.Experimental.Rendering.Universal
             }
         }
 
-        protected void OnEnable()
+        static int[] SetDefaultSortingLayers()
         {
-            if (m_Mesh == null || m_InstanceId != GetInstanceID())
+            int layerCount = SortingLayer.layers.Length;
+            int[] allLayers = new int[layerCount];
+
+            for (int layerIndex = 0; layerIndex < layerCount; layerIndex++)
+            {
+                allLayers[layerIndex] = SortingLayer.layers[layerIndex].id;
+            }
+
+            return allLayers;
+        }
+
+        internal bool IsShadowedLayer(int layer)
+        {
+            return m_ApplyToSortingLayers != null ? Array.IndexOf(m_ApplyToSortingLayers, layer) >= 0 : false;
+        }
+
+        protected void OnEnable()
+        {   
+            if(m_isFirstLaunch)
             {
                 m_Mesh = new Mesh();
                 ShadowUtility.GenerateShadowMesh(m_Mesh, m_ShapePath);
-                m_InstanceId = GetInstanceID();
+                m_isFirstLaunch = false;
             }
-            Debug.Log("D");
-            m_ShadowCasterGroup = null;
+            if (m_InstanceId != GetInstanceID())
+            {
+                m_InstanceId = GetInstanceID();
+            } 
         }
 
         protected void OnDisable()
-        {
+        {   
+            m_ShadowCasterGroup = null;
             ShadowCasterGroup2DManager.RemoveFromShadowCasterGroup(this, m_ShadowCasterGroup);
+            ShadowCasterGroup2DManager.RemoveGroup(this); 
         }
 
         public void Update()

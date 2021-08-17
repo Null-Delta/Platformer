@@ -9,7 +9,7 @@ public class SpawnShadowCaster : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap;
     [SerializeField] GameObject shadowCaster;
-    [SerializeField] int radius;
+    int radius = 8;
 
     List<GameObject> shadowCasters;
     GameObject tempShadowCaster;
@@ -47,7 +47,7 @@ public class SpawnShadowCaster : MonoBehaviour
             if(shadowMap[(int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300] != null)
             {
                 enableShadowCastersPos.Add(new Vector2Int((int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300));
-                shadowMap[(int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300].GetComponent<ShadowCaster2D>().castsShadows = true;
+                shadowMap[(int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300].SetActive(true);
             }
         }
     }
@@ -57,9 +57,8 @@ public class SpawnShadowCaster : MonoBehaviour
         //Debug.Log(shadowCasters.Count);
         if (lastPosition != new Vector3Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, 0))
         {
-
             foreach (Vector2Int pos in enableShadowCastersPos)
-                shadowMap[pos.x, pos.y].GetComponent<ShadowCaster2D>().castsShadows = false;
+                shadowMap[pos.x, pos.y].SetActive(false);
 
             enableShadowCastersPos.Clear();
 
@@ -68,7 +67,7 @@ public class SpawnShadowCaster : MonoBehaviour
                 if(shadowMap[(int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300] != null)
                 {
                     enableShadowCastersPos.Add(new Vector2Int((int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300));
-                    shadowMap[(int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300].GetComponent<ShadowCaster2D>().castsShadows = true;
+                    shadowMap[(int)gameObject.transform.position.x + p.x + 400, (int)gameObject.transform.position.y + p.y + 300].SetActive(true);
                 }
                     
             }
