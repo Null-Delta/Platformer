@@ -39,7 +39,7 @@ public class Bullet : MapObject
            map.destroyObject(this);
         }
         else if(obj is WalkAndLive) {
-            (obj as WalkAndLive).getDamage(damage);
+            (obj as WalkAndLive).getDamage(damage, 0);
             map.destroyObject(this);
         }
          else if(obj is WalkableObject) {

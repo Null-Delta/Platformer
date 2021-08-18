@@ -14,7 +14,6 @@ public class Warrior : UsualStalker
 
         hp = 50;
         stayDelay = 0.1f;
-        immortalTimeForHit = 0.2f;
         foundRange = 7;
         damage = 15;
         attackTime = 0.7f;

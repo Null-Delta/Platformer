@@ -5,10 +5,8 @@ using UnityEngine;
 public interface IHealth
 {
     float hp { get; set;}
-    float immortalTime { set; get;}
-    float immortalTimeForHit {get;set;}
 
-    public void getDamage(float damage);
+    public void getDamage(float damage, float timeToStan, int typeOfDamage);
     public void onGetDamage(float damage);
     public void onDeath();
 

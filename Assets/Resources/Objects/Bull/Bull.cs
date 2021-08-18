@@ -14,7 +14,6 @@ public class Bull : SmartStalker
 
         hp = 80;
         stayDelay = 0.3f;
-        immortalTimeForHit = 0.2f;
         foundRange = 9;
         damage = 5;
         attackTime = 0.9f;

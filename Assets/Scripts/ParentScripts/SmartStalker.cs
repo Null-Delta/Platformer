@@ -187,7 +187,6 @@ public class SmartStalker : Seeker
         order = ObjectOrder.wall;
 
         hp = 100;
-        immortalTimeForHit = 0.5f;
         foundRange = 5;
         canFall = true;
     }

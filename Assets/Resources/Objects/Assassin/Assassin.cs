@@ -14,7 +14,6 @@ public class Assassin : SmartStalker
 
         hp = 30;
         stayDelay = 0.07f;
-        immortalTimeForHit = 0.1f;
         foundRange = 12;
         damage = 15;
         attackTime = 0.3f;

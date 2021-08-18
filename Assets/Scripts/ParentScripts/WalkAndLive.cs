@@ -7,16 +7,16 @@ public class WalkAndLive : WalkableObject, IHealth
     public override string objectName => "WalkAndLive";
 
     public float hp { get;set;}
-    public float immortalTimeForHit {get;set;}
-    public float immortalTime {get;set;}
 
     public float stunTime = 0;
+    public float stunOnDamage=0.2f;
 
-    public float deathTime = 0.33f;
+    public float deathTime = 0.11f;
     public Vector2 lastFloor;
     bool actFall = false;
     bool isFalling = false;
 
+    
     public bool isDeath = false;
 
     GameObject lookHp;
@@ -26,37 +26,33 @@ public class WalkAndLive : WalkableObject, IHealth
     public bool canFall = false;
     ///////////////////////////////////////////
 
-    public void getDamage(float damage)
+    public void getDamage(float damage=0, float timeToStan=-1, int typeOfDamage=0)
     {
-        
-        if (immortalTime <=0)
+        if (stunTime <=0 && timeToStan==-1)
+            stunTime = stunOnDamage;
+        else if (timeToStan !=-1)
         {
-            if (!actFall)
-            {
-                gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
-            }
-            if (hp - damage <= 0)
-            {
-                hp = 0;
-                startDeath();
-                isDeath = true;
-            }
-            else
-            {
-                hp -=damage;
-                onGetDamage(damage);
-            }
-
-            
-
-            //lookHp.SetActive(true);
-            lookHp.transform.GetChild(0).localScale = new Vector3(hp/100f, lookHp.transform.GetChild(0).localScale.y, lookHp.transform.GetChild(0).localScale.z);
-            lookHp.transform.GetChild(2).GetComponentInChildren<UnityEngine.UI.Text>().text = "" + hp;
-            
-            
-                
-            immortalTime = immortalTimeForHit;
+            stunTime = timeToStan;
         }
+        if (!actFall)
+        {
+            gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
+        }
+        
+        if (hp - damage <= 0)
+        {
+            hp = 0;
+            startDeath();
+            isDeath = true;
+        }
+        else
+        {
+            hp -=damage;
+        }
+        onGetDamage(damage);
+
+        lookHp.transform.GetChild(0).localScale = new Vector3(hp/100f, lookHp.transform.GetChild(0).localScale.y, lookHp.transform.GetChild(0).localScale.z);
+        lookHp.transform.GetChild(2).GetComponentInChildren<UnityEngine.UI.Text>().text = "" + hp;     
     }
 
     public virtual void startDeath()
@@ -95,9 +91,7 @@ public class WalkAndLive : WalkableObject, IHealth
         isCollisiable = true;
 
         lookHp = map.createHpLine(this);
-        lookHp.transform.SetParent(this.gameObject.transform);
-        //lookHp.SetActive(false);
-        
+        lookHp.transform.SetParent(this.gameObject.transform);   
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -126,30 +120,24 @@ public class WalkAndLive : WalkableObject, IHealth
             {
                 onDeath();
                 map.destroyObject(this);
-                deathTime = 0.33f;
+                deathTime = 0.11f;
                 isDeath = false;
             }
             
         }
-
-        if (immortalTime > 0) //время бессмертия
-        {
-            immortalTime -= Time.deltaTime;
-            if (immortalTime <=0)
-            {
-                //lookHp.SetActive(false);
-            }
-        }        
             
         if (stunTime > 0)          // механика оглушения
         {
             stunTime-= Time.deltaTime;
             isIgnoreMoves = true;
+            for (int i = 1; i < movements.Count;i++)
+            {
+                movements.Remove(movements[i]);
+            }
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.1f,0.1f,0.1f, 0.5f); // to delet
             if ( stunTime <= 0)
             {
                 isIgnoreMoves = false;
-                movements.Clear();
                 this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1, 1); // to delet
                 if (isFalling)
                 {

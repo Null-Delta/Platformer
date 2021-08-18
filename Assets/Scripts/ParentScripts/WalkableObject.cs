@@ -48,9 +48,6 @@ public class WalkableObject: MapObject {
             return _isIgnoreMoves;
         }
         set{
-            if(value) {
-                movements.RemoveAll(x => true);
-            }
             _isIgnoreMoves = value;
         }
     }

@@ -14,7 +14,6 @@ public class EarthBlock : WalkAndLive
         mapLocation = new Vector2Int((int)position.x, (int)position.y);
         
         hp = 20;
-        immortalTimeForHit = 0.0f;
         canFall = false;
     }
     public override void updateObject()

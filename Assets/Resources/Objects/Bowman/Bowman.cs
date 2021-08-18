@@ -15,7 +15,6 @@ public class Bowman : UsualStalker
 
         hp = 30;
         stayDelay = 0.4f;
-        immortalTimeForHit = 0.2f;
         foundRange = 9;
         damage = 10;
         attackTime = 0.7f;

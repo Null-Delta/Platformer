@@ -20,7 +20,6 @@ public class LazerChel : SmartStalker
 
         hp = 20;
         stayDelay = 0.4f;
-        immortalTimeForHit = 0.5f;
         foundRange = 9;
         damage = 10;
         attackTime = 1f;
@@ -163,7 +162,7 @@ public class LazerChel : SmartStalker
             for (int i = 0; i != tmpList.Count; i++)
                 if (damagedList.Contains(tmpList[i]) == false)
                 {
-                    tmpList[i].getDamage(damage);
+                    tmpList[i].getDamage(damage, 0);
                     damagedList.Add(tmpList[i]);
                 }
         }

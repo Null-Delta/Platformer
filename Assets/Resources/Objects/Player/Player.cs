@@ -32,7 +32,6 @@ public class Player: WalkAndLive
         order = ObjectOrder.wall;
         
         hp = 100;
-        immortalTimeForHit = 0.5f;
         canFall = true;
     }
 
@@ -84,6 +83,11 @@ public class Player: WalkAndLive
         }
     }
 
+    public override void onGetDamage(float d)
+    {
+        this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = this.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
+        //this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().order = this.gameObject.GetComponent<SpriteRenderer>().order;
+    }
 
     public Player(int x, int y): base(x,y) {
         

@@ -14,7 +14,6 @@ public class Runner : UsualStalker
 
         hp = 100;
         stayDelay = 1.2f;
-        immortalTimeForHit = 0.2f;
         foundRange = 8;
         damage = 1;
         attackTime = 1f;
