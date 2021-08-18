@@ -13,7 +13,6 @@ public class MovingFloor : WalkableObject
     public override void startObject()
     {
         //base.startObject();
-        gameObject.transform.position = position;
 
         isCollisiable = false;
         order = ObjectOrder.floor;

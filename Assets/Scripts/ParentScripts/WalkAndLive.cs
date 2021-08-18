@@ -10,11 +10,13 @@ public class WalkAndLive : WalkableObject, IHealth
 
     public float stunTime = 0;
     public float stunOnDamage=0.2f;
+    public bool immortal = false;
 
     public float deathTime = 0.11f;
     public Vector2 lastFloor;
     bool actFall = false;
     bool isFalling = false;
+    
 
     
     public bool isDeath = false;
@@ -28,31 +30,34 @@ public class WalkAndLive : WalkableObject, IHealth
 
     public void getDamage(float damage=0, float timeToStan=-1, int typeOfDamage=0)
     {
-        if (stunTime <=0 && timeToStan==-1)
-            stunTime = stunOnDamage;
-        else if (timeToStan !=-1)
+        if (!immortal)
         {
-            stunTime = timeToStan;
-        }
-        if (!actFall)
-        {
-            gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
-        }
-        
-        if (hp - damage <= 0)
-        {
-            hp = 0;
-            startDeath();
-            isDeath = true;
-        }
-        else
-        {
-            hp -=damage;
-        }
-        onGetDamage(damage);
+            if (stunTime <=0 && timeToStan==-1)
+                stunTime = stunOnDamage;
+            else if (timeToStan !=-1)
+            {
+                stunTime = timeToStan;
+            }
+            if (!actFall)
+            {
+                gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
+            }
+            
+            if (hp - damage <= 0)
+            {
+                hp = 0;
+                startDeath();
+                isDeath = true;
+            }
+            else
+            {
+                hp -=damage;
+            }
+            onGetDamage(damage);
 
-        lookHp.transform.GetChild(0).localScale = new Vector3(hp/100f, lookHp.transform.GetChild(0).localScale.y, lookHp.transform.GetChild(0).localScale.z);
-        lookHp.transform.GetChild(2).GetComponentInChildren<UnityEngine.UI.Text>().text = "" + hp;     
+            lookHp.transform.GetChild(0).localScale = new Vector3(hp/100f, lookHp.transform.GetChild(0).localScale.y, lookHp.transform.GetChild(0).localScale.z);
+            lookHp.transform.GetChild(2).GetComponentInChildren<UnityEngine.UI.Text>().text = "" + hp;     
+        }
     }
 
     public virtual void startDeath()

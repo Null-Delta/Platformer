@@ -73,6 +73,7 @@ public class MainScript : MonoBehaviour
 
         if (true)
         {
+            objects.Add(new Jumper(22,9));
             objects.Add(new WallSaw(1,9,  20, 5, true));
             objects.Add(new LazerChel(26,9));
             objects.Add(new EarthWizard(36,9));

@@ -41,6 +41,9 @@ public class WalkableObject: MapObject {
     //отступ, относительно координат targetWalker'а
     Vector2Int targetOffset = Vector2Int.zero;
 
+    //переменная, отвечающая взаимодействует ли объект с MovingFloor
+    public bool onFloor = true;
+
     //переменная, отвечающяя за игнорирование перемещений
     private bool _isIgnoreMoves = false;
     public bool isIgnoreMoves {
@@ -112,7 +115,7 @@ public class WalkableObject: MapObject {
     virtual public bool tryFindTarget() {
         if(targetWalker != null) clearTarget();
         
-        if(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
+        if(onFloor && map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
             setTarget(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
             translate = -(position - targetWalker.position);
             targetOffset = Vector2Int.zero;
