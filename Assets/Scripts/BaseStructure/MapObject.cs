@@ -47,7 +47,10 @@ public class MapObject: Object {
     public override void startObject() { }
     public override void resetObject() { }
     public void setupOrder() {
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = (int)order;
+        if(gameObject.GetComponent<SpriteRenderer>() != null)
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y - (int)order);
+        else 
+        gameObject.GetComponentInChildren<SpriteRenderer>().sortingOrder = -(int)(position.y - (int)order);
     }
     public override void execute(Command command) { }
 

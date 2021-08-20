@@ -26,9 +26,9 @@ public class Jumper : UsualStalker
         startOfDamageTime = 2.7f;
         endOfDamageTime = 1.5f;
         rangeOfAttack = 9;
-        canFall = false;
-        onFloor = false;
-        order = ObjectOrder.wall;
+        canFall = true;
+        //onFloor = false;
+        order = ObjectOrder.wall +1;
     }
 
     public override void updateObject()
@@ -42,59 +42,61 @@ public class Jumper : UsualStalker
             {
                 if (!preJump)
                 {
-                    
+                    gameObject.GetComponentInChildren<Animator>().Play("Up",0,0);
                     map.removeMapObject(this.mapLocation, this);
                     if (targetWalker != null)
                         clearTarget();
                     inStartJump = true;
                     immortal = true;
+
                     preJump = true;
-                    gameObject.GetComponent<Animator>().Play("jump",0,0);
                 }
-
-                this.gameObject.GetComponent<Collider2D>().enabled =false;
+                this.gameObject.GetComponentInChildren<Collider2D>().enabled =false;
                 //addMovement(new movements(new Vector2Int(0,1), false));
-                position+=new Vector2Int(0,1);
-                count++;
-            }
+                //position+=new Vector2Int(0,1);
+                //count++;
+                
 
+            }
             else if (inStartJump)
             {
-                var tmpList = map.getMapObjects<MovingFloor>((int)target.mapLocation.x, (int)target.mapLocation.y, x => x is MovingFloor);
-                if (tmpList!=null)
-                {
-                    position = tmpList[0].position + new Vector2(0, position.y-saveY);
-                    //tryFindTarget(target.mapLocation);
-                }
-                else
-                {
-                    position = new Vector2(Mathf.RoundToInt(position.x),Mathf.RoundToInt(position.y));
-                }
-                position = position+(new Vector2(target.mapLocation.x-this.mapLocation.x, target.mapLocation.y - saveY));
-                savePosition = target.mapLocation;
+                addMovement(new movement(target.mapLocation - mapLocation, false));
+                
+
+                // var tmpList = map.getMapObjects<MovingFloor>((int)target.mapLocation.x, (int)target.mapLocation.y, x => x is MovingFloor);
+
+                // if (tmpList!=null)
+                // {
+                //     position = tmpList[0].position + new Vector2(0, position.y-saveY);
+                //     //tryFindTarget(target.mapLocation);
+                // }
+                // else
+                // {
+                //     position = new Vector2(Mathf.RoundToInt(position.x),Mathf.RoundToInt(position.y));
+                // }
+                //position = position+(new Vector2(target.mapLocation.x-this.mapLocation.x, target.mapLocation.y - saveY));
+                //addMovement(new movements(target.position.x-this.position.x, target.position.y - saveY , false));
+                //savePosition = target.mapLocation;
                 inStartJump = false;
+                
             }
 
             if (attackRunner <= flyingTime && endOfDamageTime <= attackRunner) // нанесение урона
             {
-                //addMovement(new movements(new Vector2Int(0,-1), false));
-                if (count >0)
-                {
-                    position+=new Vector2Int(0,-1);
-                    count--;
-                }
-                gameObject.GetComponent<Animator>().Play("Hit",0,0);
                 inEndJump = true;
             }
+            
             else if (inEndJump)
             {
-                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                //Debug.Log(savePosition-mapLocation);
+                //position = savePosition;
+                //addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));
+                this.gameObject.GetComponentInChildren<Collider2D>().enabled =true;
 
-                addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));
-                this.gameObject.GetComponent<Collider2D>().enabled =true;
                 inEndJump = false;
                 immortal = false;
                 preJump = false;
+
                 //addMovement(new movements(new Vector2Int(0,-1), false));
                 var tmpList =map.getMapObjects<WalkAndLive>(new List<Vector2Int>
                     { 

@@ -97,6 +97,10 @@ public class WalkableObject: MapObject {
 
             setupMoving();
 
+            moveStartPosition = Vector2.zero;
+            translate = Vector2.zero;
+            targetOffset = Vector2Int.zero;
+
             gameObject.transform.position = new Vector3(mapLocation.x,mapLocation.y,0);
             position = gameObject.transform.position;
 
@@ -125,6 +129,8 @@ public class WalkableObject: MapObject {
 
         return false;
     }
+
+
     virtual public bool tryFindTarget(Vector2 point) {
         if(targetWalker != null) clearTarget();
         
