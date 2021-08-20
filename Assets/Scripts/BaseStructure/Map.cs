@@ -176,12 +176,10 @@ public class Map : MonoBehaviour
             GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
             obj.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
         }
-        
-        if(obj.gameObject.GetComponent<ObjectController>() != null)
+
+        if(obj.gameObject != null && obj.gameObject.GetComponent<ObjectController>() != null)
             obj.gameObject.GetComponent<ObjectController>().obj = obj;
-        else 
-            obj.gameObject.GetComponentInChildren<ObjectController>().obj = obj;
-            
+        
         addObject(obj);
     }
     public void setTile(MapObject obj) {
