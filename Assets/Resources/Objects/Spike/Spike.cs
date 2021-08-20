@@ -24,6 +24,7 @@ public class Spike : PressableObject
             if(b[0])
             {
                 gameObject.GetComponent<Animator>().Play("Show", 0, 0);
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
                 b[0] = false;
             }
 
