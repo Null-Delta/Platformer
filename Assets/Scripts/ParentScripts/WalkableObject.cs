@@ -95,7 +95,7 @@ public class WalkableObject: MapObject {
                 });
             }
 
-            setLocationOnMap();
+            setupMoving();
 
             gameObject.transform.position = new Vector3(mapLocation.x,mapLocation.y,0);
             position = gameObject.transform.position;
@@ -117,6 +117,19 @@ public class WalkableObject: MapObject {
         
         if(onFloor && map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
             setTarget(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
+            translate = -(position - targetWalker.position);
+            targetOffset = Vector2Int.zero;
+            moveStartPosition = -translate;
+            return true;
+        }
+
+        return false;
+    }
+    virtual public bool tryFindTarget(Vector2 point) {
+        if(targetWalker != null) clearTarget();
+        
+        if(onFloor && map.getMapObjects<MapObject>((int)point.x, (int)point.y, x => x is MovingFloor) != null) {
+            setTarget(map.getMapObjects<MapObject>((int)point.x, (int)point.y, x => x is MovingFloor)[0] as MovingFloor);
             translate = -(position - targetWalker.position);
             targetOffset = Vector2Int.zero;
             moveStartPosition = -translate;
@@ -175,7 +188,7 @@ public class WalkableObject: MapObject {
         targetWalker.subWalkers.Add(this);
         targetOffset = mapLocation - targetWalker.mapLocation;
     }
-    void clearTarget() {
+    public void clearTarget() {
         targetWalker.subWalkers.Remove(this);
         targetWalker = null;
     }

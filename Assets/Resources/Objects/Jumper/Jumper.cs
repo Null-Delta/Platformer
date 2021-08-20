@@ -26,8 +26,8 @@ public class Jumper : UsualStalker
         startOfDamageTime = 2.7f;
         endOfDamageTime = 1.5f;
         rangeOfAttack = 9;
-        canFall = false;
-        onFloor = false;
+        canFall = true;
+        //onFloor = false;
         order = ObjectOrder.wall +1;
     }
 
@@ -42,7 +42,10 @@ public class Jumper : UsualStalker
             {
                 if (!preJump)
                 {
+                    
                     map.removeMapObject(this.mapLocation, this);
+                    if (targetWalker != null)
+                        clearTarget();
                     inStartJump = true;
                     immortal = true;
 
@@ -57,6 +60,16 @@ public class Jumper : UsualStalker
             }
             else if (inStartJump)
             {
+                var tmpList = map.getMapObjects<MovingFloor>((int)target.mapLocation.x, (int)target.mapLocation.y, x => x is MovingFloor);
+                if (tmpList!=null)
+                {
+                    position = tmpList[0].position + new Vector2(0, position.y-saveY);
+                    //tryFindTarget(target.mapLocation);
+                }
+                else
+                {
+                    position = new Vector2(Mathf.RoundToInt(position.x),Mathf.RoundToInt(position.y));
+                }
                 position = position+(new Vector2(target.mapLocation.x-this.mapLocation.x, target.mapLocation.y - saveY));
                 //addMovement(new movements(target.position.x-this.position.x, target.position.y - saveY , false));
                 savePosition = target.mapLocation;
@@ -76,6 +89,8 @@ public class Jumper : UsualStalker
             }
             else if (inEndJump)
             {
+                Debug.Log(savePosition-mapLocation);
+                position = savePosition;
                 addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));
                 this.gameObject.GetComponent<Collider2D>().enabled =true;
                 inEndJump = false;
@@ -102,6 +117,9 @@ public class Jumper : UsualStalker
                             tmpList[i].getDamage(damage);
                         }
                 }
+                if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor" ||
+                x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
+                    onFall();
             }
 
             if (attackRunner <=0)  // конец атаки

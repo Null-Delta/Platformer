@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MovingFloor : WalkableObject
 {
-
-    public WalkableObject movingObject = null;
     public override string objectName => "MovingFloor";
 
     public Queue<movement> preset;

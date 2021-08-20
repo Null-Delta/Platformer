@@ -7,14 +7,18 @@ public class WallSaw : MapObject
     public override string objectName => "WallSaw";
     public Vector2 direction;
     public Vector2 directionOfWall;
-    public Vector2 newPosition;
+
+    public List<Vector2> movePoints = new List<Vector2>();
+    public List<Vector2> damagePoints = new List<Vector2>();
+    Vector2 speedVector;
     float speed;
     float damage = 5;
-    bool firstDirection;
+    int step = -1;
 
-    float timeOnMove;
-    float timeRunner;
-    float waitTime = 0.5f;
+    float timeOnMove=0;
+    float timeRunner=0;
+    float waitTime=0.3f;
+    bool isReady = false;
 
     Wall saveWall;
     
@@ -22,80 +26,75 @@ public class WallSaw : MapObject
 
     public override void startObject()
     {
-        isCollisiable = true;
-        List<Wall> tmpList = map.getMapObjects<Wall>(new List<Vector2>{position+ Vector2.up, position+ Vector2.down,position+ Vector2.left, position+ Vector2.right }, x => x is Wall);
-        if (tmpList == null)
-            Debug.Log("Где стенка, эээ!");
-        else
-            directionOfWall =tmpList[0].position;
-
-        if (directionOfWall.x - this.position.x == 0)
-            if (firstDirection)
-                direction = Vector2Int.right;
-            else
-                direction = Vector2Int.left;
-        else
-            if (firstDirection)
-                direction = Vector2Int.up;
-            else
-                direction = Vector2Int.left;
-        
-        directionOfWall -=this.position;
-        directionOfWall.Normalize();
-
-        newPosition = position+direction;
         timeOnMove = 1/speed;
         order = ObjectOrder.underWall;
         timeRunner = timeOnMove;
     }
 
+    int nextStep(int i)
+    {
+        return (i+1) % movePoints.Count;
+    }
+
+    void foundPath()
+    {
+        movePoints.Add(position);
+        damagePoints.Add(directionOfWall);
+        Vector2 tmpPosition = position;
+
+        while (true)
+        {
+            tmpPosition+=direction;
+            
+            if (map.getMapObjects<Wall>(Mathf.RoundToInt(tmpPosition.x+directionOfWall.x*0.5f),Mathf.RoundToInt(tmpPosition.y+directionOfWall.y*0.5f), x=>  x is Wall) == null)
+            {
+                tmpPosition -=direction*0.5f;
+                movePoints.Add(tmpPosition);
+                damagePoints.Add(directionOfWall-direction);
+
+                var tmpVector = direction;
+                direction =directionOfWall;
+                directionOfWall = -tmpVector;
+
+                tmpPosition +=direction*0.5f;
+            }
+            else if (map.getMapObjects<Wall>(Mathf.RoundToInt(tmpPosition.x-directionOfWall.x*0.5f),Mathf.RoundToInt(tmpPosition.y-directionOfWall.y*0.5f), x=>  x is Wall) != null)
+            {
+                tmpPosition -=direction*0.5f;
+                movePoints.Add(tmpPosition);
+                damagePoints.Add(directionOfWall+direction);
+
+                var tmpVector = direction;
+                direction = -directionOfWall;
+                directionOfWall = tmpVector;
+                
+                tmpPosition +=direction*0.5f;
+            }
+
+            if (tmpPosition == movePoints[0])
+                break;
+            movePoints.Add(tmpPosition);
+            damagePoints.Add(directionOfWall);
+        }
+    }
+
     public override void updateObject()
     {
-        if (waitTime <=0)
+        if (isReady && waitTime <=0)
         {
-            timeRunner -= Time.deltaTime;
-            
-            if (timeRunner <= 0)
+            if (timeRunner >= timeOnMove)
             {
-                saveObj = new List<WalkAndLive>();
-                timeRunner += timeOnMove;
-                var tmpList = map.getMapObjects<Wall>(Mathf.RoundToInt(position.x+directionOfWall.x),Mathf.RoundToInt(position.y+directionOfWall.y), x=>  x is Wall);
-                if (tmpList == null)
-                {
-                    position = newPosition;
-                    var tmpVector = direction;
-                    direction =directionOfWall;
-                    directionOfWall = -tmpVector;
-                    newPosition = saveWall.position-directionOfWall;
-                }
-                else if (map.getMapObjects<Wall>(Mathf.RoundToInt(position.x+direction.x),Mathf.RoundToInt(position.y+direction.y), x=>  x is Wall) != null && map.getMapObjects<Wall>(Mathf.RoundToInt(position.x-directionOfWall.x),Mathf.RoundToInt(position.y-directionOfWall.y), x=>  x is Wall) != null)
-                {
-                    //position = newPosition;
-                    tmpList = map.getMapObjects<Wall>(Mathf.RoundToInt(position.x-directionOfWall.x),Mathf.RoundToInt(position.y-directionOfWall.y), x=>  x is Wall);
-                    direction = -direction;
-                    directionOfWall = -directionOfWall;
-                    newPosition = tmpList[0].position-directionOfWall+direction;
-                }
-                else if (map.getMapObjects<Wall>(Mathf.RoundToInt(position.x+direction.x),Mathf.RoundToInt(position.y+direction.y), x=>  x is Wall) != null)
-                {
-                    tmpList = map.getMapObjects<Wall>(Mathf.RoundToInt(position.x+direction.x),Mathf.RoundToInt(position.y+direction.y), x=>  x is Wall);
-                    position = newPosition;
-                    var tmpVector = direction;
-                    direction = -directionOfWall;
-                    directionOfWall = tmpVector;
-                }
-                if (tmpList != null)
-                {
-                    newPosition = tmpList[0].position-directionOfWall+direction;
-                    saveWall =tmpList[0];
-                }
                 
+                step = nextStep(step);
+                timeRunner -=timeOnMove;
+                timeOnMove = ((movePoints[nextStep(step)]-movePoints[step]).magnitude)/speed;
+                saveObj = new List<WalkAndLive>();
             }
-            
-            
-            position +=direction*speed*Time.deltaTime;
-            
-            var tmpDamageList = map.getMapObjects<WalkAndLive>(Mathf.RoundToInt(position.x),Mathf.RoundToInt(position.y), x=>  x is WalkAndLive);
+
+            timeRunner += Time.deltaTime;
+            position = movePoints[step] + (movePoints[nextStep(step)]-movePoints[step])*(timeRunner/timeOnMove);
+
+            var tmpDamageList = map.getMapObjects<WalkAndLive>(Mathf.RoundToInt(position.x-damagePoints[step].x*0.5f),Mathf.RoundToInt(position.y-damagePoints[step].y*0.5f), x=>  x is WalkAndLive);
             if (tmpDamageList != null)
                 {
                     for (int i = 0; i != tmpDamageList.Count; i++)
@@ -109,16 +108,24 @@ public class WallSaw : MapObject
                 }
         }
         else 
-            waitTime -= Time.deltaTime;
+        {
+            waitTime -=Time.deltaTime;
+            if (isReady == false)
+            {
+                isReady = true;
+                foundPath();
+            }
+        }
     }
 
-    public WallSaw(float x, float y, float _speed= 0, float _damag = 5, bool dir = false): base(x,y)
+    public WallSaw(float x, float y, Vector2 d, Vector2 dw, float _speed, float _damag)
     {
-        if (_speed == 0)
-            speed = 5;
-        else
-            speed = _speed;
+        speed = _speed;
         damage = _damag;
-        firstDirection = dir;
+        direction = d;
+        directionOfWall = dw;
+        startPosition= new Vector2(x,y);
+        startPosition +=directionOfWall*0.5f;
+        position = startPosition;
     }
 }
