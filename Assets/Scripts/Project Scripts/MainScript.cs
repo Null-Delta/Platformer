@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MainScript : MonoBehaviour
 {
@@ -297,11 +298,13 @@ public class MainScript : MonoBehaviour
         // objects.Add(new BreakableFloor(3,3,0.5f,2f));
 
         map.AddComponent<Map>();
+        map.GetComponent<Map>().tilemap = GameObject.Find("Tilemap - lvl 0").GetComponent<Tilemap>();
+        map.GetComponent<Map>().tilemap1 = GameObject.Find("Tilemap - lvl 1").GetComponent<Tilemap>();
+        map.GetComponent<Map>().tilemap2 = GameObject.Find("Tilemap - lvl 2").GetComponent<Tilemap>();
+        map.GetComponent<Map>().tilemap3 = GameObject.Find("Tilemap - lvl 3").GetComponent<Tilemap>();
+        
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);
-
-        //groups[5] = new List<Object>();
-
     }
 
     void SetRect<T>(int x, int y, int widht, int height, int hollow) where T : MapObject, new()

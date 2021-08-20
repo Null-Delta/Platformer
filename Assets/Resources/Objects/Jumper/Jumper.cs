@@ -26,9 +26,9 @@ public class Jumper : UsualStalker
         startOfDamageTime = 2.7f;
         endOfDamageTime = 1.5f;
         rangeOfAttack = 9;
-        canFall = true;
-        //onFloor = false;
-        order = ObjectOrder.wall +1;
+        canFall = false;
+        onFloor = false;
+        order = ObjectOrder.wall;
     }
 
     public override void updateObject()
@@ -48,16 +48,16 @@ public class Jumper : UsualStalker
                         clearTarget();
                     inStartJump = true;
                     immortal = true;
-
                     preJump = true;
+                    gameObject.GetComponent<Animator>().Play("jump",0,0);
                 }
+
                 this.gameObject.GetComponent<Collider2D>().enabled =false;
                 //addMovement(new movements(new Vector2Int(0,1), false));
                 position+=new Vector2Int(0,1);
                 count++;
-                
-
             }
+
             else if (inStartJump)
             {
                 var tmpList = map.getMapObjects<MovingFloor>((int)target.mapLocation.x, (int)target.mapLocation.y, x => x is MovingFloor);
@@ -71,10 +71,8 @@ public class Jumper : UsualStalker
                     position = new Vector2(Mathf.RoundToInt(position.x),Mathf.RoundToInt(position.y));
                 }
                 position = position+(new Vector2(target.mapLocation.x-this.mapLocation.x, target.mapLocation.y - saveY));
-                //addMovement(new movements(target.position.x-this.position.x, target.position.y - saveY , false));
                 savePosition = target.mapLocation;
                 inStartJump = false;
-                
             }
 
             if (attackRunner <= flyingTime && endOfDamageTime <= attackRunner) // нанесение урона
@@ -85,12 +83,13 @@ public class Jumper : UsualStalker
                     position+=new Vector2Int(0,-1);
                     count--;
                 }
+                gameObject.GetComponent<Animator>().Play("Hit",0,0);
                 inEndJump = true;
             }
             else if (inEndJump)
             {
-                Debug.Log(savePosition-mapLocation);
-                position = savePosition;
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+
                 addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));
                 this.gameObject.GetComponent<Collider2D>().enabled =true;
                 inEndJump = false;

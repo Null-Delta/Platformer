@@ -7,7 +7,7 @@ public class ObjectController : MonoBehaviour
     public Object obj;
     
     // статичные объекты
-    static List<string> unUpdateObjects=  new List<string>{"Wall", "Floor", "Grass"};
+    static List<string> unUpdateObjects =  new List<string>{"Wall", "Floor", "Grass"};
 
     void Start()
     {
