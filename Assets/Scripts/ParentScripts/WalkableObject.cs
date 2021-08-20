@@ -21,7 +21,7 @@ public class WalkableObject: MapObject {
     public override string objectName => "Walker";
 
     //время, за которое происходит перемещение объекта(одинаково для всех волкеров)
-    public const float moveDelay = 0.2f;
+    public const float moveDelay = 0.15f;
 
     //список запланированных перемещений
     public List<movement> movements = new List<movement>();

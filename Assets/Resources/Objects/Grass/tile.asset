@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Floor
+  m_Name: tile
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -4373184736405950995, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+  m_DefaultSprite: {fileID: 7932798033344189819, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: -4373184736405950995, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7932798033344189819, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 02000000020000000200000002000000
     m_NeighborPositions:
@@ -35,13 +35,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 1
     m_Sprites:
-    - {fileID: 4158732434352698325, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 917857947829267716, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -56,13 +56,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 2
     m_Sprites:
-    - {fileID: 4341242654334979365, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -6996743899038756316, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000001000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -77,13 +77,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 3
     m_Sprites:
-    - {fileID: 1903813881350671106, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -4875790746840711183, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000001000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -98,13 +98,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 4
     m_Sprites:
-    - {fileID: 8666153195878230358, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7008057662264404087, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000001000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -119,13 +119,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 5
     m_Sprites:
-    - {fileID: 4633350270274512122, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -4331507780233467490, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000001000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -140,13 +140,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 6
     m_Sprites:
-    - {fileID: -3085053661432295534, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 3947305696912312628, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000002000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -161,13 +161,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 7
     m_Sprites:
-    - {fileID: 601623144054556460, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 1511364853548294097, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000002000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -182,13 +182,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 8
     m_Sprites:
-    - {fileID: 7700971350373784707, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -1196767453120055481, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000002000000010000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -203,13 +203,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 9
     m_Sprites:
-    - {fileID: 6482533309307412173, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -7650045499417364637, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0200000001000000010000000100000001000000020000000100000001000000
     m_NeighborPositions:
@@ -224,13 +224,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 10
     m_Sprites:
-    - {fileID: -6716143812497719498, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -7102782719272619346, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000020000000100000001000000020000000100000001000000
     m_NeighborPositions:
@@ -245,13 +245,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 11
     m_Sprites:
-    - {fileID: -238930871357459764, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 5760560697798805154, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000002000000020000000100000001000000
     m_NeighborPositions:
@@ -266,13 +266,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 12
     m_Sprites:
-    - {fileID: 1546552405686873150, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 5979050371840818550, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000002000000020000000200000001000000
     m_NeighborPositions:
@@ -287,13 +287,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 13
     m_Sprites:
-    - {fileID: -2362380025853997434, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -4157006506167928481, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000002000000020000000200000001000000
     m_NeighborPositions:
@@ -308,13 +308,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 14
     m_Sprites:
-    - {fileID: -368596763120020550, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7062079563280921139, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000002000000020000000200000001000000
     m_NeighborPositions:
@@ -329,13 +329,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 15
     m_Sprites:
-    - {fileID: 1338063624304658472, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -6402286615853794283, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000002000000020000000200000001000000
     m_NeighborPositions:
@@ -350,13 +350,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 16
     m_Sprites:
-    - {fileID: 2509881989800874174, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7882093760513265202, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000100000002000000020000000200000002000000
     m_NeighborPositions:
@@ -371,13 +371,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 17
     m_Sprites:
-    - {fileID: -737837024687671454, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 1221758358402831077, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 01000000020000000200000002000000
     m_NeighborPositions:
@@ -388,13 +388,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 18
     m_Sprites:
-    - {fileID: 3038923913770714274, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 1549955567050341098, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 02000000020000000100000002000000
     m_NeighborPositions:
@@ -405,13 +405,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 19
     m_Sprites:
-    - {fileID: -968770383251345080, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7485028316761915057, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 01000000020000000200000002000000
     m_NeighborPositions:
@@ -422,13 +422,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 20
     m_Sprites:
-    - {fileID: 6735105382651259636, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -3605513636885208035, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 02000000020000000200000001000000
     m_NeighborPositions:
@@ -439,13 +439,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 21
     m_Sprites:
-    - {fileID: 6433854208847190039, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -6742746201946172663, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -457,13 +457,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 22
     m_Sprites:
-    - {fileID: 1492911798537794108, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -2140708771399861022, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -475,13 +475,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 23
     m_Sprites:
-    - {fileID: 5048416880140299565, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -5984118509526019633, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -493,13 +493,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 24
     m_Sprites:
-    - {fileID: 7641892208429834689, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 8161109568162413996, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -511,13 +511,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 25
     m_Sprites:
-    - {fileID: -800442207075965033, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -5222378910249604682, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000020000000200000002000000
     m_NeighborPositions:
@@ -529,13 +529,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 26
     m_Sprites:
-    - {fileID: 7649971556135936819, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7948030905998602369, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000020000000200000002000000
     m_NeighborPositions:
@@ -547,13 +547,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 27
     m_Sprites:
-    - {fileID: 4870877652962855886, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 4763473756237327555, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000020000000200000002000000
     m_NeighborPositions:
@@ -565,13 +565,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 28
     m_Sprites:
-    - {fileID: -435046055405278703, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 1635801129053076270, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000020000000200000002000000
     m_NeighborPositions:
@@ -583,13 +583,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 29
     m_Sprites:
-    - {fileID: 4275265726231819746, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7090553169098523241, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -602,7 +602,7 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 30
     m_Sprites:
-    - {fileID: -9055321195671008437, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 1433647835158291232, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
@@ -621,13 +621,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 31
     m_Sprites:
-    - {fileID: 8383685822998553962, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 3925414852906784594, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -640,13 +640,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 32
     m_Sprites:
-    - {fileID: -5034969528391634466, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 6399507840787211314, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000100000001000000
     m_NeighborPositions:
@@ -659,13 +659,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 33
     m_Sprites:
-    - {fileID: 2551854644190722719, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 5924365043941166966, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000002000000010000000100000001000000
     m_NeighborPositions:
@@ -678,13 +678,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 34
     m_Sprites:
-    - {fileID: -4943970475600233264, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -116850080281690458, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000100000002000000
     m_NeighborPositions:
@@ -697,13 +697,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 35
     m_Sprites:
-    - {fileID: -2987767069438478369, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 6772836760113797712, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000002000000010000000100000001000000
     m_NeighborPositions:
@@ -716,13 +716,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 36
     m_Sprites:
-    - {fileID: 291018983614156155, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 3373871025040692237, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000100000002000000
     m_NeighborPositions:
@@ -735,13 +735,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 37
     m_Sprites:
-    - {fileID: 3750309937199576963, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 2436854399354432543, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000001000000
     m_NeighborPositions:
@@ -754,13 +754,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 38
     m_Sprites:
-    - {fileID: 5602807671860324422, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -2730152382919154978, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000001000000
     m_NeighborPositions:
@@ -773,13 +773,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 39
     m_Sprites:
-    - {fileID: -4753789512137068514, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -2138023112821551989, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000001000000
     m_NeighborPositions:
@@ -792,13 +792,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 40
     m_Sprites:
-    - {fileID: -3056482181439526140, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -860065888950432356, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000001000000
     m_NeighborPositions:
@@ -811,13 +811,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 41
     m_Sprites:
-    - {fileID: -6685596499255760803, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -6791239006221428156, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000020000000200000001000000
     m_NeighborPositions:
@@ -830,13 +830,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 42
     m_Sprites:
-    - {fileID: -1098774980844157507, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -6755194336831378868, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -849,13 +849,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 43
     m_Sprites:
-    - {fileID: -7549047806516835191, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 6052375905775373263, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -868,13 +868,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 44
     m_Sprites:
-    - {fileID: 7923879727469168163, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7759756413600677213, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000200000002000000
     m_NeighborPositions:
@@ -887,13 +887,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 45
     m_Sprites:
-    - {fileID: 9152501972413254891, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -7650660313171419800, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 01000000010000000200000002000000
     m_NeighborPositions:
@@ -904,13 +904,13 @@ MonoBehaviour:
     m_RuleTransform: 0
   - m_Id: 0
     m_Sprites:
-    - {fileID: 384148847483732694, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -3219115868947907865, guid: 389ed38a4715c47a4b457b9ff8f3065f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 01000000010000000200000002000000
     m_NeighborPositions:
