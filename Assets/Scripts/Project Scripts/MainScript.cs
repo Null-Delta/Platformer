@@ -32,6 +32,12 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(14,15));
 
         objects.Add(new Torch(3,3));
+        objects.Add(new Torch(4,3));
+        objects.Add(new Torch(5,3));
+        objects.Add(new Torch(6,3));
+        objects.Add(new Torch(7,3));
+        objects.Add(new Torch(5,7));
+        objects.Add(new Torch(13,18));
     
         //SetRect<Floor>(30,30,50,50,1);
         //SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
@@ -274,7 +280,7 @@ public class MainScript : MonoBehaviour
             objects.Add(new BreakableFloor(1,22,0.5f,2f));
 
             objects.Add(new Jumper(27,17));
-            objects.Add(new WallSaw(3,2,Vector2.right, Vector2.up, 18, 5));
+            //objects.Add(new WallSaw(3,2,Vector2.right, Vector2.up, 18, 5));
             objects.Add(new LazerChel(26,9));
             objects.Add(new EarthWizard(36,9));
             objects.Add(new Runner(36,10));

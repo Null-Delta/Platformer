@@ -9,9 +9,9 @@ public class Torch : MapObject
 
     public override string objectName => "Torch";
 
-    [SerializeField] float flickersPerSecond = 15f;
-    [SerializeField] float flickerRangeMin = -0.1f;
-    [SerializeField] float flickerRangeMax = 0.1f;
+    [SerializeField] float flickersPerSecond = 10f;
+    [SerializeField] float flickerRangeMin = -0.2f;
+    [SerializeField] float flickerRangeMax = 0.2f;
     Light2D light2D;
     float intensity;
     float time;
