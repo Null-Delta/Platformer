@@ -9,10 +9,7 @@ public class Jumper : UsualStalker
     bool inStartJump = false;
     bool inEndJump = false;
     bool preJump = false;
-    float flyingTime = 2.1f;
-    int count=0;
-    float saveY;    
-    Vector2 savePosition;
+    float flyingTime;
 
     public override void startObject()
     {
@@ -23,11 +20,11 @@ public class Jumper : UsualStalker
         foundRange = 10;
         damage = 15;
         attackTime = 3f;
-        startOfDamageTime = 2.7f;
+        startOfDamageTime = 2.5f;
+        flyingTime = 2f;
         endOfDamageTime = 1.5f;
         rangeOfAttack = 9;
-        canFall = false;
-        onFloor = false;
+        canFall = true;
         order = ObjectOrder.wall +1;
     }
 
@@ -38,50 +35,29 @@ public class Jumper : UsualStalker
         {
             
             attackRunner -=Time.deltaTime;
-            if (attackRunner <= startOfDamageTime && flyingTime <= attackRunner)
+            if (!preJump && attackRunner <= startOfDamageTime)
             {
-                if (!preJump)
-                {
-                    map.removeMapObject(this.mapLocation, this);
-                    inStartJump = true;
-                    immortal = true;
-
-                    preJump = true;
-                }
-                this.gameObject.GetComponent<Collider2D>().enabled =false;
-                //addMovement(new movements(new Vector2Int(0,1), false));
-                position+=new Vector2Int(0,1);
-                count++;
-                
-
-            }
-            else if (inStartJump)
+                gameObject.GetComponentInChildren<Animator>().Play("Up",0,0);
+                map.removeMapObject(this.mapLocation, this);
+                if (targetWalker != null)
+                    clearTarget();
+                this.gameObject.GetComponentInChildren<Collider2D>().enabled =false;
+                inStartJump = true;
+                immortal = true;
+                preJump = true;
+            }     
+            else if (inStartJump && attackRunner <= flyingTime) // поиск места приземления
             {
-                position = position+(new Vector2(target.mapLocation.x-this.mapLocation.x, target.mapLocation.y - saveY));
-                //addMovement(new movements(target.position.x-this.position.x, target.position.y - saveY , false));
-                savePosition = target.mapLocation;
+                addMovement(new movement(target.mapLocation - mapLocation, false));
                 inStartJump = false;
-                
-            }
-
-            if (attackRunner <= flyingTime && endOfDamageTime <= attackRunner) // нанесение урона
-            {
-                //addMovement(new movements(new Vector2Int(0,-1), false));
-                if (count >0)
-                {
-                    position+=new Vector2Int(0,-1);
-                    count--;
-                }
                 inEndJump = true;
-            }
-            else if (inEndJump)
+            }  
+            else if (inEndJump && attackRunner <= endOfDamageTime)
             {
-                addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));
-                this.gameObject.GetComponent<Collider2D>().enabled =true;
+                this.gameObject.GetComponentInChildren<Collider2D>().enabled =true;
                 inEndJump = false;
                 immortal = false;
-                preJump = false;
-                //addMovement(new movements(new Vector2Int(0,-1), false));
+
                 var tmpList =map.getMapObjects<WalkAndLive>(new List<Vector2Int>
                     { 
                         this.mapLocation+Vector2Int.up,
@@ -97,15 +73,21 @@ public class Jumper : UsualStalker
                 if(tmpList != null)
                 {
                     for (int i = 0; i != tmpList.Count; i++)
-                        if (tmpList[i] != this)
+                        if (!(tmpList[i] is Jumper))
                         {
                             tmpList[i].getDamage(damage);
                         }
                 }
+                if (map.getMapObjects<MapObject>((int)mapLocation.x, (int)mapLocation.y, x => x.objectName == "Floor" ||
+                x.objectName == "MovingFloor" || ( x.objectName == "BreakableFloor" && (x as BreakableFloor).isReal) ) == null)
+                    onFall();
+                else
+                    lastFloor = mapLocation;
             }
 
             if (attackRunner <=0)  // конец атаки
             {
+                preJump = false;
                 isAttack = false;
                 foundWay();
             }
@@ -116,8 +98,6 @@ public class Jumper : UsualStalker
     public override void startOfAttack()
     {
         base.startOfAttack();
-        saveY = mapLocation.y;
-        count=0;
     }
 
     public override void dealDamage()

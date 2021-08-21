@@ -19,30 +19,21 @@ public class Teleport : PressableObject
     Material teleportationMaterial;
     Material originalMaterial;
 
-
-
-
     public override string objectName => "Teleport";
     public override void OnPressStart(WalkableObject walker)
     {
-
-
-
         if (!isReceptionObject)
         {
             isActivation = true;
             teleportationObj = walker;
             originalMaterial = teleportationObj.gameObject.GetComponent<SpriteRenderer>().material;
             map.executeGroup(events["OnTeleport"]);
-
         }
         else
         {
             isReceptionObject = false;
         }
-
     }
-
 
     public override void OnPressEnd(WalkableObject walker)
     {
@@ -144,10 +135,8 @@ public class Teleport : PressableObject
     public override void startObject()
     {
         base.startObject();
-        isCollisiable = false;
         order = ObjectOrder.underWall;
         gameObject.transform.position = position;
-        disintegrationMaterial = Resources.Load<Material>("URP/DisintegrationMaterial");
     }
 
     public Teleport(int x, int y, int bx, int by, List<Command> OnTeleport) : base(x, y)
@@ -155,5 +144,10 @@ public class Teleport : PressableObject
         brotherPosition = new Vector2Int(bx, by);
         events = new Dictionary<string, List<Command>>();
         events["OnTeleport"] = OnTeleport;
+
+        isCollisiable = false;
+        order = ObjectOrder.underWall;
+
+        disintegrationMaterial = Resources.Load<Material>("URP/DisintegrationMaterial");
     }
 }

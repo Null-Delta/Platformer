@@ -32,15 +32,16 @@ public class WalkAndLive : WalkableObject, IHealth
     {
         if (!immortal)
         {
-            if (stunTime <=0 && timeToStan==-1)
-                stunTime = stunOnDamage;
-            else if (timeToStan !=-1)
-            {
-                stunTime = timeToStan;
-            }
+            if (stunTime <=0)
+                if (timeToStan==-1)
+                    stunTime = stunOnDamage;
+                else
+                {
+                    stunTime = timeToStan;
+                }
             if (!actFall)
             {
-                gameObject.GetComponent<Animator>().Play("getDamage", 1, 0);
+                gameObject.GetComponentInChildren<Animator>().Play("getDamage", 1, 0);
             }
             
             if (hp - damage <= 0)
@@ -96,7 +97,7 @@ public class WalkAndLive : WalkableObject, IHealth
         isCollisiable = true;
 
         lookHp = map.createHpLine(this);
-        lookHp.transform.SetParent(this.gameObject.transform);   
+        lookHp.transform.SetParent(this.gameObject.transform.GetChild(0));   
     }
 
     public override bool canMoveOn(Vector2Int point)
@@ -139,11 +140,11 @@ public class WalkAndLive : WalkableObject, IHealth
             {
                 movements.Remove(movements[i]);
             }
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.1f,0.1f,0.1f, 0.5f); // to delet
-            if ( stunTime <= 0)
+            this.gameObject.GetComponentInChildren<SpriteRenderer>().color = new Color(0.1f,0.1f,0.1f, 0.5f); // to delet
+            if (stunTime <= 0)
             {
                 isIgnoreMoves = false;
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1, 1); // to delet
+                this.gameObject.GetComponentInChildren<SpriteRenderer>().color = new Color(1,1,1, 1); // to delet
                 if (isFalling)
                 {
                     isFalling = false;

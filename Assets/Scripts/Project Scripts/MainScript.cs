@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MainScript : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class MainScript : MonoBehaviour
         // objects.Add(new Spike(5,15, 0.25f, 1, 0.6f));
 
         objects.Add(new Spike(8,16, 0.25f, 1, 0.2f));
+        objects.Add(new Spike(7,16, 0.25f, 1, 0.4f));
+        objects.Add(new Spike(6,16, 0.25f, 1, 0.6f));
         // objects.Add(new Spike(7,16, 0.25f, 1, 0.4f));
         // objects.Add(new Spike(6,16, 0.25f, 1, 0.6f));
         // objects.Add(new Spike(5,16, 0.25f, 1, 0.8f));
@@ -274,6 +277,31 @@ public class MainScript : MonoBehaviour
 
         objects.AddRange(newGrasses);
 
+        if (true)
+        {
+            objects.Add(new BreakableFloor(1,20,0.5f,2f));
+            objects.Add(new BreakableFloor(1,21,0.5f,2f));
+            objects.Add(new BreakableFloor(1,22,0.5f,2f));
+
+            objects.Add(new Jumper(27,17));
+            objects.Add(new WallSaw(3,2,Vector2.right, Vector2.up, 18, 5));
+            objects.Add(new LazerChel(26,9));
+            objects.Add(new EarthWizard(36,9));
+            objects.Add(new Runner(36,10));
+            objects.Add(new RoundWizard(36,5));
+            objects.Add(new Assassin(36,13));
+            objects.Add(new Warrior(32,15));
+            objects.Add(new Bowman(33,2));
+            objects.Add(new Bull(34,7));
+            objects.Add(new Mina(24,7));
+            objects.Add(new Mina(27,14));
+            objects.Add(new Mina(22,3));
+            objects.Add(new Mina(25,9));
+            
+        }
+        
+        SetRect<Floor>(19,0,20,20,1);
+
         //objects.RemoveAll(x => x is MapObject && new Rect(3,3,4,4).Contains((x as MapObject).position));
 
         // objects.Add(new BreakableFloor(6,6,0.5f,2f));
@@ -295,13 +323,15 @@ public class MainScript : MonoBehaviour
         // objects.Add(new BreakableFloor(3,5,0.5f,2f));
         // objects.Add(new BreakableFloor(3,4,0.5f,2f));
         // objects.Add(new BreakableFloor(3,3,0.5f,2f));
-
+        
         map.AddComponent<Map>();
+        map.GetComponent<Map>().tilemap = GameObject.Find("Tilemap - lvl 0").GetComponent<Tilemap>();
+        map.GetComponent<Map>().tilemap1 = GameObject.Find("Tilemap - lvl 1").GetComponent<Tilemap>();
+        map.GetComponent<Map>().tilemap2 = GameObject.Find("Tilemap - lvl 2").GetComponent<Tilemap>();
+        map.GetComponent<Map>().tilemap3 = GameObject.Find("Tilemap - lvl 3").GetComponent<Tilemap>();
+        
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);
-
-        //groups[5] = new List<Object>();
-
     }
 
     void SetRect<T>(int x, int y, int widht, int height, int hollow) where T : MapObject, new()

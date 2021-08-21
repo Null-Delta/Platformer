@@ -21,7 +21,7 @@ public class WalkableObject: MapObject {
     public override string objectName => "Walker";
 
     //время, за которое происходит перемещение объекта(одинаково для всех волкеров)
-    public const float moveDelay = 0.2f;
+    public const float moveDelay = 0.15f;
 
     //список запланированных перемещений
     public List<movement> movements = new List<movement>();
@@ -95,7 +95,11 @@ public class WalkableObject: MapObject {
                 });
             }
 
-            setLocationOnMap();
+            setupMoving();
+
+            moveStartPosition = Vector2.zero;
+            translate = Vector2.zero;
+            targetOffset = Vector2Int.zero;
 
             gameObject.transform.position = new Vector3(mapLocation.x,mapLocation.y,0);
             position = gameObject.transform.position;
@@ -117,6 +121,21 @@ public class WalkableObject: MapObject {
         
         if(onFloor && map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor) != null) {
             setTarget(map.getMapObjects<MapObject>(mapLocation.x, mapLocation.y, x => x is MovingFloor)[0] as MovingFloor);
+            translate = -(position - targetWalker.position);
+            targetOffset = Vector2Int.zero;
+            moveStartPosition = -translate;
+            return true;
+        }
+
+        return false;
+    }
+
+
+    virtual public bool tryFindTarget(Vector2 point) {
+        if(targetWalker != null) clearTarget();
+        
+        if(onFloor && map.getMapObjects<MapObject>((int)point.x, (int)point.y, x => x is MovingFloor) != null) {
+            setTarget(map.getMapObjects<MapObject>((int)point.x, (int)point.y, x => x is MovingFloor)[0] as MovingFloor);
             translate = -(position - targetWalker.position);
             targetOffset = Vector2Int.zero;
             moveStartPosition = -translate;
@@ -175,7 +194,7 @@ public class WalkableObject: MapObject {
         targetWalker.subWalkers.Add(this);
         targetOffset = mapLocation - targetWalker.mapLocation;
     }
-    void clearTarget() {
+    public void clearTarget() {
         targetWalker.subWalkers.Remove(this);
         targetWalker = null;
     }

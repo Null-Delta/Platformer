@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
     Texture2D texture;
     Sprite s;
+
+    public Tilemap tilemap;
+    public Tilemap tilemap1;
+    public Tilemap tilemap2;
+    public Tilemap tilemap3;
 
     const int width = 256, height = 256;
     List<Object> objects = new List<Object>();
@@ -97,7 +103,7 @@ public class Map : MonoBehaviour
         objects.Add(obj);
         
         if(obj is MapObject) {
-            if(!(obj is Bullet)) {
+            if(!(obj is Bullet) && !(obj is RoundBullet) && !(obj is WallSaw)) {
                 mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Add(obj as MapObject);
             }
         }
@@ -137,6 +143,7 @@ public class Map : MonoBehaviour
     public void setupGameObject(GameObject gameObject, Vector3 to) {
         Instantiate(gameObject, to, Quaternion.identity);
     }
+
     public void setupObjects(List<Object> objs) {
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
@@ -157,27 +164,52 @@ public class Map : MonoBehaviour
 
     public void setupObject(Object obj) {
         obj.map = this;
-        GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
 
         if(obj is MapObject) {
-            obj.gameObject = Instantiate(prefab,(obj as MapObject).position, Quaternion.identity);
-            if(obj is Wall)
-                obj.gameObject.transform.SetParent(GameObject.Find("Walls").transform);
+            if((obj as MapObject).isTile) {
+                setTile(obj as MapObject);
+            } else {
+                GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
+                obj.gameObject = Instantiate(prefab,(obj as MapObject).position, Quaternion.identity);
+            }
         } else {
+            GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
             obj.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
         }
-        obj.gameObject.GetComponent<ObjectController>().obj = obj;
+        
+        if(obj.gameObject != null && obj.gameObject.GetComponent<ObjectController>() != null)
+            obj.gameObject.GetComponent<ObjectController>().obj = obj;
+        else if(obj.gameObject != null && obj.gameObject.GetComponentInChildren<ObjectController>() != null)
+            obj.gameObject.GetComponentInChildren<ObjectController>().obj = obj;
+            
         addObject(obj);
     }
+    public void setTile(MapObject obj) {
+        switch(obj.order) {
+            case ObjectOrder.floor:
+                tilemap3.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+            break;
+            case ObjectOrder.onFloor:
+                tilemap2.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+            break;
+            case ObjectOrder.underWall:
+                tilemap1.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+            break;
+            case ObjectOrder.wall:
+                tilemap.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+            break;
+        }
 
-    // public void Start() {
-    //     preview = GameObject.Find("mapPreview").GetComponent<Image>();
-    //     texture = new Texture2D(32,32);
-    //     s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
-    // }
+        //tilemap.gett
+    }
+
+    public void Start() {
+        preview = GameObject.Find("mapPreview").GetComponent<Image>();
+        texture = new Texture2D(32,32);
+        s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
+    }
 
     public void Update() {
-        /*
         texture.filterMode = FilterMode.Point;
 
         for(int x = 0; x < 32; x++) {
@@ -215,7 +247,6 @@ public class Map : MonoBehaviour
         texture.Apply();
 
         preview.sprite = s;
-        */
     }
 }
 

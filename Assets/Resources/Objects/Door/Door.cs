@@ -19,15 +19,15 @@ public class Door : MapObject
             case "Open":
                 order = ObjectOrder.underWall;
                 isCollisiable = false;
-                gameObject.GetComponent<Animator>().Play("DoorOpen");
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                gameObject.GetComponentInChildren<Animator>().Play("DoorOpen");
+                gameObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
             break;
 
             case "Close":
                 order = ObjectOrder.wall;
                 isCollisiable = true;
-                gameObject.GetComponent<Animator>().Play("DoorClose");
-                gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                gameObject.GetComponentInChildren<Animator>().Play("DoorClose");
+                gameObject.GetComponentInChildren<BoxCollider2D>().enabled = true;
             break;
         }
     }

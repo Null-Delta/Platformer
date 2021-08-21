@@ -47,7 +47,7 @@ public class BreakableFloor : PressableObject
                     }
                 }
                 // полное исчезновение
-                gameObject.GetComponent<Animator>().Play("Break",0,0f);
+                gameObject.GetComponentInChildren<Animator>().Play("Break",0,0f);
             }
         }
         else if (isDestroying && !isReal)
@@ -58,7 +58,7 @@ public class BreakableFloor : PressableObject
                 isReal = true;
                 isDestroying = false;
                 // полное восстановление
-                gameObject.GetComponent<Animator>().Play("Restore",0,0f);
+                gameObject.GetComponentInChildren<Animator>().Play("Restore",0,0f);
             }
         }
     }

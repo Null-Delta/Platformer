@@ -7,7 +7,7 @@ public class ObjectController : MonoBehaviour
     public Object obj;
     
     // статичные объекты
-    static List<string> unUpdateObjects=  new List<string>{"Wall", "Floor", "Grass"};
+    static List<string> unUpdateObjects =  new List<string>{"Wall", "Floor", "Grass"};
 
     void Start()
     {
@@ -37,7 +37,13 @@ public class ObjectController : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        (obj as MapObject).onCollizion(collision.gameObject.GetComponent<ObjectController>().obj as MapObject, collision);
+        if (collision.gameObject.name != "Tilemap - lvl 0")
+            (obj as MapObject).onCollizion(collision.gameObject.GetComponent<ObjectController>().obj as MapObject, collision);
+        else 
+            (obj as MapObject).onCollizion(null, collision);
+        // В случае удара об тайлмап объект конструкция collision.gameObject возвращает сам уровень Тайлмапа из-за
+        // этого невозможно получить ObjectController. Такой случай пока единственный, так что сейчас при ударе со стенкой
+        // возвращается null
     }
 
     void OnTriggerEnter2D(Collider2D collision) {

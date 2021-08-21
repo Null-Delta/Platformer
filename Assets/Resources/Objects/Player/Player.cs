@@ -14,7 +14,7 @@ public class Player: WalkAndLive
     public CheckPoint nowCheckPoint;
     override public void onStartWalk() {
         base.onStartWalk();
-        gameObject.GetComponent<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
+        gameObject.GetComponentInChildren<Animator>().Play("PlayerLeft" + ((stepCount % 2 == 0) ? "LeftLeg" : "RightLeg"),0,0);
     }
 
     public void addDirection(int dir)
@@ -85,8 +85,6 @@ public class Player: WalkAndLive
 
     public override void onGetDamage(float d)
     {
-        this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = this.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
-        //this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().order = this.gameObject.GetComponent<SpriteRenderer>().order;
     }
 
     public Player(int x, int y): base(x,y) {

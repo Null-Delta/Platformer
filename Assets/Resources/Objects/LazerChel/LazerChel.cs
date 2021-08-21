@@ -9,8 +9,10 @@ public class LazerChel : SmartStalker
     int typeAttack = 0;
     int countOfLazer= 0;
     Vector2Int directionOfAttack;
+    string nameOfDirection;
     float longerTime;
     List<Vector2Int> lazerPoint;
+    bool isFire = false;
 
     List<GameObject> g ;//to delet
 
@@ -49,14 +51,26 @@ public class LazerChel : SmartStalker
             var tmpVector = target.position - this.position;
             if (tmpVector.x == 0)
                 if (tmpVector.y > 0)
+                {
                     directionOfAttack = Vector2Int.up;
+                    nameOfDirection = "ulazer";
+                }
                 else
+                {
                     directionOfAttack = Vector2Int.down;
+                    nameOfDirection = "dlazer";
+                }
             else
                 if (tmpVector.x > 0)
+                {
                     directionOfAttack = Vector2Int.right;
+                    nameOfDirection = "rlazer";
+                }
                 else
+                {
                     directionOfAttack = Vector2Int.left;
+                    nameOfDirection = "llazer";
+                }
         }
 
     }
@@ -74,9 +88,10 @@ public class LazerChel : SmartStalker
             if (attackRunner <=0)  // конец атаки
             {
                 isAttack = false;
+                isFire = false;
                 for (int i = 0; i != g.Count; i++)
                 {
-                    map.delet(g[i]);
+                    map.delet(g[i]); // to delet
                 }
                 foundWay();
             }
@@ -116,62 +131,62 @@ public class LazerChel : SmartStalker
     {
         if (typeAttack == 0)
         {
+            if (!isFire)
+            {
+                gameObject.GetComponentInChildren<Animator>().Play(nameOfDirection);
+                isFire = true;
+            }
+                
             if (countOfLazer< rangeOfAttack && attackRunner <= longerTime)
             {
-                longerTime -=0.03f;
+                longerTime -=0.02f;
                 countOfLazer++;
-                lazerPoint.Add(this.mapLocation+directionOfAttack*countOfLazer);
-                g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
             }
-            
+            for( int ii = 1; ii != countOfLazer+1; ii++)
+            {
+                List<WalkAndLive> tmpList =map.getMapObjects<WalkAndLive>((int)(mapLocation.x+directionOfAttack.x*ii), (int)(mapLocation.y+directionOfAttack.y*ii), x => x is WalkAndLive);
+                if(tmpList != null)
+                {
+                    for (int i = 0; i != tmpList.Count; i++)
+                        if (damagedList.Contains(tmpList[i]) == false)
+                        {
+                            tmpList[i].getDamage(damage, 0);
+                            damagedList.Add(tmpList[i]);
+                        }
+                }
+            }
         }
         else if (typeAttack == 1)
         {
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.up);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.up+Vector2Int.right);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.up+Vector2Int.left);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.down);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.down+Vector2Int.right);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.down+Vector2Int.left);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.right);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            countOfLazer++;
-            lazerPoint.Add(this.mapLocation+Vector2Int.left);
-            g.Add(map.createLazerPath(lazerPoint[countOfLazer-1]));
-
-            longerTime = 0;
-        }
-        
-        List<WalkAndLive> tmpList =map.getMapObjects<WalkAndLive>(lazerPoint, x => x is WalkAndLive);
-        if(tmpList != null)
-        {
-            for (int i = 0; i != tmpList.Count; i++)
-                if (damagedList.Contains(tmpList[i]) == false)
+            if (!isFire)
+            {
+                gameObject.GetComponentInChildren<Animator>().Play("clazer");
+                longerTime = 0;
+                isFire = true;
+            }
+            List<WalkAndLive> tmpList =map.getMapObjects<WalkAndLive>(new List<Vector2Int>
+                    { 
+                        this.mapLocation+Vector2Int.up,
+                        this.mapLocation+Vector2Int.up+Vector2Int.right,
+                        this.mapLocation+Vector2Int.up+Vector2Int.left,
+                        this.mapLocation+Vector2Int.down,
+                        this.mapLocation+Vector2Int.down+Vector2Int.right,
+                        this.mapLocation+Vector2Int.down+Vector2Int.left,
+                        this.mapLocation+Vector2Int.right,
+                        this.mapLocation+Vector2Int.left,
+                    }, x => x is WalkAndLive);
+            if(tmpList != null)
                 {
-                    tmpList[i].getDamage(damage, 0);
-                    damagedList.Add(tmpList[i]);
+                    for (int i = 0; i != tmpList.Count; i++)
+                        if (damagedList.Contains(tmpList[i]) == false)
+                        {
+                            tmpList[i].getDamage(damage, 0);
+                            damagedList.Add(tmpList[i]);
+                        }
                 }
         }
+        
+        
     }
 
     override public void onEndWalk() 
