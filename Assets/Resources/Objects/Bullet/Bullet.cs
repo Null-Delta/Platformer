@@ -17,7 +17,7 @@ public class Bullet : MapObject
 
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
-        if(obj is Wall || obj is Door) {
+        if(obj == null || obj is Door) {
             var contact = collision.contacts[0];
 
             if(contact.normal.x > 0) {

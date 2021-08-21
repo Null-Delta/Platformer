@@ -260,9 +260,13 @@ public class MainScript : MonoBehaviour
 
         objects.AddRange(newGrasses);
 
-             if (true)
+        if (true)
         {
-            objects.Add(new Jumper(22,9));
+            objects.Add(new BreakableFloor(1,20,0.5f,2f));
+            objects.Add(new BreakableFloor(1,21,0.5f,2f));
+            objects.Add(new BreakableFloor(1,22,0.5f,2f));
+
+            objects.Add(new Jumper(27,17));
             objects.Add(new WallSaw(3,2,Vector2.right, Vector2.up, 18, 5));
             objects.Add(new LazerChel(26,9));
             objects.Add(new EarthWizard(36,9));
@@ -276,8 +280,10 @@ public class MainScript : MonoBehaviour
             objects.Add(new Mina(27,14));
             objects.Add(new Mina(22,3));
             objects.Add(new Mina(25,9));
-            SetRect<Floor>(19,0,20,20,1);
+            
         }
+        
+        SetRect<Floor>(19,0,20,20,1);
 
         //objects.RemoveAll(x => x is MapObject && new Rect(3,3,4,4).Contains((x as MapObject).position));
 

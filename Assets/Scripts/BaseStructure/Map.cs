@@ -103,7 +103,7 @@ public class Map : MonoBehaviour
         objects.Add(obj);
         
         if(obj is MapObject) {
-            if(!(obj is Bullet)) {
+            if(!(obj is Bullet) && !(obj is RoundBullet) && !(obj is WallSaw)) {
                 mapMatrix[(int)(obj as MapObject).position.x,(int)(obj as MapObject).position.y].Add(obj as MapObject);
             }
         }

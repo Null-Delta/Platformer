@@ -36,7 +36,7 @@ public class RoundBullet : MapObject
 
     public override void onCollizion(MapObject obj, Collision2D collision)
     {
-        if(obj is Wall || obj is Door) {
+        if(obj == null || obj is Door) {
             map.destroyObject(this);
         }
         else if(obj == owner) {

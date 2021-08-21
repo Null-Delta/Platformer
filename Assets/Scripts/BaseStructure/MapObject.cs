@@ -32,8 +32,6 @@ public class MapObject: Object {
             }
         }
         set {
-            if (objectName == "Jumper")
-                Debug.Log(1);
             if(gameObject != null) {
                 gameObject.transform.position = value;
             } else {

@@ -17,7 +17,7 @@ public class WallSaw : MapObject
 
     float timeOnMove=0;
     float timeRunner=0;
-    float waitTime=0.3f;
+    float waitTime=1f;
     bool isReady = false;
 
     Wall saveWall;
