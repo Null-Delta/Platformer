@@ -241,20 +241,24 @@ public class MainScript : MonoBehaviour
         objects.Add(new Box(13,13));
         objects.Add(new Box(14,13));
 
-        SetRect<Grass>(0,0,100,100,1);
+        SetRect<Floor>(19,0,20,20,1);
+
+        //SetRect<Grass>(0,0,100,100,1);
 
         //objects.RemoveAll(x => x is Grass && 
             //objects.Find(y => y is MapObject && (!(y is Grass) && (y as MapObject).position == (x as MapObject).position) || (y is MovingFloor)) == null);
 
         //Random.InitState(228);
 
-        objects.RemoveAll(x => x is Grass && objects.Find(y => (y is Floor) && (y as MapObject).position == (x as MapObject).position) == null);
-        objects.RemoveAll(x => x is Grass && Random.Range(0,5) == 1);
+        //objects.RemoveAll(x => x is Grass && objects.Find(y => (y is Floor) && (y as MapObject).position == (x as MapObject).position) == null);
+        //objects.RemoveAll(x => x is Grass && Random.Range(0,5) == 1);
 
         List<Grass> newGrasses = new List<Grass>();
+
         objects.ForEach(x => {
-            if(x is Wall) {
-                newGrasses.Add(new Grass((int)(x as MapObject).position.x, (int)(x as MapObject).position.y));
+            if(x is Floor) {
+                if(UnityEngine.Random.Range(0f,1f) < 0.75f)
+                    newGrasses.Add(new Grass((int)(x as MapObject).position.x, (int)(x as MapObject).position.y));
             }
         });
 
@@ -280,7 +284,6 @@ public class MainScript : MonoBehaviour
             objects.Add(new Mina(27,14));
             objects.Add(new Mina(22,3));
             objects.Add(new Mina(25,9));
-            
         }
         
         SetRect<Floor>(19,0,20,20,1);

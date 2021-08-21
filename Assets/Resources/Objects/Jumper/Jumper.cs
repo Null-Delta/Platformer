@@ -54,6 +54,10 @@ public class Jumper : UsualStalker
             }  
             else if (inEndJump && attackRunner <= endOfDamageTime)
             {
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                //Debug.Log(savePosition-mapLocation);
+                //position = savePosition;
+                //addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));
                 this.gameObject.GetComponentInChildren<Collider2D>().enabled =true;
                 inEndJump = false;
                 immortal = false;
