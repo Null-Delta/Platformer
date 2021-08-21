@@ -177,9 +177,9 @@ public class Map : MonoBehaviour
             obj.gameObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity);
         }
         
-        if(obj.gameObject.GetComponent<ObjectController>() != null)
+        if(obj.gameObject != null && obj.gameObject.GetComponent<ObjectController>() != null)
             obj.gameObject.GetComponent<ObjectController>().obj = obj;
-        else 
+        else if(obj.gameObject != null && obj.gameObject.GetComponentInChildren<ObjectController>() != null)
             obj.gameObject.GetComponentInChildren<ObjectController>().obj = obj;
             
         addObject(obj);

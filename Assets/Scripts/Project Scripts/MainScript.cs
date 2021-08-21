@@ -38,6 +38,8 @@ public class MainScript : MonoBehaviour
         // objects.Add(new Spike(5,15, 0.25f, 1, 0.6f));
 
         objects.Add(new Spike(8,16, 0.25f, 1, 0.2f));
+        objects.Add(new Spike(7,16, 0.25f, 1, 0.4f));
+        objects.Add(new Spike(6,16, 0.25f, 1, 0.6f));
         // objects.Add(new Spike(7,16, 0.25f, 1, 0.4f));
         // objects.Add(new Spike(6,16, 0.25f, 1, 0.6f));
         // objects.Add(new Spike(5,16, 0.25f, 1, 0.8f));
