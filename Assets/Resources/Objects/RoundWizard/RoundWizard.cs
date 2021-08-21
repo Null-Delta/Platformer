@@ -16,9 +16,9 @@ public class RoundWizard : SmartStalker
         hp = 80;
         stayDelay = 0.4f;
         foundRange = 9;
-        damage = 10;
-        attackTime = 0.15f;
-        startOfDamageTime = 0.14f;
+        damage = 5;
+        attackTime = 0.20f;
+        startOfDamageTime = 0.19f;
         //endOfDamageTime = 0.0f;
         rangeOfAttack = 9;
     }

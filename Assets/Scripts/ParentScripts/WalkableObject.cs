@@ -206,7 +206,7 @@ public class WalkableObject: MapObject {
         animationTime += Time.deltaTime;
         
         if(targetWalker != null) {
-            position = targetWalker.position - moveStartPosition;
+            position = targetWalker.position + moveStartPosition;
         }
 
         if(animationTime > stayDelay && movements.Count == 0) {

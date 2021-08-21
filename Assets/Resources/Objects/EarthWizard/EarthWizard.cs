@@ -35,6 +35,12 @@ public class EarthWizard : SmartStalker
         base.updateObject();
         if (cooldownTime >0)
             cooldownTime -=Time.deltaTime;
+        if (target!= null && attackRunner > 0)
+        {
+            attackRunner = 0;
+            isAttack = false;
+            notFire = 0;
+        }
         if (attackRunner > 0) 
         {
             attackRunner -=Time.deltaTime;
@@ -66,45 +72,44 @@ public class EarthWizard : SmartStalker
 
     public override void dealDamage()
     {
-        if (target!= null)
-            if (notFire == 0)
+        if (notFire == 0)
+        {
+            lockAttackPosition = target.mapLocation;
+            notFire = 1;
+            var tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x+1, (int)lockAttackPosition.y, x => x is WalkAndLive);
+            if(tmpList == null)
             {
-                lockAttackPosition = target.mapLocation;
-                notFire = 1;
-                var tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x+1, (int)lockAttackPosition.y, x => x is WalkAndLive);
-                if(tmpList == null)
-                {
-                    EarthBlock b1 = new EarthBlock((int)lockAttackPosition.x+1, (int)lockAttackPosition.y, startOfDamageTime / 2f + timeToBum +0.1f);
-                    map.setupObject(b1);
-                }
-                tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x-1, (int)lockAttackPosition.y, x => x is WalkAndLive);
-                if(tmpList == null)
-                {
-                    EarthBlock b2 = new EarthBlock((int)lockAttackPosition.x-1, (int)lockAttackPosition.y, startOfDamageTime / 2f +timeToBum+0.1f);
-                    map.setupObject(b2);
-                }
+                EarthBlock b1 = new EarthBlock((int)lockAttackPosition.x+1, (int)lockAttackPosition.y, startOfDamageTime / 2f + timeToBum +0.1f);
+                map.setupObject(b1);
+            }
+            tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x-1, (int)lockAttackPosition.y, x => x is WalkAndLive);
+            if(tmpList == null)
+            {
+                EarthBlock b2 = new EarthBlock((int)lockAttackPosition.x-1, (int)lockAttackPosition.y, startOfDamageTime / 2f +timeToBum+0.1f);
+                map.setupObject(b2);
+            }
 
-                tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x, (int)lockAttackPosition.y+1, x => x is WalkAndLive);
-                if(tmpList == null)
-                {
-                    EarthBlock b3 = new EarthBlock((int)lockAttackPosition.x, (int)lockAttackPosition.y+1, startOfDamageTime / 2f +timeToBum+0.1f);
-                    map.setupObject(b3);
-                }
-                tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x, (int)lockAttackPosition.y-1, x => x is WalkAndLive);
-                if(tmpList == null)
-                {
-                    EarthBlock b4 = new EarthBlock((int)lockAttackPosition.x, (int)lockAttackPosition.y-1, startOfDamageTime / 2f +timeToBum+0.1f);
-                    map.setupObject(b4);
-                }
-                
-                
-            }
-            else if (notFire == 1)
+            tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x, (int)lockAttackPosition.y+1, x => x is WalkAndLive);
+            if(tmpList == null)
             {
-                notFire = 2;
-                Mina m = new Mina(lockAttackPosition.x, lockAttackPosition.y, timeToBum, damage);  
-                map.setupObject(m);
+                EarthBlock b3 = new EarthBlock((int)lockAttackPosition.x, (int)lockAttackPosition.y+1, startOfDamageTime / 2f +timeToBum+0.1f);
+                map.setupObject(b3);
             }
+            tmpList =map.getMapObjects<WalkAndLive>((int)lockAttackPosition.x, (int)lockAttackPosition.y-1, x => x is WalkAndLive);
+            if(tmpList == null)
+            {
+                EarthBlock b4 = new EarthBlock((int)lockAttackPosition.x, (int)lockAttackPosition.y-1, startOfDamageTime / 2f +timeToBum+0.1f);
+                map.setupObject(b4);
+            }
+            
+            
+        }
+        else if (notFire == 1)
+        {
+            notFire = 2;
+            Mina m = new Mina(lockAttackPosition.x, lockAttackPosition.y, timeToBum, damage);  
+            map.setupObject(m);
+        }
     }
 
     public override void foundWay()

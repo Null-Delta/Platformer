@@ -39,8 +39,7 @@ public class Assassin : SmartStalker
                     addMovement(new movement(-attackDirection.x, 0, true));
                 else
                     addMovement(new movement(0,-attackDirection.y, true));
-                Bullet tmpBullet = new Bullet((attackDirection.x + position.x), (attackDirection.y + position.y), attackDirection.x, attackDirection.y, 3, damage, this);
-                map.setupObject(tmpBullet);
+                dealDamage();
             }
         }
     }
