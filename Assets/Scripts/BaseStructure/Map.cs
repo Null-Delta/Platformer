@@ -10,10 +10,12 @@ public class Map : MonoBehaviour
     Texture2D texture;
     Sprite s;
 
-    public Tilemap tilemap;
-    public Tilemap tilemap1;
-    public Tilemap tilemap2;
-    public Tilemap tilemap3;
+    // public Tilemap tilemap;
+    // public Tilemap tilemap1;
+    // public Tilemap tilemap2;
+    // public Tilemap tilemap3;
+
+    public List<List<Tilemap>> tilemaps;
 
     const int width = 256, height = 256;
     List<Object> objects = new List<Object>();
@@ -187,16 +189,16 @@ public class Map : MonoBehaviour
     public void setTile(MapObject obj) {
         switch(obj.order) {
             case ObjectOrder.floor:
-                tilemap3.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+                tilemaps[0][0].SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
             break;
             case ObjectOrder.onFloor:
-                tilemap2.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+                tilemaps[0][1].SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
             break;
             case ObjectOrder.underWall:
-                tilemap1.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+                tilemaps[0][2].SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
             break;
             case ObjectOrder.wall:
-                tilemap.SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
+                tilemaps[0][3].SetTile(new Vector3Int((int)(obj as MapObject).position.x, (int)(obj as MapObject).position.y, 0), (obj as MapObject).tile);
             break;
         }
 
@@ -207,6 +209,7 @@ public class Map : MonoBehaviour
         preview = GameObject.Find("mapPreview").GetComponent<Image>();
         texture = new Texture2D(32,32);
         s = Sprite.Create(texture, new Rect(0,0, 32, 32), new Vector2(0.5f,0.5f), 32);
+        //tilemaps = new List<List<Tilemap>>();
     }
 
     public void Update() {

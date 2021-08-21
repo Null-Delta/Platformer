@@ -30,6 +30,9 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(8,10));
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
+
+        objects.Add(new Torch(3,3));
+    
         //SetRect<Floor>(30,30,50,50,1);
         //SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
         //objects.Add(new Spike(8,15, 0.25f, 1, 0f));
@@ -310,12 +313,18 @@ public class MainScript : MonoBehaviour
         // objects.Add(new BreakableFloor(3,4,0.5f,2f));
         // objects.Add(new BreakableFloor(3,3,0.5f,2f));
         
-        map.AddComponent<Map>();
-        map.GetComponent<Map>().tilemap = GameObject.Find("Tilemap - lvl 0").GetComponent<Tilemap>();
-        map.GetComponent<Map>().tilemap1 = GameObject.Find("Tilemap - lvl 1").GetComponent<Tilemap>();
-        map.GetComponent<Map>().tilemap2 = GameObject.Find("Tilemap - lvl 2").GetComponent<Tilemap>();
-        map.GetComponent<Map>().tilemap3 = GameObject.Find("Tilemap - lvl 3").GetComponent<Tilemap>();
+        List<Tilemap> lvl0 = new List<Tilemap>();
+        lvl0.Add(GameObject.Find("Tilemap - lvl 0").GetComponent<Tilemap>());
+        lvl0.Add(GameObject.Find("Tilemap - lvl 1").GetComponent<Tilemap>());
+        lvl0.Add(GameObject.Find("Tilemap - lvl 2").GetComponent<Tilemap>());
+        lvl0.Add(GameObject.Find("Tilemap - lvl 3").GetComponent<Tilemap>());
+
         
+
+        map.AddComponent<Map>();
+        map.GetComponent<Map>().tilemaps = new List<List<Tilemap>>();
+        map.GetComponent<Map>().tilemaps.Add(lvl0);
+
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);
     }
