@@ -458,11 +458,12 @@ MonoBehaviour:
   - m_Id: 22
     m_Sprites:
     - {fileID: 1492911798537794108, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -2423787038116384429, guid: e96f59f398d6c49d28fdfd7b20f5bf0c, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
+    m_PerlinScale: 0.814
+    m_Output: 1
     m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
@@ -476,11 +477,12 @@ MonoBehaviour:
   - m_Id: 23
     m_Sprites:
     - {fileID: 5048416880140299565, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 7115772791909277994, guid: e96f59f398d6c49d28fdfd7b20f5bf0c, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
+    m_PerlinScale: 0.765
+    m_Output: 1
     m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
@@ -494,11 +496,12 @@ MonoBehaviour:
   - m_Id: 24
     m_Sprites:
     - {fileID: 7641892208429834689, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: -4788212771082311898, guid: e96f59f398d6c49d28fdfd7b20f5bf0c, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
-    m_Output: 0
+    m_Output: 1
     m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0100000001000000010000000200000002000000
@@ -584,11 +587,12 @@ MonoBehaviour:
   - m_Id: 29
     m_Sprites:
     - {fileID: 4275265726231819746, guid: 322069a8e95f246ebbe349a3a03c2ff4, type: 3}
+    - {fileID: 1959711087166770636, guid: e96f59f398d6c49d28fdfd7b20f5bf0c, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
-    m_PerlinScale: 0.5
-    m_Output: 0
+    m_PerlinScale: 0.753
+    m_Output: 1
     m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 020000000100000001000000010000000100000001000000

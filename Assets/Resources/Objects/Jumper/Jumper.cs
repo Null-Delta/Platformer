@@ -88,6 +88,7 @@ public class Jumper : UsualStalker
             
             else if (inEndJump)
             {
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
                 //Debug.Log(savePosition-mapLocation);
                 //position = savePosition;
                 //addMovement(new movement(new Vector2Int((int)(savePosition.x-this.mapLocation.x),(int)(savePosition.y-this.mapLocation.y)), false));

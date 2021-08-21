@@ -14,10 +14,8 @@ public class Spike : PressableObject
 
     bool[] b = new bool[]{true, true, true, true};
     public override string objectName => "Spike";
-
     public override void updateObject()
     {
-        
         time += Time.deltaTime;
         if (time > 0)
         {
