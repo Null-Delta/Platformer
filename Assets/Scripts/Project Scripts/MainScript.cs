@@ -30,6 +30,9 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(8,10));
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
+
+        objects.Add(new Torch(3,3));
+    
         //SetRect<Floor>(30,30,50,50,1);
         //SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
         //objects.Add(new Spike(8,15, 0.25f, 1, 0f));

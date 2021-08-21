@@ -173,7 +173,6 @@ public class Map : MonoBehaviour
             } else {
                 GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
                 obj.gameObject = Instantiate(prefab,(obj as MapObject).position, Quaternion.identity);
-                obj.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
             }
         } else {
             GameObject prefab = Resources.Load<GameObject>("Objects/" + obj.objectName + "/" + obj.objectName);
