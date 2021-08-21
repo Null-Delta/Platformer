@@ -26,7 +26,7 @@ public class Teleport : PressableObject
         {
             isActivation = true;
             teleportationObj = walker;
-            originalMaterial = teleportationObj.gameObject.GetComponent<SpriteRenderer>().material;
+            originalMaterial = teleportationObj.gameObject.GetComponentInChildren<SpriteRenderer>().material;
             map.executeGroup(events["OnTeleport"]);
         }
         else
@@ -63,8 +63,8 @@ public class Teleport : PressableObject
 
                     teleportationObj.isIgnoreMoves = true;
 
-                    teleportationObj.gameObject.GetComponent<SpriteRenderer>().material = disintegrationMaterial;
-                    teleportationMaterial = teleportationObj.gameObject.GetComponent<SpriteRenderer>().material;
+                    teleportationObj.gameObject.GetComponentInChildren<SpriteRenderer>().material = disintegrationMaterial;
+                    teleportationMaterial = teleportationObj.gameObject.GetComponentInChildren<SpriteRenderer>().material;
                     //Camera.main.GetComponent<PlayerControl>().ControlActive = false;
                     isTeleportation = true;
                     isActivation = false;
@@ -121,7 +121,7 @@ public class Teleport : PressableObject
                         teleportationObj.isIgnoreMoves = false;
                         //Camera.main.GetComponent<PlayerControl>().ControlActive = true;
                         teleportationMaterial.SetFloat("Progress", 1);
-                        teleportationObj.gameObject.GetComponent<SpriteRenderer>().material = originalMaterial;
+                        teleportationObj.gameObject.GetComponentInChildren<SpriteRenderer>().material = originalMaterial;
                         b[0] = true; b[1] = true;
                         isTeleportation = false;
                         sumTime = 0;

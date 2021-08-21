@@ -25,7 +25,7 @@ public class Jumper : UsualStalker
         endOfDamageTime = 1.5f;
         rangeOfAttack = 9;
         canFall = true;
-        order = ObjectOrder.wall +1;
+        order = ObjectOrder.wall;
     }
 
     public override void updateObject()
