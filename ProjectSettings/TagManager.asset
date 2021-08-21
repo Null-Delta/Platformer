@@ -41,6 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Walls
+  - name: Layer 1
     uniqueID: 2341611947
+    locked: 0
+  - name: Layer 2
+    uniqueID: 3825477377
+    locked: 0
+  - name: Layer 3
+    uniqueID: 1982992333
+    locked: 0
+  - name: Layer 4
+    uniqueID: 1567943959
     locked: 0

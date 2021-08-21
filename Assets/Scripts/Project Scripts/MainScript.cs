@@ -297,12 +297,19 @@ public class MainScript : MonoBehaviour
         // objects.Add(new BreakableFloor(3,4,0.5f,2f));
         // objects.Add(new BreakableFloor(3,3,0.5f,2f));
 
-        map.AddComponent<Map>();
-        map.GetComponent<Map>().tilemap = GameObject.Find("Tilemap - lvl 0").GetComponent<Tilemap>();
-        map.GetComponent<Map>().tilemap1 = GameObject.Find("Tilemap - lvl 1").GetComponent<Tilemap>();
-        map.GetComponent<Map>().tilemap2 = GameObject.Find("Tilemap - lvl 2").GetComponent<Tilemap>();
-        map.GetComponent<Map>().tilemap3 = GameObject.Find("Tilemap - lvl 3").GetComponent<Tilemap>();
         
+        List<Tilemap> lvl0 = new List<Tilemap>();
+        lvl0.Add(GameObject.Find("Tilemap - lvl 0").GetComponent<Tilemap>());
+        lvl0.Add(GameObject.Find("Tilemap - lvl 1").GetComponent<Tilemap>());
+        lvl0.Add(GameObject.Find("Tilemap - lvl 2").GetComponent<Tilemap>());
+        lvl0.Add(GameObject.Find("Tilemap - lvl 3").GetComponent<Tilemap>());
+
+        
+
+        map.AddComponent<Map>();
+        map.GetComponent<Map>().tilemaps = new List<List<Tilemap>>();
+        map.GetComponent<Map>().tilemaps.Add(lvl0);
+
         map.GetComponent<Map>().setupObjects(objects);
         map.GetComponent<Map>().setupGroups(groups);
     }
