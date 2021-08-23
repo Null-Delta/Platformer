@@ -31,13 +31,13 @@ public class MainScript : MonoBehaviour
         objects.Add(new CheckPoint(14,14));
         objects.Add(new CheckPoint(14,15));
 
-        objects.Add(new Torch(3,3));
-        objects.Add(new Torch(4,3));
-        objects.Add(new Torch(5,3));
-        objects.Add(new Torch(6,3));
-        objects.Add(new Torch(7,3));
-        objects.Add(new Torch(5,7));
-        objects.Add(new Torch(13,18));
+        // objects.Add(new Torch(3,3));
+        // objects.Add(new Torch(4,3));
+        // objects.Add(new Torch(5,3));
+        // objects.Add(new Torch(6,3));
+        // objects.Add(new Torch(7,3));
+        // objects.Add(new Torch(5,7));
+        // objects.Add(new Torch(13,18));
     
         //SetRect<Floor>(30,30,50,50,1);
         //SetRectSpike(30,30,50,50,1, 0.25f, 1, 0f);
