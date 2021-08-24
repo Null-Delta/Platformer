@@ -128,6 +128,15 @@ public class EdgePass {
     }
 
     public void Draw() {
+
+        // var_1 = edgePosition.x;
+        // var_2 = edgePosition.y;
+        // var_3 = edgeRotation;
+        // var_4 = edgeSize;
+        // var_5 = Rendering.Light.ShadowEngine.drawOffset.x;
+        // var_6 = Rendering.Light.ShadowEngine.drawOffset.y;
+        // var_7 = shadowTranslucency;
+
         GL.Color(new Color(var_4, var_5, var_6, var_7));
         GL.TexCoord3(var_1, var_2, var_3);
 
@@ -167,7 +176,7 @@ public class EdgePass {
         {
             Vector2? leftResult = Math2D.GetPointLineIntersectLine3(edgeMiddle, projectedMiddle, rightEdge, rightCoreInToEdge);
             if (leftResult != null) {
-
+                
                 GL.Vertex3(projectedMiddle.x, projectedMiddle.y, 0);
                 GL.Vertex3(rightCoreInToEdge.x, rightCoreInToEdge.y, 0);
                 GL.Vertex3(leftResult.Value.x, leftResult.Value.y, 0);
@@ -187,12 +196,14 @@ public class EdgePass {
             } 
             else 
             {
+                Debug.Log(leftEdge);
+                Debug.Log(rightEdge);
                 Vector2? rightResult = Math2D.GetPointLineIntersectLine3(edgeMiddle, projectedMiddle, leftEdge, leftCoreOutToEdge);
 
                 if (rightResult != null) {
                     GL.Vertex3(rightCoreInToEdge.x, rightCoreInToEdge.y, 0);
-                    GL.Vertex3(leftEdge.x, leftEdge.y, 0);
-                    GL.Vertex3(rightEdge.x, rightEdge.y, 0);
+                    GL.Vertex3(-1000, -1000, 0);
+                    GL.Vertex3(-1000, -1000, 0);
 
                     GL.Vertex3(projectedMiddle.x, projectedMiddle.y, 0);
                     GL.Vertex3(rightCoreInToEdge.x, rightCoreInToEdge.y, 0);
@@ -207,13 +218,13 @@ public class EdgePass {
                     GL.Vertex3(leftCoreOutToEdge.x, leftCoreOutToEdge.y, 0);
                 } else {
                     if (lightDirection > 180) {
-                        GL.Vertex3(projectedMiddle.x, projectedMiddle.y, 0);
-                        GL.Vertex3(rightCoreInToEdge.x, rightCoreInToEdge.y, 0);
-                        GL.Vertex3(rightEdge.x, rightEdge.y, 0);
+                        GL.Vertex3(projectedMiddle.x/100, projectedMiddle.y/100, 0);
+                        GL.Vertex3(rightCoreInToEdge.x/100, rightCoreInToEdge.y/100, 0);
+                        GL.Vertex3(rightEdge.x/100, rightEdge.y/100, 0);
 
-                        GL.Vertex3(projectedMiddle.x, projectedMiddle.y, 0);
-                        GL.Vertex3(leftCoreOutToEdge.x, leftCoreOutToEdge.y, 0);
-                        GL.Vertex3(leftEdge.x, leftEdge.y, 0);
+                        GL.Vertex3(projectedMiddle.x/100, projectedMiddle.y/100, 0);
+                        GL.Vertex3(leftCoreOutToEdge.x/100, leftCoreOutToEdge.y/100, 0);
+                        GL.Vertex3(leftEdge.x/100, leftEdge.y/100, 0);
                     }
                 }   
             }

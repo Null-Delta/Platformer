@@ -27,7 +27,7 @@ namespace Rendering.Light {
 
         public static float lightSize = 0;
         public static bool lightDrawAbove = false;
-
+    
         public static Vector2 objectOffset = Vector2.zero;
         public static float shadowDistanceMax = 1;
         public static float shadowDistanceMin = 0;
@@ -100,7 +100,13 @@ namespace Rendering.Light {
                 case DRAW_MODE_SOFT_CONVEX:
                 case DRAW_MODE_SOFT_VERTEX:
                     // Does not support Shadow Distance
+
+
                     Shadow.Soft.Draw(polygons, shadowTranslucency); 
+        
+
+
+
                 break;
 
                 case DRAW_MODE_PERPENDICULAR:

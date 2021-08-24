@@ -70,7 +70,7 @@ namespace Rendering.Light.Shadow {
 			pair.B.x = SoftShadowSorter.maxPoint.x + position.x;
 			pair.B.y = SoftShadowSorter.maxPoint.y + position.y;
 
-			Pair2D edge_world = pair;
+			//Pair2D edge_world = pair;
 
 			Vector2 edgePosition;
 			edgePosition.x = (float)(pair.A.x + pair.B.x) / 2;
