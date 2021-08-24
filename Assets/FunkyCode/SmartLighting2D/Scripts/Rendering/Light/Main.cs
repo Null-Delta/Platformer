@@ -7,6 +7,7 @@ namespace Rendering.Light {
 	
 	public static class Main {
 		private static Pass pass = new Pass();
+		
 
 		public static void Draw(Light2D light) {
 			ShadowEngine.Prepare(light);
@@ -50,7 +51,7 @@ namespace Rendering.Light {
 		
 		public static void DrawCollisions(Light2D light) {
 			ShadowEngine.Prepare(light);
-
+			
             LayerSetting[] layerSettings = light.GetLayerSettings();
 
 			if (layerSettings == null) {

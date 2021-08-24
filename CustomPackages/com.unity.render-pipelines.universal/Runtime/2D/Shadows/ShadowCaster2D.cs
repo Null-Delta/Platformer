@@ -146,13 +146,17 @@ namespace UnityEngine.Experimental.Rendering.Universal
 
         public void Update()
         {
+            
             Renderer renderer;
             m_HasRenderer = TryGetComponent<Renderer>(out renderer);
 
             bool rebuildMesh = LightUtility.CheckForChange(m_ShapePathHash, ref m_PreviousPathHash);
             if (rebuildMesh)
+            {
                 ShadowUtility.GenerateShadowMesh(m_Mesh, m_ShapePath);
-
+                Debug.Log(1);
+            }
+            
             m_PreviousShadowCasterGroup = m_ShadowCasterGroup;
             bool addedToNewGroup = ShadowCasterGroup2DManager.AddToShadowCasterGroup(this, ref m_ShadowCasterGroup);
             if (addedToNewGroup && m_ShadowCasterGroup != null)
@@ -169,10 +173,12 @@ namespace UnityEngine.Experimental.Rendering.Universal
             {
                 ShadowCasterGroup2DManager.RemoveGroup(this);
                 ShadowCasterGroup2DManager.AddGroup(this);
+                Debug.Log(1);
             }
 
             if (LightUtility.CheckForChange(m_CastsShadows, ref m_PreviousCastsShadows))
             {
+                Debug.Log(1);
                 if (m_CastsShadows)
                     ShadowCasterGroup2DManager.AddGroup(this);
                 else

@@ -20,7 +20,8 @@ public class MainScript : MonoBehaviour
         //objects.Add(new Walker(10,10));
 
         SetRect<Wall>(0,0,60,30,0);
-        SetRect<Wall>(3,3,5,1,0);
+        SetRect<Wall>(5,3,1,1,0);
+        //SetRect<EarthBlock>(40,40,60,60,1);
         
         objects.Add(new Wall(3,28));
         objects.Add(new Wall(1,28));
